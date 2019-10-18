@@ -185,8 +185,8 @@ namespace Azure.Storage.Files.Test
                 // Assert
                 AssertValidStorageDirectoryInfo(response);
                 //Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
-                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
-                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
+                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.FileCreationTime);
+                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.FileLastWriteTime);
             }
         }
 
@@ -268,7 +268,7 @@ namespace Azure.Storage.Files.Test
                 // Assert
                 Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
                 Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
-                Assert.AreEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
+                AssertPropertiesEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
             }
         }
 
@@ -331,9 +331,9 @@ namespace Azure.Storage.Files.Test
 
                 // Assert
                 AssertValidStorageDirectoryInfo(response);
-                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
-                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.Value.FileCreationTime);
-                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.Value.FileLastWriteTime);
+                Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
+                Assert.AreEqual(smbProperties.FileCreationTime, response.Value.SmbProperties.FileCreationTime);
+                Assert.AreEqual(smbProperties.FileLastWriteTime, response.Value.SmbProperties.FileLastWriteTime);
             }
         }
 
@@ -535,10 +535,10 @@ namespace Azure.Storage.Files.Test
             using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Act
-                Response<StorageClosedHandlesSegment> response = await directory.ForceCloseHandlesAsync();
+                int handlesClosed = await directory.ForceCloseAllHandlesAsync();
 
                 // Assert
-                Assert.AreEqual(0, response.Value.NumberOfHandlesClosed);
+                Assert.AreEqual(0, handlesClosed);
 
             }
         }
@@ -550,10 +550,10 @@ namespace Azure.Storage.Files.Test
             using (GetNewDirectory(out DirectoryClient directory))
             {
                 // Act
-                Response<StorageClosedHandlesSegment> response = await directory.ForceCloseHandlesAsync(recursive: true);
+                int handlesClosed = await directory.ForceCloseAllHandlesAsync(recursive: true);
 
                 // Assert
-                Assert.AreEqual(0, response.Value.NumberOfHandlesClosed);
+                Assert.AreEqual(0, handlesClosed);
 
             }
         }
@@ -568,9 +568,24 @@ namespace Azure.Storage.Files.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                    directory.ForceCloseHandlesAsync(),
+                    directory.ForceCloseAllHandlesAsync(),
                     actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
 
+            }
+        }
+
+        [Test]
+        public async Task ForceCloseHandle_Error()
+        {
+            // Arrange
+            using (GetNewShare(out ShareClient share))
+            {
+                DirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+                AsyncPageable<StorageFileHandle> handles = directory.GetHandlesAsync();
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    directory.ForceCloseHandleAsync("nonExistantHandleId"),
+                    actualException => Assert.AreEqual("InvalidHeaderValue", actualException.ErrorCode));
             }
         }
 
@@ -625,5 +640,6 @@ namespace Azure.Storage.Files.Test
                     async () => await file.GetPropertiesAsync());
             }
         }
+
     }
 }
