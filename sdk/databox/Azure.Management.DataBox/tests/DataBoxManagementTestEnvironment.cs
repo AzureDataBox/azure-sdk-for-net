@@ -5,9 +5,9 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Management.DataBox.Tests
 {
-    public class Microsft.DataBoxManagementTestEnvironment : TestEnvironment
+    public class DataBoxManagementTestEnvironment : TestEnvironment
     {
-        public Microsft.DataBoxManagementTestEnvironment() : base("microsft.databoxmgmt")
+        public DataBoxManagementTestEnvironment() : base("microsft.databoxmgmt")
         {
         }
     }
