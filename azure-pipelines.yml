@@ -16,6 +16,11 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    command: build
-    projects: sdk/databox/Azure.Management.DataBox/src/*.csproj'
-    arguments: '--configuration $(buildConfiguration)' 
+    command: 'build'
+    projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
+    arguments: '/t:GenerateCode'
