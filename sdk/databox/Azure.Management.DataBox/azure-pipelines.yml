@@ -13,9 +13,9 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-# - script: dotnet build
-#   displayName: 'dotnet build'
 - task: DotNetCoreCLI@2
+  displayName: Build
   inputs:
-    command: 'build'
-    projects: 'src/Azure.Management.DataBox.csproj'
+    command: build
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
