@@ -17,4 +17,4 @@ steps:
   displayName: Build
   inputs:
     command: build
-    projects: '**/*.csproj'
+    projects: '/sdk/databox/Azure.Management.DataBox/**/*.csproj'
