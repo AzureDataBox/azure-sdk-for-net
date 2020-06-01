@@ -17,5 +17,5 @@ steps:
   displayName: Build
   inputs:
     command: build
-    projects: https://github.com/t-vajana/azure-sdk-for-net/tree/master/sdk/databox/Azure.Management.DataBox/src/*.csproj'
+    projects: sdk/databox/Azure.Management.DataBox/src/*.csproj'
     arguments: '--configuration $(buildConfiguration)' 
