@@ -35,11 +35,6 @@ steps:
     command: 'build'
     projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
 
-- task: MSBuild@1
-  inputs:
-    solution: 'eng\mgmt.proj'
-    msbuildArguments: '/t:CreateNugetPackage /p:scope=Databox'
-
 - task: CmdLine@2
   inputs:
     script: |
@@ -58,3 +53,14 @@ steps:
       git commit -m "Generate models and dll for DataBox"
       echo GIT PUSH
       git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin master
+
+- task: DotNetCoreCLI@2
+  inputs:
+    projects: 'eng\mgmt.proj'
+    arguments: '/t:CreateNugetPackage /p:scope=Databox'  
+    
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'dll'
+    publishLocation: 'Container'
