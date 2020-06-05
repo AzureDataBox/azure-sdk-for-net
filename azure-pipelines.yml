@@ -34,7 +34,12 @@ steps:
   inputs:
     command: 'build'
     projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
-    outputDir: '$(Build.ArtifactStagingDirectory)'
+    
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: 'artifacts/**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'    
 
 - task: PublishBuildArtifacts@1
   inputs:
