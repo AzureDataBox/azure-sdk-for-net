@@ -29,6 +29,18 @@ steps:
     projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
     arguments: '/t:GenerateCode'
 
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: 'build'
+    projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'dll'
+    publishLocation: 'Container'
+
 - task: CmdLine@2
   inputs:
     script: |
@@ -46,16 +58,4 @@ steps:
       echo GIT COMMIT
       git commit -m "Generate models for DataBox"
       echo GIT PUSH
-      git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin master
-
-- task: DotNetCoreCLI@2
-  displayName: Build
-  inputs:
-    command: 'build'
-    projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'dll'
-    publishLocation: 'Container'
+      git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin master    
