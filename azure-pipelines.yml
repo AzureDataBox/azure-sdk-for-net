@@ -53,3 +53,8 @@ steps:
       git commit -m "Generate models for DataBox"
       echo GIT PUSH
       git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin master
+
+- task: MSBuild@1
+  inputs:
+    solution: 'eng\mgmt.proj'
+    msbuildArguments: '/t:CreateNugetPackage /p:scope=Databox'
