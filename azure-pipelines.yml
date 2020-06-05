@@ -51,4 +51,4 @@ steps:
       echo GIT COMMIT
       git commit -m "Generate models for DataBox"
       echo GIT PUSH
-      git push origin master
+      git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin master
