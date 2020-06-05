@@ -34,6 +34,7 @@ steps:
   inputs:
     command: 'build'
     projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
+    outputDir: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
   inputs:
