@@ -17,8 +17,6 @@ steps:
   displayName: Build
   inputs:
     command: 'build'
-    modifyOutputPath: true
-    outputDir: 'sdk/databox/Azure.Management.DataBox/src'
     projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
 
 - task: DotNetCoreCLI@2
@@ -26,6 +24,18 @@ steps:
     command: 'build'
     projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
     arguments: '/t:GenerateCode'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'sdk/databox/Azure.Management.DataBox/src'
+    Contents: 'Generated/**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'Generated'
+    TargetPath: 'sdk/databox/Azure.Management.DataBox/src'
 
 - task: DotNetCoreCLI@2
   displayName: Build
