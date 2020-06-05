@@ -29,12 +29,6 @@ steps:
     projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
     arguments: '/t:GenerateCode'
 
-- task: DotNetCoreCLI@2
-  displayName: Build
-  inputs:
-    command: 'build'
-    projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
-
 - task: CmdLine@2
   inputs:
     script: |
@@ -54,11 +48,12 @@ steps:
       echo GIT PUSH
       git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin master
 
-- task: MSBuild@1
+- task: DotNetCoreCLI@2
+  displayName: Build
   inputs:
-    solution: 'eng/mgmt.proj'
-    msbuildArguments: '/t:CreateNugetPackage /p:scope=Databox'  
-    
+    command: 'build'
+    projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
