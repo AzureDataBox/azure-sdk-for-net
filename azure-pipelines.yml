@@ -40,12 +40,15 @@ steps:
       git config --global user.email "t-vajana@microsoft.com"
       git config --global user.name "Vaishnavi Janardhan"
 
+      echo GIT CHECKOUT
+      git checkout master
       echo GIT STATUS
       git status
+      echo GIT ADD
       git add .
       echo GIT STATUS
       git status
       echo GIT COMMIT
       git commit -m "Generate models for DataBox"
       echo GIT PUSH
-      git push origin
+      git push origin master
