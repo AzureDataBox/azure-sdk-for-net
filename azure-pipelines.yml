@@ -13,6 +13,9 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- checkout: self
+  clean: true
+
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
@@ -25,20 +28,21 @@ steps:
     projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
     arguments: '/t:GenerateCode'
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: 'sdk/databox/Azure.Management.DataBox/src'
-    Contents: 'Generated/**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'Generated'
-    TargetPath: 'sdk/databox/Azure.Management.DataBox/src'
-
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
     command: 'build'
     projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'    
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      ECHO GIT STATUS
+      git status
+      git add .
+      ECHO GIT STATUS
+      git status
+      ECHO GIT COMMIT
+      git commit -m "Generate models for DataBox"
+      ECHO GIT PUSH
+      git push origin master
