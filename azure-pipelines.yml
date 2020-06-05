@@ -33,7 +33,12 @@ steps:
   displayName: Build
   inputs:
     command: 'build'
-    projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'    
+    projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
+
+- task: MSBuild@1
+  inputs:
+    solution: 'eng\mgmt.proj'
+    msbuildArguments: '/t:CreateNugetPackage /p:scope=Databox'
 
 - task: CmdLine@2
   inputs:
@@ -50,11 +55,6 @@ steps:
       echo GIT STATUS
       git status
       echo GIT COMMIT
-      git commit -m "Generate models for DataBox"
+      git commit -m "Generate models and dll for DataBox"
       echo GIT PUSH
       git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin master
-
-- task: MSBuild@1
-  inputs:
-    solution: 'eng\mgmt.proj'
-    msbuildArguments: '/t:CreateNugetPackage /p:scope=Databox'
