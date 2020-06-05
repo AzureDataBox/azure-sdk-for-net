@@ -17,6 +17,7 @@ steps:
   displayName: Build
   inputs:
     command: 'build'
+    outputDir: 'sdk/databox/Azure.Management.DataBox/src'
     projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
 
 - task: DotNetCoreCLI@2
