@@ -37,6 +37,9 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
+      git config --global user.email "t-vajana@microsoft.com"
+      git config --global user.name "Vaishnavi Janardhan"
+
       ECHO GIT STATUS
       git status
       git add .
