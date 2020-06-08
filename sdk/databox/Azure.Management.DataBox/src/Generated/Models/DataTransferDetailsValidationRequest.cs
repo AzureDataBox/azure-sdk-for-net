@@ -13,10 +13,11 @@ namespace Azure.Management.DataBox.Models
     public partial class DataTransferDetailsValidationRequest : ValidationInputRequest
     {
         /// <summary> Initializes a new instance of DataTransferDetailsValidationRequest. </summary>
+        /// <param name="deviceType"> Device type. </param>
         /// <param name="transferType"> Type of the transfer. </param>
-        public DataTransferDetailsValidationRequest(TransferType transferType)
+        public DataTransferDetailsValidationRequest(SkuName deviceType, TransferType transferType)
         {
-            DeviceType = "DataBox";
+            DeviceType = deviceType;
             TransferType = transferType;
             ValidationType = "ValidateDataTransferDetails";
         }
@@ -27,13 +28,13 @@ namespace Azure.Management.DataBox.Models
         /// <param name="dataImportDetails"> List of DataTransfer details to be used to import data to azure. </param>
         /// <param name="deviceType"> Device type. </param>
         /// <param name="transferType"> Type of the transfer. </param>
-        internal DataTransferDetailsValidationRequest(string validationType, IList<DataExportDetails> dataExportDetails, IList<DataImportDetails> dataImportDetails, string deviceType, TransferType transferType) : base(validationType)
+        internal DataTransferDetailsValidationRequest(ValidationInputDiscriminator validationType, IList<DataExportDetails> dataExportDetails, IList<DataImportDetails> dataImportDetails, SkuName deviceType, TransferType transferType) : base(validationType)
         {
             DataExportDetails = dataExportDetails;
             DataImportDetails = dataImportDetails;
             DeviceType = deviceType;
             TransferType = transferType;
-            ValidationType = validationType ?? "ValidateDataTransferDetails";
+            ValidationType = validationType;
         }
 
         /// <summary> List of DataTransfer details to be used to export data from azure. </summary>
@@ -41,7 +42,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> List of DataTransfer details to be used to import data to azure. </summary>
         public IList<DataImportDetails> DataImportDetails { get; set; }
         /// <summary> Device type. </summary>
-        public string DeviceType { get; }
+        public SkuName DeviceType { get; }
         /// <summary> Type of the transfer. </summary>
         public TransferType TransferType { get; }
     }

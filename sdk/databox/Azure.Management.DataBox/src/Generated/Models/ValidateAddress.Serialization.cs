@@ -18,14 +18,14 @@ namespace Azure.Management.DataBox.Models
             writer.WritePropertyName("shippingAddress");
             writer.WriteObjectValue(ShippingAddress);
             writer.WritePropertyName("deviceType");
-            writer.WriteStringValue(DeviceType);
+            writer.WriteStringValue(DeviceType.ToString());
             if (TransportPreferences != null)
             {
                 writer.WritePropertyName("transportPreferences");
                 writer.WriteObjectValue(TransportPreferences);
             }
             writer.WritePropertyName("validationType");
-            writer.WriteStringValue(ValidationType);
+            writer.WriteStringValue(ValidationType.ToString());
             writer.WriteEndObject();
         }
     }

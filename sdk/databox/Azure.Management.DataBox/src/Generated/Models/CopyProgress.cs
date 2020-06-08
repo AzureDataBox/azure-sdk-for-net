@@ -13,7 +13,6 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of CopyProgress. </summary>
         public CopyProgress()
         {
-            DataAccountType = "StorageAccount";
         }
 
         /// <summary> Initializes a new instance of CopyProgress. </summary>
@@ -36,7 +35,7 @@ namespace Azure.Management.DataBox.Models
         /// 
         /// Until this is true, the TotalBytesToProcess may not be valid.
         /// </param>
-        internal CopyProgress(string storageAccountName, TransferType? transferType, string dataAccountType, string accountId, long? bytesProcessed, long? totalBytesToProcess, long? filesProcessed, long? totalFilesToProcess, long? invalidFilesProcessed, long? invalidFileBytesUploaded, long? renamedContainerCount, long? filesErroredOut, long? directoriesErroredOut, long? invalidDirectoriesProcessed, bool? isEnumerationInProgress)
+        internal CopyProgress(string storageAccountName, TransferType? transferType, DataAccountType? dataAccountType, string accountId, long? bytesProcessed, long? totalBytesToProcess, long? filesProcessed, long? totalFilesToProcess, long? invalidFilesProcessed, long? invalidFileBytesUploaded, long? renamedContainerCount, long? filesErroredOut, long? directoriesErroredOut, long? invalidDirectoriesProcessed, bool? isEnumerationInProgress)
         {
             StorageAccountName = storageAccountName;
             TransferType = transferType;
@@ -60,7 +59,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Transfer type of data. </summary>
         public TransferType? TransferType { get; }
         /// <summary> Data Account Type. </summary>
-        public string DataAccountType { get; }
+        public DataAccountType? DataAccountType { get; }
         /// <summary> Id of the account where the data needs to be uploaded. </summary>
         public string AccountId { get; }
         /// <summary> To indicate bytes transferred. </summary>

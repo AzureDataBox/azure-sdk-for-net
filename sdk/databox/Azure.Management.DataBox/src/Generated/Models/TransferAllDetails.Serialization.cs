@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType");
-            writer.WriteStringValue(DataAccountType);
+            writer.WriteStringValue(DataAccountType.ToString());
             if (TransferAllBlobs != null)
             {
                 writer.WritePropertyName("transferAllBlobs");
@@ -32,14 +32,14 @@ namespace Azure.Management.DataBox.Models
 
         internal static TransferAllDetails DeserializeTransferAllDetails(JsonElement element)
         {
-            string dataAccountType = default;
+            DataAccountType dataAccountType = default;
             bool? transferAllBlobs = default;
             bool? transferAllFiles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataAccountType"))
                 {
-                    dataAccountType = property.Value.GetString();
+                    dataAccountType = new DataAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("transferAllBlobs"))

@@ -38,7 +38,7 @@ namespace Azure.Management.DataBox.Models
         /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
         /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="skuNames"> Sku Names to filter for available skus. </param>
-        internal AvailableSkuRequest(TransferType transferType, string country, string location, IList<string> skuNames)
+        internal AvailableSkuRequest(TransferType transferType, string country, string location, IList<SkuName> skuNames)
         {
             TransferType = transferType;
             Country = country;
@@ -53,6 +53,6 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </summary>
         public string Location { get; }
         /// <summary> Sku Names to filter for available skus. </summary>
-        public IList<string> SkuNames { get; set; }
+        public IList<SkuName> SkuNames { get; set; }
     }
 }

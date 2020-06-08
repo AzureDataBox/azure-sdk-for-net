@@ -42,7 +42,7 @@ namespace Azure.Management.DataBox.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("copyLogDetailsType");
-            writer.WriteStringValue(CopyLogDetailsType);
+            writer.WriteStringValue(CopyLogDetailsType.ToString());
             writer.WriteEndObject();
         }
 
@@ -51,7 +51,7 @@ namespace Azure.Management.DataBox.Models
             string accountName = default;
             IList<string> copyLogLink = default;
             IList<string> copyVerboseLogLink = default;
-            string copyLogDetailsType = default;
+            ClassDiscriminator copyLogDetailsType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"))
@@ -107,7 +107,7 @@ namespace Azure.Management.DataBox.Models
                 }
                 if (property.NameEquals("copyLogDetailsType"))
                 {
-                    copyLogDetailsType = property.Value.GetString();
+                    copyLogDetailsType = new ClassDiscriminator(property.Value.GetString());
                     continue;
                 }
             }

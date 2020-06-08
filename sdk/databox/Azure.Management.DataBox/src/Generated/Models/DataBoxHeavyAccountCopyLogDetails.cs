@@ -23,12 +23,12 @@ namespace Azure.Management.DataBox.Models
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>
         /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when the LogCollectionLevel is set to verbose. </param>
-        internal DataBoxHeavyAccountCopyLogDetails(string copyLogDetailsType, string accountName, IList<string> copyLogLink, IList<string> copyVerboseLogLink) : base(copyLogDetailsType)
+        internal DataBoxHeavyAccountCopyLogDetails(ClassDiscriminator copyLogDetailsType, string accountName, IList<string> copyLogLink, IList<string> copyVerboseLogLink) : base(copyLogDetailsType)
         {
             AccountName = accountName;
             CopyLogLink = copyLogLink;
             CopyVerboseLogLink = copyVerboseLogLink;
-            CopyLogDetailsType = copyLogDetailsType ?? "DataBoxHeavy";
+            CopyLogDetailsType = copyLogDetailsType;
         }
 
         /// <summary> Account name. </summary>

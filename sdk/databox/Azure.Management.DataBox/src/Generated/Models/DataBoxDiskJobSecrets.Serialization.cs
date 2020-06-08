@@ -18,7 +18,7 @@ namespace Azure.Management.DataBox.Models
             IReadOnlyList<DiskSecret> diskSecrets = default;
             string passKey = default;
             bool? isPasskeyUserDefined = default;
-            string jobSecretsType = default;
+            ClassDiscriminator? jobSecretsType = default;
             DcAccessSecurityCode dcAccessSecurityCode = default;
             CloudError error = default;
             foreach (var property in element.EnumerateObject())
@@ -68,7 +68,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    jobSecretsType = property.Value.GetString();
+                    jobSecretsType = new ClassDiscriminator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dcAccessSecurityCode"))

@@ -20,7 +20,7 @@ namespace Azure.Management.DataBox.Models
             writer.WritePropertyName("stagingStorageAccountId");
             writer.WriteStringValue(StagingStorageAccountId);
             writer.WritePropertyName("dataAccountType");
-            writer.WriteStringValue(DataAccountType);
+            writer.WriteStringValue(DataAccountType.ToString());
             if (SharePassword != null)
             {
                 writer.WritePropertyName("sharePassword");
@@ -33,7 +33,7 @@ namespace Azure.Management.DataBox.Models
         {
             string resourceGroupId = default;
             string stagingStorageAccountId = default;
-            string dataAccountType = default;
+            DataAccountType dataAccountType = default;
             string sharePassword = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,7 +49,7 @@ namespace Azure.Management.DataBox.Models
                 }
                 if (property.NameEquals("dataAccountType"))
                 {
-                    dataAccountType = property.Value.GetString();
+                    dataAccountType = new DataAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sharePassword"))

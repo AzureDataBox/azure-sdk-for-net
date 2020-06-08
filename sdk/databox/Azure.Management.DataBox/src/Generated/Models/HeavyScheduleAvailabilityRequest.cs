@@ -28,9 +28,9 @@ namespace Azure.Management.DataBox.Models
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
-        internal HeavyScheduleAvailabilityRequest(string storageLocation, string skuName, string country) : base(storageLocation, skuName, country)
+        internal HeavyScheduleAvailabilityRequest(string storageLocation, SkuName skuName, string country) : base(storageLocation, skuName, country)
         {
-            SkuName = skuName ?? "DataBoxHeavy";
+            SkuName = skuName;
         }
     }
 }

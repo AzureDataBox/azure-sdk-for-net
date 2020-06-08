@@ -13,14 +13,14 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of JobSecrets. </summary>
         internal JobSecrets()
         {
-            JobSecretsType = null;
+            JobSecretsType = (string)null;
         }
 
         /// <summary> Initializes a new instance of JobSecrets. </summary>
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dcAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
-        internal JobSecrets(string jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, CloudError error)
+        internal JobSecrets(ClassDiscriminator? jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, CloudError error)
         {
             JobSecretsType = jobSecretsType;
             DcAccessSecurityCode = dcAccessSecurityCode;
@@ -28,7 +28,7 @@ namespace Azure.Management.DataBox.Models
         }
 
         /// <summary> Used to indicate what type of job secrets object. </summary>
-        internal string JobSecretsType { get; set; }
+        internal ClassDiscriminator? JobSecretsType { get; set; }
         /// <summary> Dc Access Security Code for Customer Managed Shipping. </summary>
         public DcAccessSecurityCode DcAccessSecurityCode { get; }
         /// <summary> Error while fetching the secrets. </summary>

@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         internal static AccountCredentialDetails DeserializeAccountCredentialDetails(JsonElement element)
         {
             string accountName = default;
-            string dataAccountType = default;
+            DataAccountType? dataAccountType = default;
             string accountConnectionString = default;
             IReadOnlyList<ShareCredentialDetails> shareCredentialDetails = default;
             foreach (var property in element.EnumerateObject())
@@ -36,7 +36,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    dataAccountType = property.Value.GetString();
+                    dataAccountType = new DataAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("accountConnectionString"))

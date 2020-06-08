@@ -17,7 +17,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType");
-            writer.WriteStringValue(DataAccountType);
+            writer.WriteStringValue(DataAccountType.ToString());
             if (BlobFilterDetails != null)
             {
                 writer.WritePropertyName("blobFilterDetails");
@@ -43,7 +43,7 @@ namespace Azure.Management.DataBox.Models
 
         internal static TransferFilterDetails DeserializeTransferFilterDetails(JsonElement element)
         {
-            string dataAccountType = default;
+            DataAccountType dataAccountType = default;
             BlobFilterDetails blobFilterDetails = default;
             AzureFileFilterDetails azureFileFilterDetails = default;
             IList<FilterFileDetails> filterFileDetails = default;
@@ -51,7 +51,7 @@ namespace Azure.Management.DataBox.Models
             {
                 if (property.NameEquals("dataAccountType"))
                 {
-                    dataAccountType = property.Value.GetString();
+                    dataAccountType = new DataAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("blobFilterDetails"))

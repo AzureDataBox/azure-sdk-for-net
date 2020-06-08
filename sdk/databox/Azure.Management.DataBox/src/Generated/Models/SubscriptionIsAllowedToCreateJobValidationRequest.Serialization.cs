@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("validationType");
-            writer.WriteStringValue(ValidationType);
+            writer.WriteStringValue(ValidationType.ToString());
             writer.WriteEndObject();
         }
     }

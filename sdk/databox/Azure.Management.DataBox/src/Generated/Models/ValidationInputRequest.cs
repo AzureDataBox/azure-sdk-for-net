@@ -18,12 +18,12 @@ namespace Azure.Management.DataBox.Models
 
         /// <summary> Initializes a new instance of ValidationInputRequest. </summary>
         /// <param name="validationType"> Identifies the type of validation request. </param>
-        internal ValidationInputRequest(string validationType)
+        internal ValidationInputRequest(ValidationInputDiscriminator validationType)
         {
             ValidationType = validationType;
         }
 
         /// <summary> Identifies the type of validation request. </summary>
-        internal string ValidationType { get; set; }
+        internal ValidationInputDiscriminator ValidationType { get; set; }
     }
 }

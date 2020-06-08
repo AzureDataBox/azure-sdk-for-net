@@ -13,9 +13,10 @@ namespace Azure.Management.DataBox.Models
     public partial class TransferFilterDetails
     {
         /// <summary> Initializes a new instance of TransferFilterDetails. </summary>
-        public TransferFilterDetails()
+        /// <param name="dataAccountType"> Type of the account of data. </param>
+        public TransferFilterDetails(DataAccountType dataAccountType)
         {
-            DataAccountType = "StorageAccount";
+            DataAccountType = dataAccountType;
         }
 
         /// <summary> Initializes a new instance of TransferFilterDetails. </summary>
@@ -23,7 +24,7 @@ namespace Azure.Management.DataBox.Models
         /// <param name="blobFilterDetails"> Filter details to transfer blobs. </param>
         /// <param name="azureFileFilterDetails"> Filter details to transfer Azure files. </param>
         /// <param name="filterFileDetails"> Details of the filter files to be used for data transfer. </param>
-        internal TransferFilterDetails(string dataAccountType, BlobFilterDetails blobFilterDetails, AzureFileFilterDetails azureFileFilterDetails, IList<FilterFileDetails> filterFileDetails)
+        internal TransferFilterDetails(DataAccountType dataAccountType, BlobFilterDetails blobFilterDetails, AzureFileFilterDetails azureFileFilterDetails, IList<FilterFileDetails> filterFileDetails)
         {
             DataAccountType = dataAccountType;
             BlobFilterDetails = blobFilterDetails;
@@ -32,7 +33,7 @@ namespace Azure.Management.DataBox.Models
         }
 
         /// <summary> Type of the account of data. </summary>
-        public string DataAccountType { get; set; }
+        public DataAccountType DataAccountType { get; set; }
         /// <summary> Filter details to transfer blobs. </summary>
         public BlobFilterDetails BlobFilterDetails { get; set; }
         /// <summary> Filter details to transfer Azure files. </summary>

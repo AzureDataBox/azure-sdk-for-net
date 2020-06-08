@@ -28,7 +28,7 @@ namespace Azure.Management.DataBox.Models
             if (DataAccountType != null)
             {
                 writer.WritePropertyName("dataAccountType");
-                writer.WriteStringValue(DataAccountType);
+                writer.WriteStringValue(DataAccountType.Value.ToString());
             }
             if (AccountId != null)
             {
@@ -97,7 +97,7 @@ namespace Azure.Management.DataBox.Models
         {
             string storageAccountName = default;
             TransferType? transferType = default;
-            string dataAccountType = default;
+            DataAccountType? dataAccountType = default;
             string accountId = default;
             long? bytesProcessed = default;
             long? totalBytesToProcess = default;
@@ -136,7 +136,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    dataAccountType = property.Value.GetString();
+                    dataAccountType = new DataAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("accountId"))

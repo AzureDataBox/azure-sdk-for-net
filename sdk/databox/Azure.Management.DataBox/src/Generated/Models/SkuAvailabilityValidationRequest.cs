@@ -13,10 +13,11 @@ namespace Azure.Management.DataBox.Models
     public partial class SkuAvailabilityValidationRequest : ValidationInputRequest
     {
         /// <summary> Initializes a new instance of SkuAvailabilityValidationRequest. </summary>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="transferType"> Type of the transfer. </param>
         /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
         /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
-        public SkuAvailabilityValidationRequest(TransferType transferType, string country, string location)
+        public SkuAvailabilityValidationRequest(SkuName deviceType, TransferType transferType, string country, string location)
         {
             if (country == null)
             {
@@ -27,7 +28,7 @@ namespace Azure.Management.DataBox.Models
                 throw new ArgumentNullException(nameof(location));
             }
 
-            DeviceType = "DataBox";
+            DeviceType = deviceType;
             TransferType = transferType;
             Country = country;
             Location = location;
@@ -40,17 +41,17 @@ namespace Azure.Management.DataBox.Models
         /// <param name="transferType"> Type of the transfer. </param>
         /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
         /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
-        internal SkuAvailabilityValidationRequest(string validationType, string deviceType, TransferType transferType, string country, string location) : base(validationType)
+        internal SkuAvailabilityValidationRequest(ValidationInputDiscriminator validationType, SkuName deviceType, TransferType transferType, string country, string location) : base(validationType)
         {
             DeviceType = deviceType;
             TransferType = transferType;
             Country = country;
             Location = location;
-            ValidationType = validationType ?? "ValidateSkuAvailability";
+            ValidationType = validationType;
         }
 
         /// <summary> Device type to be used for the job. </summary>
-        public string DeviceType { get; }
+        public SkuName DeviceType { get; }
         /// <summary> Type of the transfer. </summary>
         public TransferType TransferType { get; }
         /// <summary> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </summary>

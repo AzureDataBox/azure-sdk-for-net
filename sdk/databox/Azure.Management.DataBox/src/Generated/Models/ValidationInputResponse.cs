@@ -19,14 +19,14 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of ValidationInputResponse. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
-        internal ValidationInputResponse(string validationType, CloudError error)
+        internal ValidationInputResponse(ValidationType validationType, CloudError error)
         {
             ValidationType = validationType;
             Error = error;
         }
 
         /// <summary> Identifies the type of validation response. </summary>
-        internal string ValidationType { get; set; }
+        internal ValidationType ValidationType { get; set; }
         /// <summary> Error code and message of validation response. </summary>
         public CloudError Error { get; }
     }

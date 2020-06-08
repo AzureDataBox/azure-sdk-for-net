@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("copyLogDetailsType");
-            writer.WriteStringValue(CopyLogDetailsType);
+            writer.WriteStringValue(CopyLogDetailsType.ToString());
             writer.WriteEndObject();
         }
 
@@ -31,12 +31,12 @@ namespace Azure.Management.DataBox.Models
                     case "DataBoxHeavy": return DataBoxHeavyAccountCopyLogDetails.DeserializeDataBoxHeavyAccountCopyLogDetails(element);
                 }
             }
-            string copyLogDetailsType = default;
+            ClassDiscriminator copyLogDetailsType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("copyLogDetailsType"))
                 {
-                    copyLogDetailsType = property.Value.GetString();
+                    copyLogDetailsType = new ClassDiscriminator(property.Value.GetString());
                     continue;
                 }
             }

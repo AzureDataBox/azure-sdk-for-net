@@ -15,7 +15,7 @@ namespace Azure.Management.DataBox.Models
     {
         internal static AddressValidationOutput DeserializeAddressValidationOutput(JsonElement element)
         {
-            string validationType = default;
+            ValidationType? validationType = default;
             CloudError error = default;
             AddressValidationStatus? validationStatus = default;
             IReadOnlyList<ShippingAddress> alternateAddresses = default;
@@ -31,7 +31,7 @@ namespace Azure.Management.DataBox.Models
                             {
                                 continue;
                             }
-                            validationType = property0.Value.GetString();
+                            validationType = new ValidationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("error"))

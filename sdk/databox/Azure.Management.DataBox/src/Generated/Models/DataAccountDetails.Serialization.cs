@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType");
-            writer.WriteStringValue(DataAccountType);
+            writer.WriteStringValue(DataAccountType.ToString());
             if (SharePassword != null)
             {
                 writer.WritePropertyName("sharePassword");
@@ -35,13 +35,13 @@ namespace Azure.Management.DataBox.Models
                     case "StorageAccount": return StorageAccountDetails.DeserializeStorageAccountDetails(element);
                 }
             }
-            string dataAccountType = default;
+            DataAccountType dataAccountType = default;
             string sharePassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataAccountType"))
                 {
-                    dataAccountType = property.Value.GetString();
+                    dataAccountType = new DataAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sharePassword"))

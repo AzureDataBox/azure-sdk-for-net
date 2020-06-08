@@ -21,9 +21,9 @@ namespace Azure.Management.DataBox.Models
                 writer.WriteObjectValue(Preference);
             }
             writer.WritePropertyName("deviceType");
-            writer.WriteStringValue(DeviceType);
+            writer.WriteStringValue(DeviceType.ToString());
             writer.WritePropertyName("validationType");
-            writer.WriteStringValue(ValidationType);
+            writer.WriteStringValue(ValidationType.ToString());
             writer.WriteEndObject();
         }
     }

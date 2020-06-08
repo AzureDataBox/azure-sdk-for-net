@@ -18,11 +18,11 @@ namespace Azure.Management.DataBox.Models
         }
 
         /// <summary> Initializes a new instance of CloudError. </summary>
-        /// <param name="code"> Cloud error description. </param>
-        /// <param name="message"> Cloud error message. </param>
-        /// <param name="target"> Cloud error target. </param>
-        /// <param name="details"> Cloud error details. </param>
-        /// <param name="additionalInfo"> Cloud error additional info. </param>
+        /// <param name="code"> Cloud Error code. </param>
+        /// <param name="message"> Cloud Error message. </param>
+        /// <param name="target"> Cloud Error target. </param>
+        /// <param name="details"> Cloud Error details. </param>
+        /// <param name="additionalInfo"> Cloud Error additional info. </param>
         internal CloudError(string code, string message, string target, IList<CloudError> details, IList<AdditionalErrorInfo> additionalInfo)
         {
             Code = code;
@@ -32,15 +32,15 @@ namespace Azure.Management.DataBox.Models
             AdditionalInfo = additionalInfo;
         }
 
-        /// <summary> Cloud error description. </summary>
+        /// <summary> Cloud Error code. </summary>
         public string Code { get; set; }
-        /// <summary> Cloud error message. </summary>
+        /// <summary> Cloud Error message. </summary>
         public string Message { get; set; }
-        /// <summary> Cloud error target. </summary>
+        /// <summary> Cloud Error target. </summary>
         public string Target { get; set; }
-        /// <summary> Cloud error details. </summary>
+        /// <summary> Cloud Error details. </summary>
         public IList<CloudError> Details { get; }
-        /// <summary> Cloud error additional info. </summary>
+        /// <summary> Cloud Error additional info. </summary>
         public IList<AdditionalErrorInfo> AdditionalInfo { get; }
     }
 }

@@ -20,10 +20,10 @@ namespace Azure.Management.DataBox.Models
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Validation status of requested data center and transport. </param>
-        internal PreferencesValidationResponseProperties(string validationType, CloudError error, ValidationStatus? status) : base(validationType, error)
+        internal PreferencesValidationResponseProperties(ValidationType validationType, CloudError error, ValidationStatus? status) : base(validationType, error)
         {
             Status = status;
-            ValidationType = validationType ?? "ValidatePreferences";
+            ValidationType = validationType;
         }
 
         /// <summary> Validation status of requested data center and transport. </summary>

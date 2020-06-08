@@ -23,7 +23,7 @@ namespace Azure.Management.DataBox.Models
                     case "DataBoxHeavy": return DataBoxHeavyJobSecrets.DeserializeDataBoxHeavyJobSecrets(element);
                 }
             }
-            string jobSecretsType = default;
+            ClassDiscriminator? jobSecretsType = default;
             DcAccessSecurityCode dcAccessSecurityCode = default;
             CloudError error = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    jobSecretsType = property.Value.GetString();
+                    jobSecretsType = new ClassDiscriminator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dcAccessSecurityCode"))

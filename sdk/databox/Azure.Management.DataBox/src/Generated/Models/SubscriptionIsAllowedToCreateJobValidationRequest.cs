@@ -18,9 +18,9 @@ namespace Azure.Management.DataBox.Models
 
         /// <summary> Initializes a new instance of SubscriptionIsAllowedToCreateJobValidationRequest. </summary>
         /// <param name="validationType"> Identifies the type of validation request. </param>
-        internal SubscriptionIsAllowedToCreateJobValidationRequest(string validationType) : base(validationType)
+        internal SubscriptionIsAllowedToCreateJobValidationRequest(ValidationInputDiscriminator validationType) : base(validationType)
         {
-            ValidationType = validationType ?? "ValidateSubscriptionIsAllowedToCreateJob";
+            ValidationType = validationType;
         }
     }
 }

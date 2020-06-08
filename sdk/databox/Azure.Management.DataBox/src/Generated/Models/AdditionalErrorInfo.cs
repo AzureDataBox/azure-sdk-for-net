@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         }
 
         /// <summary> Initializes a new instance of AdditionalErrorInfo. </summary>
-        /// <param name="type"> Error type. </param>
+        /// <param name="type"> Additional Error Info type. </param>
         /// <param name="info"> Any object. </param>
         internal AdditionalErrorInfo(string type, object info)
         {
@@ -24,7 +24,7 @@ namespace Azure.Management.DataBox.Models
             Info = info;
         }
 
-        /// <summary> Error type. </summary>
+        /// <summary> Additional Error Info type. </summary>
         public string Type { get; set; }
         /// <summary> Any object. </summary>
         public object Info { get; set; }

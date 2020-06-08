@@ -21,12 +21,12 @@ namespace Azure.Management.DataBox.Models
         /// <param name="diskSerialNumber"> Disk Serial Number. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
-        internal DataBoxDiskCopyLogDetails(string copyLogDetailsType, string diskSerialNumber, string errorLogLink, string verboseLogLink) : base(copyLogDetailsType)
+        internal DataBoxDiskCopyLogDetails(ClassDiscriminator copyLogDetailsType, string diskSerialNumber, string errorLogLink, string verboseLogLink) : base(copyLogDetailsType)
         {
             DiskSerialNumber = diskSerialNumber;
             ErrorLogLink = errorLogLink;
             VerboseLogLink = verboseLogLink;
-            CopyLogDetailsType = copyLogDetailsType ?? "DataBoxDisk";
+            CopyLogDetailsType = copyLogDetailsType;
         }
 
         /// <summary> Disk Serial Number. </summary>

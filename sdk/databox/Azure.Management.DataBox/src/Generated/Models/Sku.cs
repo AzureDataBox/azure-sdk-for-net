@@ -11,16 +11,17 @@ namespace Azure.Management.DataBox.Models
     public partial class Sku
     {
         /// <summary> Initializes a new instance of Sku. </summary>
-        public Sku()
+        /// <param name="name"> The sku name. </param>
+        public Sku(SkuName name)
         {
-            Name = "DataBox";
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of Sku. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="displayName"> The display name of the sku. </param>
         /// <param name="family"> The sku family. </param>
-        internal Sku(string name, string displayName, string family)
+        internal Sku(SkuName name, string displayName, string family)
         {
             Name = name;
             DisplayName = displayName;
@@ -28,7 +29,7 @@ namespace Azure.Management.DataBox.Models
         }
 
         /// <summary> The sku name. </summary>
-        public string Name { get; set; }
+        public SkuName Name { get; set; }
         /// <summary> The display name of the sku. </summary>
         public string DisplayName { get; set; }
         /// <summary> The sku family. </summary>

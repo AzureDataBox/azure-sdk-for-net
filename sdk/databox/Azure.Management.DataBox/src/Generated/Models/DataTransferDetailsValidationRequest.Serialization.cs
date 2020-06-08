@@ -36,11 +36,11 @@ namespace Azure.Management.DataBox.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("deviceType");
-            writer.WriteStringValue(DeviceType);
+            writer.WriteStringValue(DeviceType.ToString());
             writer.WritePropertyName("transferType");
             writer.WriteStringValue(TransferType.ToSerialString());
             writer.WritePropertyName("validationType");
-            writer.WriteStringValue(ValidationType);
+            writer.WriteStringValue(ValidationType.ToString());
             writer.WriteEndObject();
         }
     }

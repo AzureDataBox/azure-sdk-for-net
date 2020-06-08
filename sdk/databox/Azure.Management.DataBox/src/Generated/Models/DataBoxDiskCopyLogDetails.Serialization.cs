@@ -31,7 +31,7 @@ namespace Azure.Management.DataBox.Models
                 writer.WriteStringValue(VerboseLogLink);
             }
             writer.WritePropertyName("copyLogDetailsType");
-            writer.WriteStringValue(CopyLogDetailsType);
+            writer.WriteStringValue(CopyLogDetailsType.ToString());
             writer.WriteEndObject();
         }
 
@@ -40,7 +40,7 @@ namespace Azure.Management.DataBox.Models
             string diskSerialNumber = default;
             string errorLogLink = default;
             string verboseLogLink = default;
-            string copyLogDetailsType = default;
+            ClassDiscriminator copyLogDetailsType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskSerialNumber"))
@@ -72,7 +72,7 @@ namespace Azure.Management.DataBox.Models
                 }
                 if (property.NameEquals("copyLogDetailsType"))
                 {
-                    copyLogDetailsType = property.Value.GetString();
+                    copyLogDetailsType = new ClassDiscriminator(property.Value.GetString());
                     continue;
                 }
             }

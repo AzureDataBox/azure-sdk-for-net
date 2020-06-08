@@ -25,12 +25,12 @@ namespace Azure.Management.DataBox.Models
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
         /// <param name="passKey"> PassKey for the disk Job. </param>
         /// <param name="isPasskeyUserDefined"> Whether passkey was provided by user. </param>
-        internal DataBoxDiskJobSecrets(string jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, CloudError error, IReadOnlyList<DiskSecret> diskSecrets, string passKey, bool? isPasskeyUserDefined) : base(jobSecretsType, dcAccessSecurityCode, error)
+        internal DataBoxDiskJobSecrets(ClassDiscriminator? jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, CloudError error, IReadOnlyList<DiskSecret> diskSecrets, string passKey, bool? isPasskeyUserDefined) : base(jobSecretsType, dcAccessSecurityCode, error)
         {
             DiskSecrets = diskSecrets;
             PassKey = passKey;
             IsPasskeyUserDefined = isPasskeyUserDefined;
-            JobSecretsType = jobSecretsType ?? "DataBoxDisk";
+            JobSecretsType = jobSecretsType;
         }
 
         /// <summary> Contains the list of secrets object for that device. </summary>

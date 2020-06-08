@@ -23,10 +23,10 @@ namespace Azure.Management.DataBox.Models
         /// <param name="dcAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="cabinetPodSecrets"> Contains the list of secret objects for a databox heavy job. </param>
-        internal DataBoxHeavyJobSecrets(string jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, CloudError error, IReadOnlyList<DataBoxHeavySecret> cabinetPodSecrets) : base(jobSecretsType, dcAccessSecurityCode, error)
+        internal DataBoxHeavyJobSecrets(ClassDiscriminator? jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, CloudError error, IReadOnlyList<DataBoxHeavySecret> cabinetPodSecrets) : base(jobSecretsType, dcAccessSecurityCode, error)
         {
             CabinetPodSecrets = cabinetPodSecrets;
-            JobSecretsType = jobSecretsType ?? "DataBoxHeavy";
+            JobSecretsType = jobSecretsType;
         }
 
         /// <summary> Contains the list of secret objects for a databox heavy job. </summary>

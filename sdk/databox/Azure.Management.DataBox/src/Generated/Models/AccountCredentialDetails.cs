@@ -15,7 +15,6 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of AccountCredentialDetails. </summary>
         internal AccountCredentialDetails()
         {
-            DataAccountType = "StorageAccount";
         }
 
         /// <summary> Initializes a new instance of AccountCredentialDetails. </summary>
@@ -23,7 +22,7 @@ namespace Azure.Management.DataBox.Models
         /// <param name="dataAccountType"> Type of the account. </param>
         /// <param name="accountConnectionString"> Connection string of the account endpoint to use the account as a storage endpoint on the device. </param>
         /// <param name="shareCredentialDetails"> Per share level unencrypted access credentials. </param>
-        internal AccountCredentialDetails(string accountName, string dataAccountType, string accountConnectionString, IReadOnlyList<ShareCredentialDetails> shareCredentialDetails)
+        internal AccountCredentialDetails(string accountName, DataAccountType? dataAccountType, string accountConnectionString, IReadOnlyList<ShareCredentialDetails> shareCredentialDetails)
         {
             AccountName = accountName;
             DataAccountType = dataAccountType;
@@ -34,7 +33,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Name of the account. </summary>
         public string AccountName { get; }
         /// <summary> Type of the account. </summary>
-        public string DataAccountType { get; }
+        public DataAccountType? DataAccountType { get; }
         /// <summary> Connection string of the account endpoint to use the account as a storage endpoint on the device. </summary>
         public string AccountConnectionString { get; }
         /// <summary> Per share level unencrypted access credentials. </summary>

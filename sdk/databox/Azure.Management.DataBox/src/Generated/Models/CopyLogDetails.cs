@@ -18,12 +18,12 @@ namespace Azure.Management.DataBox.Models
 
         /// <summary> Initializes a new instance of CopyLogDetails. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
-        internal CopyLogDetails(string copyLogDetailsType)
+        internal CopyLogDetails(ClassDiscriminator copyLogDetailsType)
         {
             CopyLogDetailsType = copyLogDetailsType;
         }
 
         /// <summary> Indicates the type of job details. </summary>
-        internal string CopyLogDetailsType { get; set; }
+        internal ClassDiscriminator CopyLogDetailsType { get; set; }
     }
 }

@@ -20,10 +20,10 @@ namespace Azure.Management.DataBox.Models
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Create order limit validation status. </param>
-        internal CreateOrderLimitForSubscriptionValidationResponseProperties(string validationType, CloudError error, ValidationStatus? status) : base(validationType, error)
+        internal CreateOrderLimitForSubscriptionValidationResponseProperties(ValidationType validationType, CloudError error, ValidationStatus? status) : base(validationType, error)
         {
             Status = status;
-            ValidationType = validationType ?? "ValidateCreateOrderLimit";
+            ValidationType = validationType;
         }
 
         /// <summary> Create order limit validation status. </summary>

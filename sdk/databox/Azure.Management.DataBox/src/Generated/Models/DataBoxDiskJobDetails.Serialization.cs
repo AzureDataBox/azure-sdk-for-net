@@ -101,7 +101,7 @@ namespace Azure.Management.DataBox.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("jobDetailsType");
-            writer.WriteStringValue(JobDetailsType);
+            writer.WriteStringValue(JobDetailsType.ToString());
             if (Preferences != null)
             {
                 writer.WritePropertyName("preferences");
@@ -153,7 +153,7 @@ namespace Azure.Management.DataBox.Models
             PackageShippingDetails returnPackage = default;
             IList<DataImportDetails> dataImportDetails = default;
             IList<DataExportDetails> dataExportDetails = default;
-            string jobDetailsType = default;
+            ClassDiscriminator jobDetailsType = default;
             Preferences preferences = default;
             IList<CopyLogDetails> copyLogDetails = default;
             string reverseShipmentLabelSasKey = default;
@@ -317,7 +317,7 @@ namespace Azure.Management.DataBox.Models
                 }
                 if (property.NameEquals("jobDetailsType"))
                 {
-                    jobDetailsType = property.Value.GetString();
+                    jobDetailsType = new ClassDiscriminator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("preferences"))

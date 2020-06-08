@@ -23,11 +23,11 @@ namespace Azure.Management.DataBox.Models
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="validationStatus"> The address validation status. </param>
         /// <param name="alternateAddresses"> List of alternate addresses. </param>
-        internal AddressValidationProperties(string validationType, CloudError error, AddressValidationStatus? validationStatus, IReadOnlyList<ShippingAddress> alternateAddresses) : base(validationType, error)
+        internal AddressValidationProperties(ValidationType validationType, CloudError error, AddressValidationStatus? validationStatus, IReadOnlyList<ShippingAddress> alternateAddresses) : base(validationType, error)
         {
             ValidationStatus = validationStatus;
             AlternateAddresses = alternateAddresses;
-            ValidationType = validationType ?? "ValidateAddress";
+            ValidationType = validationType;
         }
 
         /// <summary> The address validation status. </summary>

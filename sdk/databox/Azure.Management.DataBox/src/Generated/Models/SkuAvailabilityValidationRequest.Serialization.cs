@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("deviceType");
-            writer.WriteStringValue(DeviceType);
+            writer.WriteStringValue(DeviceType.ToString());
             writer.WritePropertyName("transferType");
             writer.WriteStringValue(TransferType.ToSerialString());
             writer.WritePropertyName("country");
@@ -24,7 +24,7 @@ namespace Azure.Management.DataBox.Models
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("validationType");
-            writer.WriteStringValue(ValidationType);
+            writer.WriteStringValue(ValidationType.ToString());
             writer.WriteEndObject();
         }
     }

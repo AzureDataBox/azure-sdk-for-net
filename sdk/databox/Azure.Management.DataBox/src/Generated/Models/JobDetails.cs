@@ -41,7 +41,7 @@ namespace Azure.Management.DataBox.Models
         /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
         /// <param name="keyEncryptionKey"> Details about which key encryption type is being used. </param>
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transfered in this job, in tera bytes. </param>
-        internal JobDetails(IList<JobStages> jobStages, ContactDetails contactDetails, ShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, string jobDetailsType, Preferences preferences, IList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, KeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes)
+        internal JobDetails(IList<JobStages> jobStages, ContactDetails contactDetails, ShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, ClassDiscriminator jobDetailsType, Preferences preferences, IList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, KeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes)
         {
             JobStages = jobStages;
             ContactDetails = contactDetails;
@@ -74,7 +74,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Details of the data to be exported from azure. </summary>
         public IList<DataExportDetails> DataExportDetails { get; set; }
         /// <summary> Indicates the type of job details. </summary>
-        internal string JobDetailsType { get; set; }
+        internal ClassDiscriminator JobDetailsType { get; set; }
         /// <summary> Preferences for the order. </summary>
         public Preferences Preferences { get; set; }
         /// <summary> List of copy log details. </summary>

@@ -14,7 +14,8 @@ namespace Azure.Management.DataBox.Models
     {
         /// <summary> Initializes a new instance of ValidateAddress. </summary>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
-        public ValidateAddress(ShippingAddress shippingAddress)
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        public ValidateAddress(ShippingAddress shippingAddress, SkuName deviceType)
         {
             if (shippingAddress == null)
             {
@@ -22,7 +23,7 @@ namespace Azure.Management.DataBox.Models
             }
 
             ShippingAddress = shippingAddress;
-            DeviceType = "DataBox";
+            DeviceType = deviceType;
             ValidationType = "ValidateAddress";
         }
 
@@ -31,18 +32,18 @@ namespace Azure.Management.DataBox.Models
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
-        internal ValidateAddress(string validationType, ShippingAddress shippingAddress, string deviceType, TransportPreferences transportPreferences) : base(validationType)
+        internal ValidateAddress(ValidationInputDiscriminator validationType, ShippingAddress shippingAddress, SkuName deviceType, TransportPreferences transportPreferences) : base(validationType)
         {
             ShippingAddress = shippingAddress;
             DeviceType = deviceType;
             TransportPreferences = transportPreferences;
-            ValidationType = validationType ?? "ValidateAddress";
+            ValidationType = validationType;
         }
 
         /// <summary> Shipping address of the customer. </summary>
         public ShippingAddress ShippingAddress { get; }
         /// <summary> Device type to be used for the job. </summary>
-        public string DeviceType { get; }
+        public SkuName DeviceType { get; }
         /// <summary> Preferences related to the shipment logistics of the sku. </summary>
         public TransportPreferences TransportPreferences { get; set; }
     }

@@ -29,7 +29,7 @@ namespace Azure.Management.DataBox.Models
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
-        internal ScheduleAvailabilityRequest(string storageLocation, string skuName, string country)
+        internal ScheduleAvailabilityRequest(string storageLocation, SkuName skuName, string country)
         {
             StorageLocation = storageLocation;
             SkuName = skuName;
@@ -39,7 +39,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </summary>
         public string StorageLocation { get; }
         /// <summary> Sku Name for which the order is to be scheduled. </summary>
-        internal string SkuName { get; set; }
+        internal SkuName SkuName { get; set; }
         /// <summary> Country in which storage location should be supported. </summary>
         public string Country { get; set; }
     }

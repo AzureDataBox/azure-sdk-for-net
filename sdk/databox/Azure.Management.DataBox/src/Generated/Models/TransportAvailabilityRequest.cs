@@ -13,17 +13,16 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of TransportAvailabilityRequest. </summary>
         public TransportAvailabilityRequest()
         {
-            SkuName = "DataBox";
         }
 
         /// <summary> Initializes a new instance of TransportAvailabilityRequest. </summary>
         /// <param name="skuName"> Type of the device. </param>
-        internal TransportAvailabilityRequest(string skuName)
+        internal TransportAvailabilityRequest(SkuName? skuName)
         {
             SkuName = skuName;
         }
 
         /// <summary> Type of the device. </summary>
-        public string SkuName { get; set; }
+        public SkuName? SkuName { get; set; }
     }
 }

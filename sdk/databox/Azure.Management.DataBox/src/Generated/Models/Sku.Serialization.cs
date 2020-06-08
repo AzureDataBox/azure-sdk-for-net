@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
+            writer.WriteStringValue(Name.ToString());
             if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName");
@@ -32,14 +32,14 @@ namespace Azure.Management.DataBox.Models
 
         internal static Sku DeserializeSku(JsonElement element)
         {
-            string name = default;
+            SkuName name = default;
             string displayName = default;
             string family = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    name = property.Value.GetString();
+                    name = new SkuName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"))

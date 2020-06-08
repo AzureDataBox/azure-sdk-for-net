@@ -27,7 +27,7 @@ namespace Azure.Management.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in SkuNames)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }

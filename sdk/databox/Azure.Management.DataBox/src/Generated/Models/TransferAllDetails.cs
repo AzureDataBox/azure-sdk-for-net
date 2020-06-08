@@ -11,16 +11,17 @@ namespace Azure.Management.DataBox.Models
     public partial class TransferAllDetails
     {
         /// <summary> Initializes a new instance of TransferAllDetails. </summary>
-        public TransferAllDetails()
+        /// <param name="dataAccountType"> Type of the account of data. </param>
+        public TransferAllDetails(DataAccountType dataAccountType)
         {
-            DataAccountType = "StorageAccount";
+            DataAccountType = dataAccountType;
         }
 
         /// <summary> Initializes a new instance of TransferAllDetails. </summary>
         /// <param name="dataAccountType"> Type of the account of data. </param>
         /// <param name="transferAllBlobs"> To indicate if all Azure blobs have to be transferred. </param>
         /// <param name="transferAllFiles"> To indicate if all Azure Files have to be transferred. </param>
-        internal TransferAllDetails(string dataAccountType, bool? transferAllBlobs, bool? transferAllFiles)
+        internal TransferAllDetails(DataAccountType dataAccountType, bool? transferAllBlobs, bool? transferAllFiles)
         {
             DataAccountType = dataAccountType;
             TransferAllBlobs = transferAllBlobs;
@@ -28,7 +29,7 @@ namespace Azure.Management.DataBox.Models
         }
 
         /// <summary> Type of the account of data. </summary>
-        public string DataAccountType { get; set; }
+        public DataAccountType DataAccountType { get; set; }
         /// <summary> To indicate if all Azure blobs have to be transferred. </summary>
         public bool? TransferAllBlobs { get; set; }
         /// <summary> To indicate if all Azure Files have to be transferred. </summary>

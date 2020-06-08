@@ -18,7 +18,7 @@ namespace Azure.Management.DataBox.Models
             writer.WritePropertyName("storageLocation");
             writer.WriteStringValue(StorageLocation);
             writer.WritePropertyName("skuName");
-            writer.WriteStringValue(SkuName);
+            writer.WriteStringValue(SkuName.ToString());
             if (Country != null)
             {
                 writer.WritePropertyName("country");

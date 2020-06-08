@@ -11,22 +11,23 @@ namespace Azure.Management.DataBox.Models
     public partial class CreateOrderLimitForSubscriptionValidationRequest : ValidationInputRequest
     {
         /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationRequest. </summary>
-        public CreateOrderLimitForSubscriptionValidationRequest()
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        public CreateOrderLimitForSubscriptionValidationRequest(SkuName deviceType)
         {
-            DeviceType = "DataBox";
+            DeviceType = deviceType;
             ValidationType = "ValidateCreateOrderLimit";
         }
 
         /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationRequest. </summary>
         /// <param name="validationType"> Identifies the type of validation request. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
-        internal CreateOrderLimitForSubscriptionValidationRequest(string validationType, string deviceType) : base(validationType)
+        internal CreateOrderLimitForSubscriptionValidationRequest(ValidationInputDiscriminator validationType, SkuName deviceType) : base(validationType)
         {
             DeviceType = deviceType;
-            ValidationType = validationType ?? "ValidateCreateOrderLimit";
+            ValidationType = validationType;
         }
 
         /// <summary> Device type to be used for the job. </summary>
-        public string DeviceType { get; }
+        public SkuName DeviceType { get; }
     }
 }

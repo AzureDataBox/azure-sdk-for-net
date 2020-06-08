@@ -31,10 +31,10 @@ namespace Azure.Management.DataBox.Models
         /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in tera bytes. </param>
-        internal DiskScheduleAvailabilityRequest(string storageLocation, string skuName, string country, int expectedDataSizeInTerabytes) : base(storageLocation, skuName, country)
+        internal DiskScheduleAvailabilityRequest(string storageLocation, SkuName skuName, string country, int expectedDataSizeInTerabytes) : base(storageLocation, skuName, country)
         {
             ExpectedDataSizeInTerabytes = expectedDataSizeInTerabytes;
-            SkuName = skuName ?? "DataBoxDisk";
+            SkuName = skuName;
         }
 
         /// <summary> The expected size of the data, which needs to be transferred in this job, in tera bytes. </summary>
