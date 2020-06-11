@@ -126,7 +126,7 @@ namespace Azure.Management.DataBox.Models
                             {
                                 continue;
                             }
-                            disabledReason = property0.Value.GetString().ToSkuDisabledReason();
+                            disabledReason = new SkuDisabledReason(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("disabledReasonMessage"))

@@ -5,16 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> The address validation status. </summary>
-    public enum AddressValidationStatus
+    public readonly partial struct AddressValidationStatus : IEquatable<AddressValidationStatus>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="AddressValidationStatus"/> values are the same. </summary>
+        public AddressValidationStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string ValidValue = "Valid";
+        private const string InvalidValue = "Invalid";
+        private const string AmbiguousValue = "Ambiguous";
+
         /// <summary> Address provided is valid. </summary>
-        Valid,
+        public static AddressValidationStatus Valid { get; } = new AddressValidationStatus(ValidValue);
         /// <summary> Address provided is invalid or not supported. </summary>
-        Invalid,
+        public static AddressValidationStatus Invalid { get; } = new AddressValidationStatus(InvalidValue);
         /// <summary> Address provided is ambiguous, please choose one of the alternate addresses returned. </summary>
-        Ambiguous
+        public static AddressValidationStatus Ambiguous { get; } = new AddressValidationStatus(AmbiguousValue);
+        /// <summary> Determines if two <see cref="AddressValidationStatus"/> values are the same. </summary>
+        public static bool operator ==(AddressValidationStatus left, AddressValidationStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AddressValidationStatus"/> values are not the same. </summary>
+        public static bool operator !=(AddressValidationStatus left, AddressValidationStatus right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="AddressValidationStatus"/>. </summary>
+        public static implicit operator AddressValidationStatus(string value) => new AddressValidationStatus(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is AddressValidationStatus other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(AddressValidationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

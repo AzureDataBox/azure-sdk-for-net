@@ -18,7 +18,7 @@ namespace Azure.Management.DataBox.Models
             writer.WritePropertyName("deviceType");
             writer.WriteStringValue(DeviceType.ToString());
             writer.WritePropertyName("transferType");
-            writer.WriteStringValue(TransferType.ToSerialString());
+            writer.WriteStringValue(TransferType.ToString());
             writer.WritePropertyName("country");
             writer.WriteStringValue(Country);
             writer.WritePropertyName("location");

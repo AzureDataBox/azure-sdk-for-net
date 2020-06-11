@@ -29,7 +29,7 @@ namespace Azure.Management.DataBox.Models
                             {
                                 continue;
                             }
-                            status = property0.Value.GetString().ToOverallValidationStatus();
+                            status = new OverallValidationStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("individualResponseDetails"))

@@ -15,7 +15,7 @@ namespace Azure.Management.DataBox.Models
         internal static PreferencesValidationResponseProperties DeserializePreferencesValidationResponseProperties(JsonElement element)
         {
             ValidationStatus? status = default;
-            ValidationType validationType = default;
+            ValidationInputDiscriminator validationType = default;
             CloudError error = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,12 +25,12 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    status = property.Value.GetString().ToValidationStatus();
+                    status = new ValidationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("validationType"))
                 {
-                    validationType = new ValidationType(property.Value.GetString());
+                    validationType = new ValidationInputDiscriminator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"))

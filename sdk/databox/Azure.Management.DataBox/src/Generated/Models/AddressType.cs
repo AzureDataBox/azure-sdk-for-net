@@ -5,16 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Type of address. </summary>
-    public enum AddressType
+    public readonly partial struct AddressType : IEquatable<AddressType>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="AddressType"/> values are the same. </summary>
+        public AddressType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string NoneValue = "None";
+        private const string ResidentialValue = "Residential";
+        private const string CommercialValue = "Commercial";
+
         /// <summary> Address type not known. </summary>
-        None,
+        public static AddressType None { get; } = new AddressType(NoneValue);
         /// <summary> Residential Address. </summary>
-        Residential,
+        public static AddressType Residential { get; } = new AddressType(ResidentialValue);
         /// <summary> Commercial Address. </summary>
-        Commercial
+        public static AddressType Commercial { get; } = new AddressType(CommercialValue);
+        /// <summary> Determines if two <see cref="AddressType"/> values are the same. </summary>
+        public static bool operator ==(AddressType left, AddressType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AddressType"/> values are not the same. </summary>
+        public static bool operator !=(AddressType left, AddressType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="AddressType"/>. </summary>
+        public static implicit operator AddressType(string value) => new AddressType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is AddressType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(AddressType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

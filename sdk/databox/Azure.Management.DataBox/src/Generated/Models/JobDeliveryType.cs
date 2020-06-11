@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Delivery type of Job. </summary>
-    public enum JobDeliveryType
+    public readonly partial struct JobDeliveryType : IEquatable<JobDeliveryType>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="JobDeliveryType"/> values are the same. </summary>
+        public JobDeliveryType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string NonScheduledValue = "NonScheduled";
+        private const string ScheduledValue = "Scheduled";
+
         /// <summary> Non Scheduled job. </summary>
-        NonScheduled,
+        public static JobDeliveryType NonScheduled { get; } = new JobDeliveryType(NonScheduledValue);
         /// <summary> Scheduled job. </summary>
-        Scheduled
+        public static JobDeliveryType Scheduled { get; } = new JobDeliveryType(ScheduledValue);
+        /// <summary> Determines if two <see cref="JobDeliveryType"/> values are the same. </summary>
+        public static bool operator ==(JobDeliveryType left, JobDeliveryType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="JobDeliveryType"/> values are not the same. </summary>
+        public static bool operator !=(JobDeliveryType left, JobDeliveryType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="JobDeliveryType"/>. </summary>
+        public static implicit operator JobDeliveryType(string value) => new JobDeliveryType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is JobDeliveryType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(JobDeliveryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

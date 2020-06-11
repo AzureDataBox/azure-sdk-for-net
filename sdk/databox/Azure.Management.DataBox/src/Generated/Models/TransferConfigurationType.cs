@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Type of the configuration for transfer. </summary>
-    public enum TransferConfigurationType
+    public readonly partial struct TransferConfigurationType : IEquatable<TransferConfigurationType>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="TransferConfigurationType"/> values are the same. </summary>
+        public TransferConfigurationType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string TransferAllValue = "TransferAll";
+        private const string TransferUsingFilterValue = "TransferUsingFilter";
+
         /// <summary> Transfer all the data. </summary>
-        TransferAll,
+        public static TransferConfigurationType TransferAll { get; } = new TransferConfigurationType(TransferAllValue);
         /// <summary> Transfer using filter. </summary>
-        TransferUsingFilter
+        public static TransferConfigurationType TransferUsingFilter { get; } = new TransferConfigurationType(TransferUsingFilterValue);
+        /// <summary> Determines if two <see cref="TransferConfigurationType"/> values are the same. </summary>
+        public static bool operator ==(TransferConfigurationType left, TransferConfigurationType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="TransferConfigurationType"/> values are not the same. </summary>
+        public static bool operator !=(TransferConfigurationType left, TransferConfigurationType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="TransferConfigurationType"/>. </summary>
+        public static implicit operator TransferConfigurationType(string value) => new TransferConfigurationType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is TransferConfigurationType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(TransferConfigurationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

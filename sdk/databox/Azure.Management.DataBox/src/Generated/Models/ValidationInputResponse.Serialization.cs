@@ -26,13 +26,13 @@ namespace Azure.Management.DataBox.Models
                     case "ValidateSubscriptionIsAllowedToCreateJob": return SubscriptionIsAllowedToCreateJobValidationResponseProperties.DeserializeSubscriptionIsAllowedToCreateJobValidationResponseProperties(element);
                 }
             }
-            ValidationType validationType = default;
+            ValidationInputDiscriminator validationType = default;
             CloudError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationType"))
                 {
-                    validationType = new ValidationType(property.Value.GetString());
+                    validationType = new ValidationInputDiscriminator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"))

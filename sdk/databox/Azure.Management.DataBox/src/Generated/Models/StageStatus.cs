@@ -5,28 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Status of the job stage. </summary>
-    public enum StageStatus
+    public readonly partial struct StageStatus : IEquatable<StageStatus>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="StageStatus"/> values are the same. </summary>
+        public StageStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string NoneValue = "None";
+        private const string InProgressValue = "InProgress";
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CancelledValue = "Cancelled";
+        private const string CancellingValue = "Cancelling";
+        private const string SucceededWithErrorsValue = "SucceededWithErrors";
+        private const string WaitingForCustomerActionValue = "WaitingForCustomerAction";
+        private const string SucceededWithWarningsValue = "SucceededWithWarnings";
+
         /// <summary> No status available yet. </summary>
-        None,
+        public static StageStatus None { get; } = new StageStatus(NoneValue);
         /// <summary> Stage is in progress. </summary>
-        InProgress,
+        public static StageStatus InProgress { get; } = new StageStatus(InProgressValue);
         /// <summary> Stage has succeeded. </summary>
-        Succeeded,
+        public static StageStatus Succeeded { get; } = new StageStatus(SucceededValue);
         /// <summary> Stage has failed. </summary>
-        Failed,
+        public static StageStatus Failed { get; } = new StageStatus(FailedValue);
         /// <summary> Stage has been cancelled. </summary>
-        Cancelled,
+        public static StageStatus Cancelled { get; } = new StageStatus(CancelledValue);
         /// <summary> Stage is cancelling. </summary>
-        Cancelling,
+        public static StageStatus Cancelling { get; } = new StageStatus(CancellingValue);
         /// <summary> Stage has succeeded with errors. </summary>
-        SucceededWithErrors,
+        public static StageStatus SucceededWithErrors { get; } = new StageStatus(SucceededWithErrorsValue);
         /// <summary> Stage is stuck until customer takes some action. </summary>
-        WaitingForCustomerAction,
+        public static StageStatus WaitingForCustomerAction { get; } = new StageStatus(WaitingForCustomerActionValue);
         /// <summary> Stage has succeeded with warnings. </summary>
-        SucceededWithWarnings
+        public static StageStatus SucceededWithWarnings { get; } = new StageStatus(SucceededWithWarningsValue);
+        /// <summary> Determines if two <see cref="StageStatus"/> values are the same. </summary>
+        public static bool operator ==(StageStatus left, StageStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="StageStatus"/> values are not the same. </summary>
+        public static bool operator !=(StageStatus left, StageStatus right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="StageStatus"/>. </summary>
+        public static implicit operator StageStatus(string value) => new StageStatus(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is StageStatus other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(StageStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

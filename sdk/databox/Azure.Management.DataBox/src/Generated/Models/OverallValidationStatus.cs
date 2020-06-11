@@ -5,16 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Overall validation status. </summary>
-    public enum OverallValidationStatus
+    public readonly partial struct OverallValidationStatus : IEquatable<OverallValidationStatus>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="OverallValidationStatus"/> values are the same. </summary>
+        public OverallValidationStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string AllValidToProceedValue = "AllValidToProceed";
+        private const string InputsRevisitRequiredValue = "InputsRevisitRequired";
+        private const string CertainInputValidationsSkippedValue = "CertainInputValidationsSkipped";
+
         /// <summary> Every input request is valid. </summary>
-        AllValidToProceed,
+        public static OverallValidationStatus AllValidToProceed { get; } = new OverallValidationStatus(AllValidToProceedValue);
         /// <summary> Some input requests are not valid. </summary>
-        InputsRevisitRequired,
+        public static OverallValidationStatus InputsRevisitRequired { get; } = new OverallValidationStatus(InputsRevisitRequiredValue);
         /// <summary> Certain input validations skipped. </summary>
-        CertainInputValidationsSkipped
+        public static OverallValidationStatus CertainInputValidationsSkipped { get; } = new OverallValidationStatus(CertainInputValidationsSkippedValue);
+        /// <summary> Determines if two <see cref="OverallValidationStatus"/> values are the same. </summary>
+        public static bool operator ==(OverallValidationStatus left, OverallValidationStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="OverallValidationStatus"/> values are not the same. </summary>
+        public static bool operator !=(OverallValidationStatus left, OverallValidationStatus right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="OverallValidationStatus"/>. </summary>
+        public static implicit operator OverallValidationStatus(string value) => new OverallValidationStatus(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is OverallValidationStatus other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(OverallValidationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

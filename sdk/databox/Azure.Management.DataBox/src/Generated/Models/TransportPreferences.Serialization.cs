@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("preferredShipmentType");
-            writer.WriteStringValue(PreferredShipmentType.ToSerialString());
+            writer.WriteStringValue(PreferredShipmentType.ToString());
             writer.WriteEndObject();
         }
 
@@ -27,7 +27,7 @@ namespace Azure.Management.DataBox.Models
             {
                 if (property.NameEquals("preferredShipmentType"))
                 {
-                    preferredShipmentType = property.Value.GetString().ToTransportShipmentTypes();
+                    preferredShipmentType = new TransportShipmentTypes(property.Value.GetString());
                     continue;
                 }
             }

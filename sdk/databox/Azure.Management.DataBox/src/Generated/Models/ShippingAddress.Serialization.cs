@@ -54,7 +54,7 @@ namespace Azure.Management.DataBox.Models
             if (AddressType != null)
             {
                 writer.WritePropertyName("addressType");
-                writer.WriteStringValue(AddressType.Value.ToSerialString());
+                writer.WriteStringValue(AddressType.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -148,7 +148,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    addressType = property.Value.GetString().ToAddressType();
+                    addressType = new AddressType(property.Value.GetString());
                     continue;
                 }
             }

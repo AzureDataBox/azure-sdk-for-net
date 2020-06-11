@@ -5,22 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Type of the share. </summary>
-    public enum ShareDestinationFormatType
+    public readonly partial struct ShareDestinationFormatType : IEquatable<ShareDestinationFormatType>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="ShareDestinationFormatType"/> values are the same. </summary>
+        public ShareDestinationFormatType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string UnknownTypeValue = "UnknownType";
+        private const string HCSValue = "HCS";
+        private const string BlockBlobValue = "BlockBlob";
+        private const string PageBlobValue = "PageBlob";
+        private const string AzureFileValue = "AzureFile";
+        private const string ManagedDiskValue = "ManagedDisk";
+
         /// <summary> Unknown format. </summary>
-        UnknownType,
+        public static ShareDestinationFormatType UnknownType { get; } = new ShareDestinationFormatType(UnknownTypeValue);
         /// <summary> Storsimple data format. </summary>
-        HCS,
+        public static ShareDestinationFormatType HCS { get; } = new ShareDestinationFormatType(HCSValue);
         /// <summary> Azure storage block blob format. </summary>
-        BlockBlob,
+        public static ShareDestinationFormatType BlockBlob { get; } = new ShareDestinationFormatType(BlockBlobValue);
         /// <summary> Azure storage page blob format. </summary>
-        PageBlob,
+        public static ShareDestinationFormatType PageBlob { get; } = new ShareDestinationFormatType(PageBlobValue);
         /// <summary> Azure storage file format. </summary>
-        AzureFile,
+        public static ShareDestinationFormatType AzureFile { get; } = new ShareDestinationFormatType(AzureFileValue);
         /// <summary> Azure Compute Disk. </summary>
-        ManagedDisk
+        public static ShareDestinationFormatType ManagedDisk { get; } = new ShareDestinationFormatType(ManagedDiskValue);
+        /// <summary> Determines if two <see cref="ShareDestinationFormatType"/> values are the same. </summary>
+        public static bool operator ==(ShareDestinationFormatType left, ShareDestinationFormatType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ShareDestinationFormatType"/> values are not the same. </summary>
+        public static bool operator !=(ShareDestinationFormatType left, ShareDestinationFormatType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ShareDestinationFormatType"/>. </summary>
+        public static implicit operator ShareDestinationFormatType(string value) => new ShareDestinationFormatType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ShareDestinationFormatType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(ShareDestinationFormatType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

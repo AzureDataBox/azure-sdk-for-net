@@ -5,42 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Name of the stage which is in progress. </summary>
-    public enum StageName
+    public readonly partial struct StageName : IEquatable<StageName>
     {
+        private readonly string _value;
+
+        /// <summary> Determines if two <see cref="StageName"/> values are the same. </summary>
+        public StageName(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string DeviceOrderedValue = "DeviceOrdered";
+        private const string DevicePreparedValue = "DevicePrepared";
+        private const string DispatchedValue = "Dispatched";
+        private const string DeliveredValue = "Delivered";
+        private const string PickedUpValue = "PickedUp";
+        private const string AtAzureDCValue = "AtAzureDC";
+        private const string DataCopyValue = "DataCopy";
+        private const string CompletedValue = "Completed";
+        private const string CompletedWithErrorsValue = "CompletedWithErrors";
+        private const string CancelledValue = "Cancelled";
+        private const string FailedIssueReportedAtCustomerValue = "Failed_IssueReportedAtCustomer";
+        private const string FailedIssueDetectedAtAzureDCValue = "Failed_IssueDetectedAtAzureDC";
+        private const string AbortedValue = "Aborted";
+        private const string CompletedWithWarningsValue = "CompletedWithWarnings";
+        private const string ReadyToDispatchFromAzureDCValue = "ReadyToDispatchFromAzureDC";
+        private const string ReadyToReceiveAtAzureDCValue = "ReadyToReceiveAtAzureDC";
+
         /// <summary> An order has been created. </summary>
-        DeviceOrdered,
+        public static StageName DeviceOrdered { get; } = new StageName(DeviceOrderedValue);
         /// <summary> A device has been prepared for the order. </summary>
-        DevicePrepared,
+        public static StageName DevicePrepared { get; } = new StageName(DevicePreparedValue);
         /// <summary> Device has been dispatched to the user of the order. </summary>
-        Dispatched,
+        public static StageName Dispatched { get; } = new StageName(DispatchedValue);
         /// <summary> Device has been delivered to the user of the order. </summary>
-        Delivered,
+        public static StageName Delivered { get; } = new StageName(DeliveredValue);
         /// <summary> Device has been picked up from user and in transit to Azure datacenter. </summary>
-        PickedUp,
+        public static StageName PickedUp { get; } = new StageName(PickedUpValue);
         /// <summary> Device has been received at Azure datacenter from the user. </summary>
-        AtAzureDC,
+        public static StageName AtAzureDC { get; } = new StageName(AtAzureDCValue);
         /// <summary> Data copy from the device at Azure datacenter. </summary>
-        DataCopy,
+        public static StageName DataCopy { get; } = new StageName(DataCopyValue);
         /// <summary> Order has completed. </summary>
-        Completed,
+        public static StageName Completed { get; } = new StageName(CompletedValue);
         /// <summary> Order has completed with errors. </summary>
-        CompletedWithErrors,
+        public static StageName CompletedWithErrors { get; } = new StageName(CompletedWithErrorsValue);
         /// <summary> Order has been cancelled. </summary>
-        Cancelled,
+        public static StageName Cancelled { get; } = new StageName(CancelledValue);
         /// <summary> Order has failed due to issue reported by user. </summary>
-        FailedIssueReportedAtCustomer,
+        public static StageName FailedIssueReportedAtCustomer { get; } = new StageName(FailedIssueReportedAtCustomerValue);
         /// <summary> Order has failed due to issue detected at Azure datacenter. </summary>
-        FailedIssueDetectedAtAzureDC,
+        public static StageName FailedIssueDetectedAtAzureDC { get; } = new StageName(FailedIssueDetectedAtAzureDCValue);
         /// <summary> Order has been aborted. </summary>
-        Aborted,
+        public static StageName Aborted { get; } = new StageName(AbortedValue);
         /// <summary> Order has completed with warnings. </summary>
-        CompletedWithWarnings,
+        public static StageName CompletedWithWarnings { get; } = new StageName(CompletedWithWarningsValue);
         /// <summary> Device is ready to be handed to customer from Azure DC. </summary>
-        ReadyToDispatchFromAzureDC,
+        public static StageName ReadyToDispatchFromAzureDC { get; } = new StageName(ReadyToDispatchFromAzureDCValue);
         /// <summary> Device can be dropped off at Azure DC. </summary>
-        ReadyToReceiveAtAzureDC
+        public static StageName ReadyToReceiveAtAzureDC { get; } = new StageName(ReadyToReceiveAtAzureDCValue);
+        /// <summary> Determines if two <see cref="StageName"/> values are the same. </summary>
+        public static bool operator ==(StageName left, StageName right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="StageName"/> values are not the same. </summary>
+        public static bool operator !=(StageName left, StageName right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="StageName"/>. </summary>
+        public static implicit operator StageName(string value) => new StageName(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is StageName other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(StageName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.Management.DataBox.Models
             if (TransferType != null)
             {
                 writer.WritePropertyName("transferType");
-                writer.WriteStringValue(TransferType.Value.ToSerialString());
+                writer.WriteStringValue(TransferType.Value.ToString());
             }
             if (DataAccountType != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    transferType = property.Value.GetString().ToTransferType();
+                    transferType = new TransferType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataAccountType"))

@@ -55,7 +55,7 @@ namespace Azure.Management.DataBox.Models
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WritePropertyName("transferType");
-            writer.WriteStringValue(TransferType.ToSerialString());
+            writer.WriteStringValue(TransferType.ToString());
             if (IsCancellable != null)
             {
                 writer.WritePropertyName("isCancellable");
@@ -79,7 +79,7 @@ namespace Azure.Management.DataBox.Models
             if (Status != null)
             {
                 writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
             if (StartTime != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.Management.DataBox.Models
             if (DeliveryType != null)
             {
                 writer.WritePropertyName("deliveryType");
-                writer.WriteStringValue(DeliveryType.Value.ToSerialString());
+                writer.WriteStringValue(DeliveryType.Value.ToString());
             }
             if (DeliveryInfo != null)
             {
@@ -217,7 +217,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         if (property0.NameEquals("transferType"))
                         {
-                            transferType = property0.Value.GetString().ToTransferType();
+                            transferType = new TransferType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("isCancellable"))
@@ -262,7 +262,7 @@ namespace Azure.Management.DataBox.Models
                             {
                                 continue;
                             }
-                            status = property0.Value.GetString().ToStageName();
+                            status = new StageName(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startTime"))
@@ -307,7 +307,7 @@ namespace Azure.Management.DataBox.Models
                             {
                                 continue;
                             }
-                            deliveryType = property0.Value.GetString().ToJobDeliveryType();
+                            deliveryType = new JobDeliveryType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("deliveryInfo"))

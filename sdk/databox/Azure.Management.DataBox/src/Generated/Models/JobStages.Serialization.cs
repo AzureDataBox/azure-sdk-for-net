@@ -19,7 +19,7 @@ namespace Azure.Management.DataBox.Models
             if (StageName != null)
             {
                 writer.WritePropertyName("stageName");
-                writer.WriteStringValue(StageName.Value.ToSerialString());
+                writer.WriteStringValue(StageName.Value.ToString());
             }
             if (DisplayName != null)
             {
@@ -29,7 +29,7 @@ namespace Azure.Management.DataBox.Models
             if (StageStatus != null)
             {
                 writer.WritePropertyName("stageStatus");
-                writer.WriteStringValue(StageStatus.Value.ToSerialString());
+                writer.WriteStringValue(StageStatus.Value.ToString());
             }
             if (StageTime != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    stageName = property.Value.GetString().ToStageName();
+                    stageName = new StageName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"))
@@ -77,7 +77,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    stageStatus = property.Value.GetString().ToStageStatus();
+                    stageStatus = new StageStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stageTime"))

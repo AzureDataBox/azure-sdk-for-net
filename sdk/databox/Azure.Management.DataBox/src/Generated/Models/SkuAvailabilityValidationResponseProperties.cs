@@ -20,7 +20,7 @@ namespace Azure.Management.DataBox.Models
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Sku availability validation status. </param>
-        internal SkuAvailabilityValidationResponseProperties(ValidationType validationType, CloudError error, ValidationStatus? status) : base(validationType, error)
+        internal SkuAvailabilityValidationResponseProperties(ValidationInputDiscriminator validationType, CloudError error, ValidationStatus? status) : base(validationType, error)
         {
             Status = status;
             ValidationType = validationType;

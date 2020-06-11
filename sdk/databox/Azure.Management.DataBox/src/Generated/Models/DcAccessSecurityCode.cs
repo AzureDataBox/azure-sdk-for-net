@@ -16,17 +16,17 @@ namespace Azure.Management.DataBox.Models
         }
 
         /// <summary> Initializes a new instance of DcAccessSecurityCode. </summary>
-        /// <param name="reverseDcAccessCode"> Reverse DcAccess security code. </param>
-        /// <param name="forwardDcAccessCode"> Forward DcAccess security code. </param>
+        /// <param name="reverseDcAccessCode"> Reverse DcAccess code. </param>
+        /// <param name="forwardDcAccessCode"> Forward DcAccess code. </param>
         internal DcAccessSecurityCode(string reverseDcAccessCode, string forwardDcAccessCode)
         {
             ReverseDcAccessCode = reverseDcAccessCode;
             ForwardDcAccessCode = forwardDcAccessCode;
         }
 
-        /// <summary> Reverse DcAccess security code. </summary>
+        /// <summary> Reverse DcAccess code. </summary>
         public string ReverseDcAccessCode { get; }
-        /// <summary> Forward DcAccess security code. </summary>
+        /// <summary> Forward DcAccess code. </summary>
         public string ForwardDcAccessCode { get; }
     }
 }
