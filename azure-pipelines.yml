@@ -62,6 +62,6 @@ steps:
       echo GIT STATUS
       git status
       echo GIT COMMIT
-      git commit -m "Generate models for DataBox"
+      git commit -m "Generate SDK for DataBox"
       echo GIT PUSH
       git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin master    
