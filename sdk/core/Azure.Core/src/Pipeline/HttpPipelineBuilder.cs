@@ -5,17 +5,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
+    /// <summary>
+    /// Factory for creating instances of <see cref="HttpPipeline"/> populated with default policies.
+    /// </summary>
     public static class HttpPipelineBuilder
     {
+        /// <summary>
+        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
+        /// </summary>
+        /// <param name="options">The customer provided client options object.</param>
+        /// <param name="perRetryPolicies">Client provided per-call policies.</param>
+        /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
         public static HttpPipeline Build(ClientOptions options, params HttpPipelinePolicy[] perRetryPolicies)
         {
             return Build(options, Array.Empty<HttpPipelinePolicy>(), perRetryPolicies, new ResponseClassifier());
         }
 
+        /// <summary>
+        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
+        /// </summary>
+        /// <param name="options">The customer provided client options object.</param>
+        /// <param name="perCallPolicies">Client provided per-call policies.</param>
+        /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
+        /// <param name="responseClassifier">The client provided response classifier.</param>
+        /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
         public static HttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, ResponseClassifier responseClassifier)
         {
             if (perCallPolicies == null)
@@ -31,6 +47,8 @@ namespace Azure.Core.Pipeline
             var policies = new List<HttpPipelinePolicy>();
 
             bool isDistributedTracingEnabled = options.Diagnostics.IsDistributedTracingEnabled;
+
+            policies.Add(ReadClientRequestIdPolicy.Shared);
 
             policies.AddRange(perCallPolicies);
 
@@ -53,13 +71,15 @@ namespace Azure.Core.Pipeline
 
             if (diagnostics.IsLoggingEnabled)
             {
+                string assemblyName = options.GetType().Assembly.GetName().Name;
+
                 policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit,
-                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray()));
+                    diagnostics.LoggedHeaderNames.ToArray(), diagnostics.LoggedQueryParameters.ToArray(), assemblyName));
             }
 
-            policies.Add(BufferResponsePolicy.Shared);
+            policies.Add(new ResponseBodyPolicy(options.Retry.NetworkTimeout));
 
-            policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled));
+            policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly)));
 
             policies.RemoveAll(policy => policy == null);
 
@@ -87,6 +107,12 @@ namespace Azure.Core.Pipeline
             if (assemblyName.StartsWith(PackagePrefix, StringComparison.Ordinal))
             {
                 assemblyName = assemblyName.Substring(PackagePrefix.Length);
+            }
+
+            int hashSeparator = version.IndexOf('+');
+            if (hashSeparator != -1)
+            {
+                version = version.Substring(0, hashSeparator);
             }
 
             return new TelemetryPolicy(assemblyName, version, options.Diagnostics.ApplicationId);

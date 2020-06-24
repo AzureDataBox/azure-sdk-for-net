@@ -15,8 +15,9 @@ We support a number of extensions including using the vendor prefix `x-az-`:
 - `x-az-stream`: Whether to generate a non buffered request that takes owhership of the response stream. The default value is `false`.
 - `x-az-struct`: Indicates whether a model is struct or not. The default value is `false`.
 - `x-az-nullable-array`:  Allows list to be null. The default value is `false`.
+- `x-az-internal`: x-ms-external is only allowed on definitions so this does the same for parameters, etc.
 
-### Autorest plugin configuration
+### AutoRest plugin configuration
 The AutoRest example at https://github.com/Azure/autorest-extension-helloworld
 walks through the following section and the docs at
 http://azure.github.io/autorest/user/literate-file-formats/configuration.html
@@ -47,3 +48,6 @@ scope-azure-track2-csharp-generator/emitter:
 output-artifact: azure-track2-csharp-generator-code
 
 ```
+
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Common%2Fswagger%2FGenerator%2Freadme.png)

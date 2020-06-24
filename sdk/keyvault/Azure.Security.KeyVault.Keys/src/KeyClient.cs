@@ -12,17 +12,17 @@ namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
     /// The KeyClient provides synchronous and asynchronous methods to manage <see cref="KeyVaultKey"/> in the Azure Key Vault. The client
-    /// supports creating, retrieving, updating, deleting, purging, backing up, restoring and listing the <see cref="KeyVaultKey"/>.
+    /// supports creating, retrieving, updating, deleting, purging, backing up, restoring, and listing the <see cref="KeyVaultKey"/>.
     /// The client also supports listing <see cref="DeletedKey"/> for a soft-delete enabled Azure Key Vault.
     /// </summary>
     public class KeyClient
     {
+        internal const string KeysPath = "/keys/";
+        internal const string DeletedKeysPath = "/deletedkeys/";
+
         private readonly KeyVaultPipeline _pipeline;
 
         private readonly ClientDiagnostics _clientDiagnostics;
-
-        private const string KeysPath = "/keys/";
-        private const string DeletedKeysPath = "/deletedkeys/";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyClient"/> class for mocking.
@@ -34,24 +34,24 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultEndpoint">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="vaultEndpoint"/> or <paramref name="credential"/> is null.</exception>
-        public KeyClient(Uri vaultEndpoint, TokenCredential credential)
-            : this(vaultEndpoint, credential, null)
+        /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
+        public KeyClient(Uri vaultUri, TokenCredential credential)
+            : this(vaultUri, credential, null)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultEndpoint">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <param name="options"><see cref="KeyClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="vaultEndpoint"/> or <paramref name="credential"/> is null.</exception>
-        public KeyClient(Uri vaultEndpoint, TokenCredential credential, KeyClientOptions options)
+        /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
+        public KeyClient(Uri vaultUri, TokenCredential credential, KeyClientOptions options)
         {
-            Argument.AssertNotNull(vaultEndpoint, nameof(vaultEndpoint));
+            Argument.AssertNotNull(vaultUri, nameof(vaultUri));
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new KeyClientOptions();
@@ -61,13 +61,13 @@ namespace Azure.Security.KeyVault.Keys
                     new ChallengeBasedAuthenticationPolicy(credential));
 
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = new KeyVaultPipeline(vaultEndpoint, apiVersion, pipeline, _clientDiagnostics);
+            _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, pipeline, _clientDiagnostics);
         }
 
         /// <summary>
         /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="KeyClient"/>.
         /// </summary>
-        public Uri VaultEndpoint => _pipeline.VaultEndpoint;
+        public virtual Uri VaultUri => _pipeline.VaultUri;
 
         /// <summary>
         /// Creates and stores a new key in Key Vault. The create key operation can be used to create any key type in Azure Key Vault.
@@ -87,7 +87,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.CreateKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -120,7 +120,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.CreateKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -149,7 +149,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(ecKeyOptions);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.CreateEcKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateEcKey)}");
             scope.AddAttribute("key", ecKeyOptions.Name);
             scope.Start();
 
@@ -178,7 +178,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(ecKeyOptions);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.CreateEcKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateEcKey)}");
             scope.AddAttribute("key", ecKeyOptions.Name);
             scope.Start();
 
@@ -207,7 +207,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(rsaKeyOptions);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.CreateRsaKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateRsaKey)}");
             scope.AddAttribute("key", rsaKeyOptions.Name);
             scope.Start();
 
@@ -236,7 +236,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(rsaKeyOptions);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.CreateRsaKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateRsaKey)}");
             scope.AddAttribute("key", rsaKeyOptions.Name);
             scope.Start();
 
@@ -272,7 +272,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(properties, keyOperations);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.UpdateKeyProperties");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyProperties)}");
             scope.AddAttribute("key", properties.Name);
             scope.Start();
 
@@ -308,7 +308,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(properties, keyOperations);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.UpdateKeyProperties");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyProperties)}");
             scope.AddAttribute("key", properties.Name);
             scope.Start();
 
@@ -341,7 +341,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.GetKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -374,7 +374,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.GetKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -390,7 +390,7 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// List keys in the specified vault.
+        /// Lists the properties of all keys in the specified vault. You can use the returned <see cref="KeyProperties.Name"/> in subsequent calls to <see cref="GetKey"/>.
         /// </summary>
         /// <remarks>
         /// Retrieves a list of the keys in the Key Vault that contains the public part of a stored key.
@@ -405,11 +405,11 @@ namespace Azure.Security.KeyVault.Keys
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(KeysPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), "Azure.Security.KeyVault.Keys.KeyClient.GetPropertiesOfKeys", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), "KeyClient.GetPropertiesOfKeys", cancellationToken));
         }
 
         /// <summary>
-        /// List keys in the specified vault.
+        /// Lists the properties of all keys in the specified vault. You can use the returned <see cref="KeyProperties.Name"/> in subsequent calls to <see cref="GetKeyAsync"/>.
         /// </summary>
         /// <remarks>
         /// Retrieves a list of the keys in the Key Vault that contains the public part of a stored key.
@@ -423,11 +423,11 @@ namespace Azure.Security.KeyVault.Keys
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(KeysPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), "Azure.Security.KeyVault.Keys.KeyClient.GetPropertiesOfKeys", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), "KeyClient.GetPropertiesOfKeys", cancellationToken));
         }
 
         /// <summary>
-        /// Retrieves a list of individual key versions with the same key name.
+        /// Lists the properties of all versions of the specified key. You can use the returned <see cref="KeyProperties.Name"/> and <see cref="KeyProperties.Version"/> in subsequent calls to <see cref="GetKey"/>.
         /// </summary>
         /// <remarks>
         /// The full key identifier, attributes, and tags are provided in the response.
@@ -444,11 +444,11 @@ namespace Azure.Security.KeyVault.Keys
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{KeysPath}{name}/versions");
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), "Azure.Security.KeyVault.Keys.KeyClient.GetPropertiesOfKeyVersions", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new KeyProperties(), "KeyClient.GetPropertiesOfKeyVersions", cancellationToken));
         }
 
         /// <summary>
-        /// Retrieves a list of individual key versions with the same key name.
+        /// Lists the properties of all versions of the specified key. You can use the returned <see cref="KeyProperties.Name"/> and <see cref="KeyProperties.Version"/> in subsequent calls to <see cref="GetKeyAsync"/>.
         /// </summary>
         /// <remarks>
         /// The full key identifier, attributes, and tags are provided in the response.
@@ -465,7 +465,7 @@ namespace Azure.Security.KeyVault.Keys
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{KeysPath}{name}/versions");
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), "Azure.Security.KeyVault.Keys.KeyClient.GetPropertiesOfKeyVersions", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new KeyProperties(), "KeyClient.GetPropertiesOfKeyVersions", cancellationToken));
         }
 
         /// <summary>
@@ -486,7 +486,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.GetDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetDeletedKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -519,7 +519,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.GetDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetDeletedKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -546,20 +546,26 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="name">The name of the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="DeleteKeyOperation"/> to wait on this long-running operation.
+        /// If the Key Vault is soft delete-enabled, you only need to wait for the operation to complete if you need to recover or purge the key;
+        /// otherwise, the key is deleted automatically on the <see cref="DeletedKey.ScheduledPurgeDate"/>.
+        /// </returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<DeletedKey> DeleteKey(string name, CancellationToken cancellationToken = default)
+        public virtual DeleteKeyOperation StartDeleteKey(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.DeleteKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartDeleteKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name);
+                Response<DeletedKey> response = _pipeline.SendRequest(RequestMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name);
+                return new DeleteKeyOperation(_pipeline, response);
             }
             catch (Exception e)
             {
@@ -580,20 +586,26 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="name">The name of the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="DeleteKeyOperation"/> to wait on this long-running operation.
+        /// If the Key Vault is soft delete-enabled, you only need to wait for the operation to complete if you need to recover or purge the key;
+        /// otherwise, the key is deleted automatically on the <see cref="DeletedKey.ScheduledPurgeDate"/>.
+        /// </returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<DeletedKey>> DeleteKeyAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<DeleteKeyOperation> StartDeleteKeyAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.DeleteKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartDeleteKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name).ConfigureAwait(false);
+                Response<DeletedKey> response = await _pipeline.SendRequestAsync(RequestMethod.Delete, () => new DeletedKey(name), cancellationToken, KeysPath, name).ConfigureAwait(false);
+                return new DeleteKeyOperation(_pipeline, response);
             }
             catch (Exception e)
             {
@@ -619,7 +631,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedKeysPath);
 
-            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new DeletedKey(), "Azure.Security.KeyVault.Keys.KeyClient.GetDeletedKeys", cancellationToken));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => _pipeline.GetPage(firstPageUri, nextLink, () => new DeletedKey(), "KeyClient.GetDeletedKeys", cancellationToken));
         }
 
         /// <summary>
@@ -639,7 +651,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Uri firstPageUri = _pipeline.CreateFirstPageUri(DeletedKeysPath);
 
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new DeletedKey(), "Azure.Security.KeyVault.Keys.KeyClient.GetDeletedKeys", cancellationToken));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => _pipeline.GetPageAsync(firstPageUri, nextLink, () => new DeletedKey(), "KeyClient.GetDeletedKeys", cancellationToken));
         }
 
         /// <summary>
@@ -660,7 +672,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.PurgeDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(PurgeDeletedKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -693,7 +705,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.PurgeDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(PurgeDeletedKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -720,20 +732,22 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="name">The name of the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecoverDeletedKeyOperation"/> to wait on this long-running operation.</returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<KeyVaultKey> RecoverDeletedKey(string name, CancellationToken cancellationToken = default)
+        public virtual RecoverDeletedKeyOperation StartRecoverDeletedKey(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.RecoverDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartRecoverDeletedKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, () => new KeyVaultKey(name), cancellationToken, DeletedKeysPath, name, "/recover");
+                Response<KeyVaultKey> response = _pipeline.SendRequest(RequestMethod.Post, () => new KeyVaultKey(name), cancellationToken, DeletedKeysPath, name, "/recover");
+                return new RecoverDeletedKeyOperation(_pipeline, response);
             }
             catch (Exception e)
             {
@@ -754,20 +768,22 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         /// <param name="name">The name of the key.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecoverDeletedKeyOperation"/> to wait on this long-running operation.</returns>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<KeyVaultKey>> RecoverDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<RecoverDeletedKeyOperation> StartRecoverDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.RecoverDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartRecoverDeletedKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, () => new KeyVaultKey(name), cancellationToken, DeletedKeysPath, name, "/recover").ConfigureAwait(false);
+                Response<KeyVaultKey> response = await _pipeline.SendRequestAsync(RequestMethod.Post, () => new KeyVaultKey(name), cancellationToken, DeletedKeysPath, name, "/recover").ConfigureAwait(false);
+                return new RecoverDeletedKeyOperation(_pipeline, response);
             }
             catch (Exception e)
             {
@@ -803,7 +819,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.BackupKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(BackupKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -847,7 +863,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.BackupKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(BackupKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -869,7 +885,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <remarks>
         /// Imports a previously backed up key into Azure Key Vault, restoring the key,
-        /// its key identifier, attributes and access control policies. The RESTORE
+        /// its key identifier, attributes, and access control policies. The RESTORE
         /// operation may be used to import a previously backed up key. Individual
         /// versions of a key cannot be restored. The key is restored in its entirety
         /// with the same key name as it had when it was backed up. If the key name is
@@ -891,7 +907,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNull(backup, nameof(backup));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.RestoreKeyBackup");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(RestoreKeyBackup)}");
             scope.Start();
 
             try
@@ -910,7 +926,7 @@ namespace Azure.Security.KeyVault.Keys
         /// </summary>
         /// <remarks>
         /// Imports a previously backed up key into Azure Key Vault, restoring the key,
-        /// its key identifier, attributes and access control policies. The RESTORE
+        /// its key identifier, attributes, and access control policies. The RESTORE
         /// operation may be used to import a previously backed up key. Individual
         /// versions of a key cannot be restored. The key is restored in its entirety
         /// with the same key name as it had when it was backed up. If the key name is
@@ -932,7 +948,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNull(backup, nameof(backup));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.RestoreKeyBackup");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(RestoreKeyBackup)}");
             scope.Start();
 
             try
@@ -968,7 +984,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var importKeyOptions = new ImportKeyOptions(name, keyMaterial);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.ImportKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -1005,7 +1021,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var importKeyOptions = new ImportKeyOptions(name, keyMaterial);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.ImportKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -1037,7 +1053,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNull(importKeyOptions, nameof(importKeyOptions));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.ImportKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
             scope.AddAttribute("key", importKeyOptions.Name);
             scope.Start();
 
@@ -1070,7 +1086,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNull(importKeyOptions, nameof(importKeyOptions));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Keys.KeyClient.ImportKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
             scope.AddAttribute("key", importKeyOptions.Name);
             scope.Start();
 

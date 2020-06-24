@@ -5,6 +5,8 @@ trigger:
   branches:
     include:
     - master
+    - hotfix/*
+    - release/*
   paths:
     include:
     - sdk/eventhub/
@@ -13,18 +15,28 @@ pr:
   branches:
     include:
     - master
+    - feature/*
+    - hotfix/*
+    - release/*
   paths:
     include:
     - sdk/eventhub/
 
-resources:
-  repositories:
-    - repository: azure-sdk-tools
-      type: github
-      name: Azure/azure-sdk-tools
-      endpoint: azure
-
-jobs:
-- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: eventhub
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Messaging.EventHubs
+      safeName: AzureMessagingEventHubs
+    - name: Azure.Messaging.EventHubs.Processor
+      safeName: AzureMessagingEventHubsProcessor
+    - name: Microsoft.Azure.EventHubs
+      safeName: MicrosoftAzureEventHubs
+    - name: Microsoft.Azure.EventHubs.Processor
+      safeName: MicrosoftAzureEventHubsProcessor
+    - name: Microsoft.Azure.EventHubs.ServiceFabricProcessor
+      safeName: MicrosoftAzureEventHubsServiceFabricProcessor
+    - name: Azure.ResourceManager.EventHubs
+      safeName: AzureResourceManagerEventHubs

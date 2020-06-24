@@ -88,12 +88,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public BgpSettings BgpSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the VPN gateway resource.
-        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
-        /// 'Failed'
+        /// Gets the provisioning state of the VPN gateway resource. Possible
+        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the scale unit for this vpn gateway.
@@ -108,5 +107,18 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (BgpSettings != null)
+            {
+                BgpSettings.Validate();
+            }
+        }
     }
 }

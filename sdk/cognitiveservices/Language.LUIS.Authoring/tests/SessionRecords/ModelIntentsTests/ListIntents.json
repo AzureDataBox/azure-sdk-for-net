@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/3327b33c-35df-40d0-a661-c9ade29da239/versions/0.1/intents?skip=0&take=100",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8zMzI3YjMzYy0zNWRmLTQwZDAtYTY2MS1jOWFkZTI5ZGEyMzkvdmVyc2lvbnMvMC4xL2ludGVudHM/c2tpcD0wJnRha2U9MTAw",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/57145764-300b-4640-a4ed-0289ad085e05/versions/0.1/intents?skip=0&take=100",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLzU3MTQ1NzY0LTMwMGItNDY0MC1hNGVkLTAyODlhZDA4NWUwNS92ZXJzaW9ucy8wLjEvaW50ZW50cz9za2lwPTAmdGFrZT0xMDA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "507dfc3e5c29448e98fad6046cdee451"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.28619.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -24,10 +24,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "72172836-91d3-4431-bba3-b2479f9d0c1e"
+          "c3ab1dbb-b8b1-4200-96bd-4387bbb0d43c"
         ],
         "Request-Id": [
-          "72172836-91d3-4431-bba3-b2479f9d0c1e"
+          "c3ab1dbb-b8b1-4200-96bd-4387bbb0d43c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -42,16 +42,16 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:21:13 GMT"
+          "Wed, 13 May 2020 15:44:27 GMT"
         ],
         "Content-Length": [
-          "213"
+          "107"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"ac04c5c6-2c0c-4af8-ba3f-5db090fa7de5\",\r\n    \"name\": \"None\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  },\r\n  {\r\n    \"id\": \"eee1436a-701d-46c4-9e4b-6de52d641513\",\r\n    \"name\": \"sfds\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"26c734cc-849b-4a02-9a6d-b3a4649060cf\",\r\n    \"name\": \"None\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\"\r\n  }\r\n]",
       "StatusCode": 200
     }
   ],

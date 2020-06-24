@@ -8,6 +8,7 @@
 .vs/
 *.lock.json
 developer/
+launch.json
 
 # Build results
 binaries/
@@ -61,6 +62,9 @@ ipch/
 *.psess
 *.vsp
 
+# VS Code
+.vscode/
+
 # Code analysis
 *.CodeAnalysisLog.xml
 
@@ -71,6 +75,9 @@ ipch/
 _ReSharper*/
 
 *.[Rr]e[Ss]harper
+
+# Rider IDE
+.idea
 
 # NCrunch
 *.ncrunch*
@@ -114,9 +121,11 @@ tools/*.dll
 
 # Sensitive files
 *.keys
+!Azure.Extensions.AspNetCore.DataProtection.Keys
 !Azure.Security.KeyVault.Keys
 *.pfx
-sdk/storage/Azure.Storage.Common/tests/Shared/TestConfigurations.xml
+TestConfigurations.xml
+*.json.env
 
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git ;-)
@@ -152,3 +161,6 @@ node_modules/
 
 # MSBuild binary log files
 msbuild.binlog
+
+# BenchmarkDotNet 
+BenchmarkDotNet.Artifacts

@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Common.Tests.Shared;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Blobs.Test
 {
     public class UnitTests
     {

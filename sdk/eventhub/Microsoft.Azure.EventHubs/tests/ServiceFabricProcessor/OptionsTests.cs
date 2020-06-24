@@ -13,7 +13,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
 
     public class OptionsTests
     {
-        [Fact]
+        [Fact(Skip ="Intermittent failures.  Tracked by #12929")]
         [DisplayTestMethodName]
         public void SimpleOptionsTest()
         {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
 
             // EnableReceiverRuntimeMetric is false by default. This case is a convenient opportunity to
             // verify that RuntimeInformation was not updated when the option is false.
-            Assert.True(state.Processor.LatestContext.RuntimeInformation.LastSequenceNumber == 0L,
+            Assert.True(state.Processor.LatestContext.RuntimeInformation.LastSequenceNumber == -1L,
                 $"RuntimeInformation.LastSequenceNumber is {state.Processor.LatestContext.RuntimeInformation.LastSequenceNumber}");
 
             state.DoNormalShutdown(10);

@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using Azure.Messaging.EventHubs.Amqp;
-using Azure.Messaging.EventHubs.Metadata;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -967,6 +966,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData.LastPartitionOffset.HasValue, Is.False, "The last offset should not be set.");
             Assert.That(eventData.LastPartitionSequenceNumber.HasValue, Is.False, "The last sequence number should not be set.");
             Assert.That(eventData.LastPartitionEnqueuedTime.HasValue, Is.False, "The last enqueued time should not be set.");
+            Assert.That(eventData.LastPartitionPropertiesRetrievalTime.HasValue, Is.False, "The last retrieval time should not be set.");
         }
 
         /// <summary>
@@ -1020,6 +1020,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var lastSequenceNumber = (long.MaxValue - 100);
             var enqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
             var lastEnqueuedTime = DateTimeOffset.Parse("2012-03-04T08:42:00Z");
+            var lastRetrievalTime = DateTimeOffset.Parse("203-09-27T04:32:00Z");
             var partitionKey = "OMG! partition!";
 
             using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
@@ -1036,6 +1037,7 @@ namespace Azure.Messaging.EventHubs.Tests
             message.DeliveryAnnotations.Map.Add(AmqpProperty.PartitionLastEnqueuedSequenceNumber, lastSequenceNumber);
             message.DeliveryAnnotations.Map.Add(AmqpProperty.PartitionLastEnqueuedOffset, lastOffset.ToString());
             message.DeliveryAnnotations.Map.Add(AmqpProperty.PartitionLastEnqueuedTimeUtc, lastEnqueuedTime.Ticks);
+            message.DeliveryAnnotations.Map.Add(AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc, lastRetrievalTime.Ticks);
 
             var converter = new AmqpMessageConverter();
             EventData eventData = converter.CreateEventFromMessage(message);
@@ -1050,6 +1052,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData.LastPartitionOffset, Is.EqualTo(lastOffset), "The last offset should match.");
             Assert.That(eventData.LastPartitionSequenceNumber, Is.EqualTo(lastSequenceNumber), "The last sequence number should match.");
             Assert.That(eventData.LastPartitionEnqueuedTime, Is.EqualTo(lastEnqueuedTime), "The last enqueued time should match.");
+            Assert.That(eventData.LastPartitionPropertiesRetrievalTime, Is.EqualTo(lastRetrievalTime), "The last retrieval time should match.");
         }
 
         /// <summary>
@@ -1100,6 +1103,50 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
             Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueuedTime), "The enqueue time should match.");
             Assert.That(eventData.LastPartitionEnqueuedTime, Is.EqualTo(lastEnqueuedTime), "The last enqueued time should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateEventFromMessage" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateEventFromMessagePopulatesLastRetrievalTimeFromDateTime()
+        {
+            var lastRetrieval = DateTimeOffset.Parse("2012-03-04T08:42:00Z");
+
+            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
+            using var message = AmqpMessage.Create(bodyStream, true);
+
+            message.DeliveryAnnotations.Map.Add(AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc, lastRetrieval.UtcDateTime);
+
+            var converter = new AmqpMessageConverter();
+            EventData eventData = converter.CreateEventFromMessage(message);
+
+            Assert.That(eventData, Is.Not.Null, "The event should have been created.");
+            Assert.That(eventData.LastPartitionPropertiesRetrievalTime, Is.EqualTo(lastRetrieval), "The last retrieval time should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateEventFromMessage" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateEventFromMessagePopulatesLastRetrievalTimeFromTicks()
+        {
+            var lastRetrieval = DateTimeOffset.Parse("2012-03-04T08:42:00Z");
+
+            using var bodyStream = new MemoryStream(new byte[] { 0x11, 0x22, 0x33 }, false);
+            using var message = AmqpMessage.Create(bodyStream, true);
+
+            message.DeliveryAnnotations.Map.Add(AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc, lastRetrieval.UtcTicks);
+
+            var converter = new AmqpMessageConverter();
+            EventData eventData = converter.CreateEventFromMessage(message);
+
+            Assert.That(eventData, Is.Not.Null, "The event should have been created.");
+            Assert.That(eventData.LastPartitionPropertiesRetrievalTime, Is.EqualTo(lastRetrieval), "The last retrieval time should match.");
         }
 
         /// <summary>
@@ -1277,11 +1324,11 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             using var response = AmqpMessage.Create(new AmqpValue { Value = body });
-            Metadata.EventHubProperties properties = converter.CreateEventHubPropertiesFromResponse(response);
+            EventHubProperties properties = converter.CreateEventHubPropertiesFromResponse(response);
 
             Assert.That(properties, Is.Not.Null, "The properties should have been created");
             Assert.That(properties.Name, Is.EqualTo(name), "The name should match");
-            Assert.That(properties.CreatedAt, Is.EqualTo(created), "The created date should match");
+            Assert.That(properties.CreatedOn, Is.EqualTo(created), "The created date should match");
             Assert.That(properties.PartitionIds, Is.EquivalentTo(identifiers), "The set of partition identifiers should match");
         }
 

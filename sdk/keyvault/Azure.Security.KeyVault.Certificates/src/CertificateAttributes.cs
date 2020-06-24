@@ -13,19 +13,22 @@ namespace Azure.Security.KeyVault.Certificates
         private const string ExpiresPropertyName = "exp";
         private const string CreatedPropertyName = "created";
         private const string UpdatedPropertyName = "updated";
+        private const string RecoverableDaysPropertyName = "recoverableDays";
         private const string RecoveryLevelPropertyName = "recoveryLevel";
 
         public bool? Enabled { get; set; }
 
         public DateTimeOffset? NotBefore { get; set; }
 
-        public DateTimeOffset? Expires { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
-        public DateTimeOffset? Created { get; private set; }
+        public DateTimeOffset? CreatedOn { get; internal set; }
 
-        public DateTimeOffset? Updated { get; private set; }
+        public DateTimeOffset? UpdatedOn { get; internal set; }
 
-        public string RecoveryLevel { get; private set; }
+        public int? RecoverableDays { get; internal set; }
+
+        public string RecoveryLevel { get; internal set; }
 
         internal void ReadProperties(JsonElement json)
         {
@@ -42,15 +45,19 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case ExpiresPropertyName:
-                        Expires = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        ExpiresOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
 
                     case CreatedPropertyName:
-                        Created = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        CreatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
 
                     case UpdatedPropertyName:
-                        Updated = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        UpdatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        break;
+
+                    case RecoverableDaysPropertyName:
+                        RecoverableDays = prop.Value.GetInt32();
                         break;
 
                     case RecoveryLevelPropertyName:

@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// space.</param>
         /// <param name="gatewayIpAddress">IP address of local network
         /// gateway.</param>
+        /// <param name="fqdn">FQDN of local network gateway.</param>
         /// <param name="bgpSettings">Local network gateway's BGP speaker
         /// settings.</param>
         /// <param name="resourceGuid">The resource GUID property of the local
@@ -52,11 +53,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public LocalNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), AddressSpace localNetworkAddressSpace = default(AddressSpace), string gatewayIpAddress = default(string), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public LocalNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), AddressSpace localNetworkAddressSpace = default(AddressSpace), string gatewayIpAddress = default(string), string fqdn = default(string), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             LocalNetworkAddressSpace = localNetworkAddressSpace;
             GatewayIpAddress = gatewayIpAddress;
+            Fqdn = fqdn;
             BgpSettings = bgpSettings;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
@@ -82,17 +84,23 @@ namespace Microsoft.Azure.Management.Network.Models
         public string GatewayIpAddress { get; set; }
 
         /// <summary>
+        /// Gets or sets FQDN of local network gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.fqdn")]
+        public string Fqdn { get; set; }
+
+        /// <summary>
         /// Gets or sets local network gateway's BGP speaker settings.
         /// </summary>
         [JsonProperty(PropertyName = "properties.bgpSettings")]
         public BgpSettings BgpSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the local network
-        /// gateway resource.
+        /// Gets the resource GUID property of the local network gateway
+        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
         /// Gets the provisioning state of the local network gateway resource.
@@ -103,11 +111,24 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (BgpSettings != null)
+            {
+                BgpSettings.Validate();
+            }
+        }
     }
 }

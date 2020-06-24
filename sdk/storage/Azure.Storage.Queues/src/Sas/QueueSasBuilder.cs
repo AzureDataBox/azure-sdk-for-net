@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Storage.Queues;
 
 namespace Azure.Storage.Sas
 {
@@ -52,7 +53,7 @@ namespace Azure.Storage.Sas
         /// <see cref="QueueAccountSasPermissions"/> can be used to create the
         /// permissions string.
         /// </summary>
-        public string Permissions { get; set; }
+        public string Permissions { get; private set; }
 
         /// <summary>
         /// Specifies an IP address or a range of IP addresses from which to
@@ -76,6 +77,37 @@ namespace Azure.Storage.Sas
         public string QueueName { get; set; }
 
         /// <summary>
+        /// Sets the permissions for a queue SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="QueueSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(QueueSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for a queue account level SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="QueueAccountSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(QueueAccountSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
+        /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
+        public void SetPermissions(string rawPermissions)
+        {
+            Permissions = rawPermissions;
+        }
+
+        /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
         /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
@@ -91,14 +123,10 @@ namespace Azure.Storage.Sas
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
-            Permissions = QueueAccountSasPermissions.Parse(Permissions).ToString();
-            if (string.IsNullOrEmpty(Version))
-            {
-                Version = SasQueryParameters.DefaultSasVersion;
-            }
+            EnsureState();
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = string.Join("\n",
@@ -108,10 +136,10 @@ namespace Azure.Storage.Sas
                 GetCanonicalName(sharedKeyCredential.AccountName, QueueName ?? string.Empty),
                 Identifier,
                 IPRange.ToString(),
-                Protocol.ToProtocolString(),
+                SasExtensions.ToProtocolString(Protocol),
                 Version);
-            var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
-            var p = new SasQueryParameters(
+            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
+            var p = SasQueryParametersInternals.Create(
                 version: Version,
                 services: default,
                 resourceTypes: default,
@@ -163,5 +191,29 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the QueueSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        /// <summary>
+        /// Ensure the <see cref="QueueSasBuilder"/>'s properties are in a
+        /// consistent state.
+        /// </summary>
+        private void EnsureState()
+        {
+            if (Identifier == default)
+            {
+                if (ExpiresOn == default)
+                {
+                    throw Errors.SasMissingData(nameof(ExpiresOn));
+                }
+                if (string.IsNullOrEmpty(Permissions))
+                {
+                    throw Errors.SasMissingData(nameof(Permissions));
+                }
+            }
+
+            if (string.IsNullOrEmpty(Version))
+            {
+                Version = SasQueryParameters.DefaultSasVersion;
+            }
+        }
     }
 }

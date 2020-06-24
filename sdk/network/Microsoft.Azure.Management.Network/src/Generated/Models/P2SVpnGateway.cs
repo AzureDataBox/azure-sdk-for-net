@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="virtualHub">The VirtualHub to which the gateway
         /// belongs.</param>
-        /// <param name="p2sConnectionConfigurations">List of all p2s
+        /// <param name="p2SConnectionConfigurations">List of all p2s
         /// connection configurations of the gateway.</param>
         /// <param name="provisioningState">The provisioning state of the P2S
         /// VPN gateway resource. Possible values include: 'Succeeded',
@@ -52,17 +52,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// which the p2sVpnGateway is attached to.</param>
         /// <param name="vpnClientConnectionHealth">All P2S VPN clients'
         /// connection health status.</param>
+        /// <param name="customDnsServers">List of all customer specified DNS
+        /// servers IP addresses.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public P2SVpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), IList<P2SConnectionConfiguration> p2sConnectionConfigurations = default(IList<P2SConnectionConfiguration>), string provisioningState = default(string), int? vpnGatewayScaleUnit = default(int?), VpnServerConfiguration vpnServerConfiguration = default(VpnServerConfiguration), VpnClientConnectionHealth vpnClientConnectionHealth = default(VpnClientConnectionHealth), string etag = default(string))
+        public P2SVpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), IList<P2SConnectionConfiguration> p2SConnectionConfigurations = default(IList<P2SConnectionConfiguration>), string provisioningState = default(string), int? vpnGatewayScaleUnit = default(int?), SubResource vpnServerConfiguration = default(SubResource), VpnClientConnectionHealth vpnClientConnectionHealth = default(VpnClientConnectionHealth), IList<string> customDnsServers = default(IList<string>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualHub = virtualHub;
-            P2sConnectionConfigurations = p2sConnectionConfigurations;
+            P2SConnectionConfigurations = p2SConnectionConfigurations;
             ProvisioningState = provisioningState;
             VpnGatewayScaleUnit = vpnGatewayScaleUnit;
             VpnServerConfiguration = vpnServerConfiguration;
             VpnClientConnectionHealth = vpnClientConnectionHealth;
+            CustomDnsServers = customDnsServers;
             Etag = etag;
             CustomInit();
         }
@@ -82,16 +85,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets list of all p2s connection configurations of the
         /// gateway.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.p2sConnectionConfigurations")]
-        public IList<P2SConnectionConfiguration> P2sConnectionConfigurations { get; set; }
+        [JsonProperty(PropertyName = "properties.p2SConnectionConfigurations")]
+        public IList<P2SConnectionConfiguration> P2SConnectionConfigurations { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the P2S VPN gateway
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// Gets the provisioning state of the P2S VPN gateway resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the scale unit for this p2s vpn gateway.
@@ -104,13 +107,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// is attached to.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnServerConfiguration")]
-        public VpnServerConfiguration VpnServerConfiguration { get; set; }
+        public SubResource VpnServerConfiguration { get; set; }
 
         /// <summary>
         /// Gets all P2S VPN clients' connection health status.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnClientConnectionHealth")]
         public VpnClientConnectionHealth VpnClientConnectionHealth { get; private set; }
+
+        /// <summary>
+        /// Gets or sets list of all customer specified DNS servers IP
+        /// addresses.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customDnsServers")]
+        public IList<string> CustomDnsServers { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

@@ -11,19 +11,19 @@ using System.Threading.Tasks;
 namespace Azure
 {
     /// <summary>
-    /// Represents a long running operation (LRO).
+    /// Represents a long-running operation.
     /// </summary>
-    /// <typeparam name="T">The final result of the LRO.</typeparam>
+    /// <typeparam name="T">The final result of the long-running operation.</typeparam>
     public abstract class Operation<T> where T : notnull
     {
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
-        /// the status of the LRO.
+        /// the status of the long-running operation.
         /// </summary>
         public abstract string Id { get; }
 
         /// <summary>
-        /// Final result of the LRO.
+        /// Final result of the long-running operation.
         /// </summary>
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
@@ -41,55 +41,55 @@ namespace Azure
         public abstract Response GetRawResponse();
 
         /// <summary>
-        /// Returns true if the LRO completed.
+        /// Returns true if the long-running operation completed.
         /// </summary>
         public abstract bool HasCompleted { get; }
 
         /// <summary>
-        /// Returns true if the LRO completed successfully and has produced final result (accessible by Value property).
+        /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
         public abstract bool HasValue { get; }
 
         /// <summary>
-        /// Periodically calls the server till the LRO completes.
+        /// Periodically calls the server till the long-running operation completes.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
         public abstract ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Periodically calls the server till the LRO completes.
+        /// Periodically calls the server till the long-running operation completes.
         /// </summary>
         /// <param name="pollingInterval">
         /// The interval between status requests to the server.
         /// The interval can change based on information returned from the server.
         /// For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
         /// </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
         public abstract ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Calls the server to get updated status of the LRO.
+        /// Calls the server to get updated status of the long-running operation.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
+        /// <returns>The HTTP response received from the server.</returns>
         /// <remarks>
         /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
         /// </remarks>
         public abstract ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Calls the server to get updated status of the LRO.
+        /// Calls the server to get updated status of the long-running operation.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
+        /// <returns>The HTTP response received from the server.</returns>
         /// <remarks>
         /// This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
         /// </remarks>

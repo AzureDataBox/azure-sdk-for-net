@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using Azure.Core.Diagnostics;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -24,13 +24,28 @@ namespace Azure.Core.Tests
                     invocations.Add((args, s));
                 }, EventLevel.Verbose);
 
-            AzureCoreEventSource.Singleton.Request("id", "GET", "http", "header");
+            AzureCoreEventSource.Singleton.Request("id", "GET", "http", "header", "Test-SDK");
 
             Assert.AreEqual(1, invocations.Count);
             var singleInvocation = invocations.Single();
 
             Assert.AreEqual("Request", singleInvocation.Item1.EventName);
             Assert.NotNull(singleInvocation.Item2);
+        }
+
+        [Test]
+        public void IgnoresEventCountersEvents()
+        {
+            var invocations = new List<(EventWrittenEventArgs, string)>();
+            using var _ = new AzureEventSourceListener(
+                (args, s) =>
+                {
+                    invocations.Add((args, s));
+                }, EventLevel.Verbose);
+
+            TestSource.Log.Write("EventCounters");
+
+            Assert.AreEqual(0, invocations.Count);
         }
 
         [Test]
@@ -43,7 +58,7 @@ namespace Azure.Core.Tests
         [Test]
         public void FormatsByteArrays()
         {
-            (EventWrittenEventArgs e, string message) = ExpectSingleEvent(() => TestSource.Log.LogWithByteArray(new byte[] { 0, 1, 233}));
+            (EventWrittenEventArgs e, string message) = ExpectSingleEvent(() => TestSource.Log.LogWithByteArray(new byte[] { 0, 1, 233 }));
             Assert.AreEqual("Logging 0001E9", message);
         }
 

@@ -66,11 +66,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="largeFileSharesState">Allow large file shares if sets
         /// to Enabled. It cannot be disabled once it is enabled. Possible
         /// values include: 'Disabled', 'Enabled'</param>
+        /// <param name="routingPreference">Maintains information about the
+        /// network routing choice opted by the user for data transfer</param>
+        /// <param name="allowBlobPublicAccess">Allow or disallow public access
+        /// to all blobs or containers in the storage account. The default
+        /// interpretation is true for this property.</param>
+        /// <param name="minimumTlsVersion">Set the minimum TLS version to be
+        /// permitted on requests to storage. The default interpretation is TLS
+        /// 1.0 for this property. Possible values include: 'TLS1_0', 'TLS1_1',
+        /// 'TLS1_2'</param>
         /// <param name="kind">Optional. Indicates the type of storage account.
         /// Currently only StorageV2 value supported by server. Possible values
         /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
         /// 'BlockBlobStorage'</param>
-        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), string largeFileSharesState = default(string), string kind = default(string))
+        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), string kind = default(string))
         {
             Sku = sku;
             Tags = tags;
@@ -82,6 +91,9 @@ namespace Microsoft.Azure.Management.Storage.Models
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
             NetworkRuleSet = networkRuleSet;
             LargeFileSharesState = largeFileSharesState;
+            RoutingPreference = routingPreference;
+            AllowBlobPublicAccess = allowBlobPublicAccess;
+            MinimumTlsVersion = minimumTlsVersion;
             Kind = kind;
             CustomInit();
         }
@@ -166,6 +178,29 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.largeFileSharesState")]
         public string LargeFileSharesState { get; set; }
+
+        /// <summary>
+        /// Gets or sets maintains information about the network routing choice
+        /// opted by the user for data transfer
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routingPreference")]
+        public RoutingPreference RoutingPreference { get; set; }
+
+        /// <summary>
+        /// Gets or sets allow or disallow public access to all blobs or
+        /// containers in the storage account. The default interpretation is
+        /// true for this property.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowBlobPublicAccess")]
+        public bool? AllowBlobPublicAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets set the minimum TLS version to be permitted on
+        /// requests to storage. The default interpretation is TLS 1.0 for this
+        /// property. Possible values include: 'TLS1_0', 'TLS1_1', 'TLS1_2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimumTlsVersion")]
+        public string MinimumTlsVersion { get; set; }
 
         /// <summary>
         /// Gets or sets optional. Indicates the type of storage account.

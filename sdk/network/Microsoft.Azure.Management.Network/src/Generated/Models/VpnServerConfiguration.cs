@@ -46,14 +46,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// VpnServerConfiguration.</param>
         /// <param name="vpnAuthenticationTypes">VPN authentication types for
         /// the VpnServerConfiguration.</param>
-        /// <param name="vpnServerConfigVpnClientRootCertificates">VPN client
-        /// root certificate of VpnServerConfiguration.</param>
-        /// <param name="vpnServerConfigVpnClientRevokedCertificates">VPN
-        /// client revoked certificate of VpnServerConfiguration.</param>
-        /// <param name="vpnServerConfigRadiusServerRootCertificates">Radius
-        /// Server root certificate of VpnServerConfiguration.</param>
-        /// <param name="vpnServerConfigRadiusClientRootCertificates">Radius
-        /// client root certificate of VpnServerConfiguration.</param>
+        /// <param name="vpnClientRootCertificates">VPN client root certificate
+        /// of VpnServerConfiguration.</param>
+        /// <param name="vpnClientRevokedCertificates">VPN client revoked
+        /// certificate of VpnServerConfiguration.</param>
+        /// <param name="radiusServerRootCertificates">Radius Server root
+        /// certificate of VpnServerConfiguration.</param>
+        /// <param name="radiusClientRootCertificates">Radius client root
+        /// certificate of VpnServerConfiguration.</param>
         /// <param name="vpnClientIpsecPolicies">VpnClientIpsecPolicies for
         /// VpnServerConfiguration.</param>
         /// <param name="radiusServerAddress">The radius server address
@@ -62,6 +62,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="radiusServerSecret">The radius secret property of the
         /// VpnServerConfiguration resource for point to site client
         /// connection.</param>
+        /// <param name="radiusServers">Multiple Radius Server configuration
+        /// for VpnServerConfiguration.</param>
         /// <param name="aadAuthenticationParameters">The set of aad vpn
         /// authentication parameters.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -72,21 +74,22 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="vpnServerConfigurationPropertiesEtag">A unique
         /// read-only string that changes whenever the resource is
         /// updated.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
-        public VpnServerConfiguration(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string vpnServerConfigurationName = default(string), IList<string> vpnProtocols = default(IList<string>), IList<string> vpnAuthenticationTypes = default(IList<string>), IList<VpnServerConfigVpnClientRootCertificate> vpnServerConfigVpnClientRootCertificates = default(IList<VpnServerConfigVpnClientRootCertificate>), IList<VpnServerConfigVpnClientRevokedCertificate> vpnServerConfigVpnClientRevokedCertificates = default(IList<VpnServerConfigVpnClientRevokedCertificate>), IList<VpnServerConfigRadiusServerRootCertificate> vpnServerConfigRadiusServerRootCertificates = default(IList<VpnServerConfigRadiusServerRootCertificate>), IList<VpnServerConfigRadiusClientRootCertificate> vpnServerConfigRadiusClientRootCertificates = default(IList<VpnServerConfigRadiusClientRootCertificate>), IList<IpsecPolicy> vpnClientIpsecPolicies = default(IList<IpsecPolicy>), string radiusServerAddress = default(string), string radiusServerSecret = default(string), AadAuthenticationParameters aadAuthenticationParameters = default(AadAuthenticationParameters), string provisioningState = default(string), IList<P2SVpnGateway> p2SVpnGateways = default(IList<P2SVpnGateway>), string vpnServerConfigurationPropertiesEtag = default(string), string etag = default(string))
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
+        public VpnServerConfiguration(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string vpnServerConfigurationName = default(string), IList<string> vpnProtocols = default(IList<string>), IList<string> vpnAuthenticationTypes = default(IList<string>), IList<VpnServerConfigVpnClientRootCertificate> vpnClientRootCertificates = default(IList<VpnServerConfigVpnClientRootCertificate>), IList<VpnServerConfigVpnClientRevokedCertificate> vpnClientRevokedCertificates = default(IList<VpnServerConfigVpnClientRevokedCertificate>), IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates = default(IList<VpnServerConfigRadiusServerRootCertificate>), IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates = default(IList<VpnServerConfigRadiusClientRootCertificate>), IList<IpsecPolicy> vpnClientIpsecPolicies = default(IList<IpsecPolicy>), string radiusServerAddress = default(string), string radiusServerSecret = default(string), IList<RadiusServer> radiusServers = default(IList<RadiusServer>), AadAuthenticationParameters aadAuthenticationParameters = default(AadAuthenticationParameters), string provisioningState = default(string), IList<P2SVpnGateway> p2SVpnGateways = default(IList<P2SVpnGateway>), string vpnServerConfigurationPropertiesEtag = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VpnServerConfigurationName = vpnServerConfigurationName;
             VpnProtocols = vpnProtocols;
             VpnAuthenticationTypes = vpnAuthenticationTypes;
-            VpnServerConfigVpnClientRootCertificates = vpnServerConfigVpnClientRootCertificates;
-            VpnServerConfigVpnClientRevokedCertificates = vpnServerConfigVpnClientRevokedCertificates;
-            VpnServerConfigRadiusServerRootCertificates = vpnServerConfigRadiusServerRootCertificates;
-            VpnServerConfigRadiusClientRootCertificates = vpnServerConfigRadiusClientRootCertificates;
+            VpnClientRootCertificates = vpnClientRootCertificates;
+            VpnClientRevokedCertificates = vpnClientRevokedCertificates;
+            RadiusServerRootCertificates = radiusServerRootCertificates;
+            RadiusClientRootCertificates = radiusClientRootCertificates;
             VpnClientIpsecPolicies = vpnClientIpsecPolicies;
             RadiusServerAddress = radiusServerAddress;
             RadiusServerSecret = radiusServerSecret;
+            RadiusServers = radiusServers;
             AadAuthenticationParameters = aadAuthenticationParameters;
             ProvisioningState = provisioningState;
             P2SVpnGateways = p2SVpnGateways;
@@ -123,29 +126,29 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets VPN client root certificate of VpnServerConfiguration.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vpnServerConfigVpnClientRootCertificates")]
-        public IList<VpnServerConfigVpnClientRootCertificate> VpnServerConfigVpnClientRootCertificates { get; set; }
+        [JsonProperty(PropertyName = "properties.vpnClientRootCertificates")]
+        public IList<VpnServerConfigVpnClientRootCertificate> VpnClientRootCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets VPN client revoked certificate of
         /// VpnServerConfiguration.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vpnServerConfigVpnClientRevokedCertificates")]
-        public IList<VpnServerConfigVpnClientRevokedCertificate> VpnServerConfigVpnClientRevokedCertificates { get; set; }
+        [JsonProperty(PropertyName = "properties.vpnClientRevokedCertificates")]
+        public IList<VpnServerConfigVpnClientRevokedCertificate> VpnClientRevokedCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets radius Server root certificate of
         /// VpnServerConfiguration.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vpnServerConfigRadiusServerRootCertificates")]
-        public IList<VpnServerConfigRadiusServerRootCertificate> VpnServerConfigRadiusServerRootCertificates { get; set; }
+        [JsonProperty(PropertyName = "properties.radiusServerRootCertificates")]
+        public IList<VpnServerConfigRadiusServerRootCertificate> RadiusServerRootCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets radius client root certificate of
         /// VpnServerConfiguration.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vpnServerConfigRadiusClientRootCertificates")]
-        public IList<VpnServerConfigRadiusClientRootCertificate> VpnServerConfigRadiusClientRootCertificates { get; set; }
+        [JsonProperty(PropertyName = "properties.radiusClientRootCertificates")]
+        public IList<VpnServerConfigRadiusClientRootCertificate> RadiusClientRootCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets vpnClientIpsecPolicies for VpnServerConfiguration.
@@ -170,6 +173,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public string RadiusServerSecret { get; set; }
 
         /// <summary>
+        /// Gets or sets multiple Radius Server configuration for
+        /// VpnServerConfiguration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.radiusServers")]
+        public IList<RadiusServer> RadiusServers { get; set; }
+
+        /// <summary>
         /// Gets or sets the set of aad vpn authentication parameters.
         /// </summary>
         [JsonProperty(PropertyName = "properties.aadAuthenticationParameters")]
@@ -189,11 +199,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<P2SVpnGateway> P2SVpnGateways { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.etag")]
-        public string VpnServerConfigurationPropertiesEtag { get; set; }
+        public string VpnServerConfigurationPropertiesEtag { get; private set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

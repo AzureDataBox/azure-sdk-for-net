@@ -44,7 +44,7 @@ namespace Azure.Storage.Queues.Samples
             // Create a client that can authenticate with a connection string
             QueueServiceClient service = new QueueServiceClient(connectionString);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
         }
 
@@ -78,7 +78,7 @@ namespace Azure.Storage.Queues.Samples
             // Create a client that can authenticate with a connection string
             QueueServiceClient service = new QueueServiceClient(serviceUri, credential);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
         }
 
@@ -107,12 +107,11 @@ namespace Azure.Storage.Queues.Samples
                 // Allow access to the service level APIs
                 ResourceTypes = AccountSasResourceTypes.Service,
 
-                // Allow read access
-                Permissions = new AccountSasPermissions() { Read = true }.ToString(),
-
                 // Access expires in 1 hour!
                 ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
             };
+            // Allow read access
+            sas.SetPermissions(AccountSasPermissions.Read);
 
             // Create a SharedKeyCredential that we can use to sign the SAS token
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
@@ -126,13 +125,13 @@ namespace Azure.Storage.Queues.Samples
             // Create a client that can authenticate with the SAS URI
             QueueServiceClient service = new QueueServiceClient(sasUri.Uri);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
 
             // Try to create a new container (which is beyond our
             // delegated permission)
-            StorageRequestFailedException ex =
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+            RequestFailedException ex =
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.CreateQueueAsync(Randomize("sample-queue")));
             Assert.AreEqual(403, ex.Status);
         }
@@ -161,12 +160,12 @@ namespace Azure.Storage.Queues.Samples
                     ActiveDirectoryTenantId,
                     ActiveDirectoryApplicationId,
                     ActiveDirectoryApplicationSecret,
-                    new AzureCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+                    new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
 
             // Create a client that can authenticate using our token credential
             QueueServiceClient service = new QueueServiceClient(ActiveDirectoryQueueUri, credential);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
         }
     }

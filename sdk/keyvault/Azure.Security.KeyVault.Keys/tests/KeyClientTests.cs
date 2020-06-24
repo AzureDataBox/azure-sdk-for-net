@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -13,7 +13,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         public KeyClientTests(bool isAsync) : base(isAsync)
         {
-            Client = InstrumentClient(new KeyClient(new Uri("http://localhost"), new DefaultAzureCredential()));
+            KeyClientOptions options = new KeyClientOptions
+            {
+                Transport = new MockTransport(),
+            };
+
+            Client = InstrumentClient(new KeyClient(new Uri("http://localhost"), new DefaultAzureCredential(), options));
         }
 
         public KeyClient Client { get; set; }
@@ -62,8 +67,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void DeleteKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DeleteKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DeleteKeyAsync(string.Empty));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartDeleteKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.StartDeleteKeyAsync(string.Empty));
         }
 
         [Test]
@@ -76,8 +81,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void RecoverDeletedKeyArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecoverDeletedKeyAsync(null));
-            Assert.ThrowsAsync<ArgumentException>(() => Client.RecoverDeletedKeyAsync(string.Empty));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.StartRecoverDeletedKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.StartRecoverDeletedKeyAsync(string.Empty));
         }
 
         [Test]
@@ -102,6 +107,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             Assert.Throws<ArgumentNullException>(() => Client.GetPropertiesOfKeyVersionsAsync(null));
             Assert.Throws<ArgumentException>(() => Client.GetPropertiesOfKeyVersionsAsync(string.Empty));
+        }
+
+        [Test]
+        public void ChallengeBasedAuthenticationRequiresHttps()
+        {
+            // After passing parameter validation, ChallengeBasedAuthenticationPolicy should throw for "http" requests.
+            Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetKeyAsync("test"));
         }
     }
 }

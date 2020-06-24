@@ -6,7 +6,6 @@ using Azure.Core.Pipeline;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
@@ -50,7 +49,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Value = plaintext,
             };
 
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Encrypt");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Encrypt)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 
@@ -73,7 +72,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Value = plaintext,
             };
 
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Encrypt");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Encrypt)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 
@@ -96,7 +95,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Value = ciphertext,
             };
 
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Decrypt");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Decrypt)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 
@@ -119,7 +118,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Value = ciphertext,
             };
 
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Decrypt");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Decrypt)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 
@@ -142,7 +141,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Key = key
             };
 
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.WrapKey");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(WrapKey)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 
@@ -165,7 +164,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Key = key
             };
 
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.WrapKey");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(WrapKey)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 
@@ -188,7 +187,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Key = encryptedKey
             };
 
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.UnwrapKey");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(UnwrapKey)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 
@@ -211,7 +210,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Key = encryptedKey
             };
 
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.UnwrapKey");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(UnwrapKey)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 
@@ -234,7 +233,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Digest = digest
             };
 
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Sign");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Sign)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 
@@ -257,7 +256,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Digest = digest
             };
 
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Sign");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Sign)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 
@@ -281,7 +280,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Signature = signature
             };
 
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Verify");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Verify)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 
@@ -305,7 +304,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 Signature = signature
             };
 
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.Verify");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Verify)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 
@@ -322,7 +321,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal virtual async Task<Response<KeyVaultKey>> GetKeyAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.GetKey");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(GetKey)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 
@@ -339,7 +338,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal virtual Response<KeyVaultKey> GetKey(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = Pipeline.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.RemoteCryptographyClient.GetKey");
+            using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(GetKey)}");
             scope.AddAttribute("key", _keyId);
             scope.Start();
 

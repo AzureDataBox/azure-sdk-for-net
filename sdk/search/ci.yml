@@ -5,6 +5,8 @@ trigger:
   branches:
     include:
     - master
+    - hotfix/*
+    - release/*
   paths:
     include:
     - sdk/search/
@@ -13,18 +15,26 @@ pr:
   branches:
     include:
     - master
+    - feature/*
+    - hotfix/*
+    - release/*
   paths:
     include:
     - sdk/search/
 
-resources:
-  repositories:
-    - repository: azure-sdk-tools
-      type: github
-      name: Azure/azure-sdk-tools
-      endpoint: azure
-
-jobs:
-- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: search
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Search.Documents
+      safeName: AzureSearchDocuments
+    - name: Microsoft.Azure.Search
+      safeName: MicrosoftAzureSearch
+    - name: Microsoft.Azure.Search.Common
+      safeName: MicrosoftAzureSearchCommon
+    - name: Microsoft.Azure.Search.Data
+      safeName: MicrosoftAzureSearchData
+    - name: Microsoft.Azure.Search.Service
+      safeName: MicrosoftAzureSearchService

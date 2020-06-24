@@ -39,6 +39,14 @@ namespace Azure.Core
         /// Gets <see cref="RequestMethod"/> instance for HEAD method.
         /// </summary>
         public static RequestMethod Head { get; } = new RequestMethod("HEAD");
+        /// <summary>
+        /// Gets <see cref="RequestMethod"/> instance for OPTIONS method.
+        /// </summary>
+        public static RequestMethod Options { get; } = new RequestMethod("OPTIONS");
+        /// <summary>
+        /// Gets <see cref="RequestMethod"/> instance for TRACE method.
+        /// </summary>
+        public static RequestMethod Trace { get; } = new RequestMethod("TRACE");
 
         /// <summary>
         /// Creates an instance of <see cref="RequestMethod"/> with provided method. Method must be all uppercase.
@@ -94,6 +102,14 @@ namespace Azure.Core
                 {
                     return Delete;
                 }
+                if (string.Equals(method, "OPTIONS", StringComparison.OrdinalIgnoreCase))
+                {
+                    return Options;
+                }
+                if (string.Equals(method, "TRACE", StringComparison.OrdinalIgnoreCase))
+                {
+                    return Trace;
+                }
             }
 
             return new RequestMethod(method);
@@ -122,7 +138,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="left">The method to compare.</param>
         /// <param name="right">The method to compare against.</param>
-        /// <returns><code>true</code> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise. <code>false</code></returns>
+        /// <returns><c>true</c> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
         public static bool operator ==(RequestMethod left, RequestMethod right)
         {
             return left.Equals(right);
@@ -133,7 +149,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="left">The method to compare.</param>
         /// <param name="right">The method to compare against.</param>
-        /// <returns><code>true</code> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise. <code>false</code></returns>
+        /// <returns><c>true</c> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
         public static bool operator !=(RequestMethod left, RequestMethod right)
         {
             return !left.Equals(right);

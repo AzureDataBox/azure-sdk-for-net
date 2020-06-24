@@ -384,7 +384,8 @@ namespace Microsoft.Azure.Management.Compute
             /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
-            /// The list parameters.
+            /// The list parameters. Allowed values are 'instanceView',
+            /// 'instanceView/statuses'.
             /// </param>
             public static IPage<VirtualMachineScaleSetVM> List(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string virtualMachineScaleSetName, ODataQuery<VirtualMachineScaleSetVM> odataQuery = default(ODataQuery<VirtualMachineScaleSetVM>), string select = default(string))
             {
@@ -407,7 +408,8 @@ namespace Microsoft.Azure.Management.Compute
             /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='select'>
-            /// The list parameters.
+            /// The list parameters. Allowed values are 'instanceView',
+            /// 'instanceView/statuses'.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -564,7 +566,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Redeploys a virtual machine in a VM scale set.
+            /// Shuts down the virtual machine in the virtual machine scale set, moves it
+            /// to a new node, and powers it back on.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -584,7 +587,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Redeploys a virtual machine in a VM scale set.
+            /// Shuts down the virtual machine in the virtual machine scale set, moves it
+            /// to a new node, and powers it back on.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -647,6 +651,51 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task PerformMaintenanceAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.PerformMaintenanceWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// The operation to simulate the eviction of spot virtual machine in a VM
+            /// scale set. The eviction will occur within 30 minutes of calling the API
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='instanceId'>
+            /// The instance ID of the virtual machine.
+            /// </param>
+            public static void SimulateEviction(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId)
+            {
+                operations.SimulateEvictionAsync(resourceGroupName, vmScaleSetName, instanceId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to simulate the eviction of spot virtual machine in a VM
+            /// scale set. The eviction will occur within 30 minutes of calling the API
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='instanceId'>
+            /// The instance ID of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task SimulateEvictionAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.SimulateEvictionWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1091,7 +1140,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Redeploys a virtual machine in a VM scale set.
+            /// Shuts down the virtual machine in the virtual machine scale set, moves it
+            /// to a new node, and powers it back on.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1111,7 +1161,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Redeploys a virtual machine in a VM scale set.
+            /// Shuts down the virtual machine in the virtual machine scale set, moves it
+            /// to a new node, and powers it back on.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

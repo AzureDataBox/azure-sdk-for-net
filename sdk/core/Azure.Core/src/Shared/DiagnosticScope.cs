@@ -22,7 +22,7 @@ namespace Azure.Core.Pipeline
         {
             _name = name;
             _source = source;
-            _activity = _source.IsEnabled() ? new DiagnosticActivity(_name) : null;
+            _activity = _source.IsEnabled(_name) ? new DiagnosticActivity(_name) : null;
             _activity?.SetW3CFormat();
         }
 
@@ -37,7 +37,7 @@ namespace Azure.Core.Pipeline
         {
             if (_activity != null && value != null)
             {
-                AddAttribute(name, value.ToString());
+                AddAttribute(name, value.ToString() ?? string.Empty);
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        public void AddLink(string id)
+        public void AddLink(string id, IDictionary<string, string>? attributes = null)
         {
             if (_activity != null)
             {
@@ -57,13 +57,21 @@ namespace Azure.Core.Pipeline
                 linkedActivity.SetW3CFormat();
                 linkedActivity.SetParentId(id);
 
+                if (attributes != null)
+                {
+                    foreach (var kvp in attributes)
+                    {
+                        linkedActivity.AddTag(kvp.Key, kvp.Value);
+                    }
+                }
+
                 _activity.AddLink(linkedActivity);
             }
         }
 
         public void Start()
         {
-            if (_activity != null && _source.IsEnabled(_name))
+            if (_activity != null)
             {
                 _source.StartActivity(_activity, _activity);
             }
@@ -138,9 +146,9 @@ namespace Azure.Core.Pipeline
         {
             if (s_getIdFormatMethod == null) return false;
 
-            object result = s_getIdFormatMethod.Invoke(activity, Array.Empty<object>());
+            object? result = s_getIdFormatMethod.Invoke(activity, Array.Empty<object>());
 
-            return (int)result == 2 /* ActivityIdFormat.W3C */;
+            return result != null && (int)result == 2 /* ActivityIdFormat.W3C */;
         }
 
         public static bool TryGetTraceState(this Activity activity, out string? traceState)

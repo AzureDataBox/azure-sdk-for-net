@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -28,7 +28,7 @@ namespace Azure.Identity.Tests
 
             var mockTransport = new MockTransport(request => ProcessMockRequest(request, tenantId, expectedToken));
 
-            var options = new AzureCredentialOptions() { Transport = mockTransport };
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
 
             AuthorizationCodeCredential cred = InstrumentClient(new AuthorizationCodeCredential(tenantId, clientId, clientSecret, authCode, options));
 

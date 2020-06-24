@@ -142,7 +142,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Conclusion time of the last attempted Copy Blob operation where this blob was the destination blob. This value can specify the time of a completed, aborted, or failed copy attempt. This header does not appear if a copy is pending, if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List.
         /// </summary>
-        public DateTimeOffset CopyCompletionTime => _flattened.CopyCompletionTime;
+        public DateTimeOffset CopyCompletedOn => _flattened.CopyCompletionTime;
 
         /// <summary>
         /// Only appears when x-ms-copy-status is failed or pending. Describes the cause of the last fatal or non-fatal copy operation failure. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List
@@ -205,6 +205,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionKeySha256 => _flattened.EncryptionKeySha256;
 
         /// <summary>
+        /// The encryption scope used to encrypt the blob.
+        /// </summary>
+        public string EncryptionScope => _flattened.EncryptionScope;
+
+        /// <summary>
         /// If the blob has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole blob's MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range
         /// </summary>
 #pragma warning disable CA1819 // Properties should not return arrays
@@ -245,11 +250,83 @@ namespace Azure.Storage.Blobs.Models
             bool isServerEncrypted = default,
             string contentType = default,
             string encryptionKeySha256 = default,
+            string encryptionScope = default,
             long contentLength = default,
             byte[] blobContentHash = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default,
             System.IO.Stream content = default,
             System.DateTimeOffset copyCompletionTime = default)
+        {
+            return new BlobDownloadInfo(
+                new FlattenedDownloadProperties()
+                {
+                    LastModified = lastModified,
+                    BlobSequenceNumber = blobSequenceNumber,
+                    BlobType = blobType,
+                    ContentCrc64 = contentCrc64,
+                    ContentLanguage = contentLanguage,
+                    CopyStatusDescription = copyStatusDescription,
+                    CopyId = copyId,
+                    CopyProgress = copyProgress,
+                    CopySource = copySource,
+                    CopyStatus = copyStatus,
+                    ContentDisposition = contentDisposition,
+                    LeaseDuration = leaseDuration,
+                    CacheControl = cacheControl,
+                    LeaseState = leaseState,
+                    ContentEncoding = contentEncoding,
+                    LeaseStatus = leaseStatus,
+                    ContentHash = contentHash,
+                    AcceptRanges = acceptRanges,
+                    ETag = eTag,
+                    BlobCommittedBlockCount = blobCommittedBlockCount,
+                    ContentRange = contentRange,
+                    IsServerEncrypted = isServerEncrypted,
+                    ContentType = contentType,
+                    EncryptionKeySha256 = encryptionKeySha256,
+                    EncryptionScope = encryptionScope,
+                    ContentLength = contentLength,
+                    BlobContentHash = blobContentHash,
+                    Metadata = metadata,
+                    Content = content,
+                    CopyCompletionTime = copyCompletionTime
+                }
+            );
+        }
+
+        /// <summary>
+        /// Creates a new BlobDownloadInfo instance for mocking.
+        /// </summary>
+        public static BlobDownloadInfo BlobDownloadInfo(
+            System.DateTimeOffset lastModified,
+            long blobSequenceNumber,
+            Azure.Storage.Blobs.Models.BlobType blobType,
+            byte[] contentCrc64,
+            string contentLanguage,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            System.Uri copySource,
+            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
+            string contentDisposition,
+            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
+            string cacheControl,
+            Azure.Storage.Blobs.Models.LeaseState leaseState,
+            string contentEncoding,
+            Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
+            byte[] contentHash,
+            string acceptRanges,
+            ETag eTag,
+            int blobCommittedBlockCount,
+            string contentRange,
+            bool isServerEncrypted,
+            string contentType,
+            string encryptionKeySha256,
+            long contentLength,
+            byte[] blobContentHash,
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            System.IO.Stream content,
+            System.DateTimeOffset copyCompletionTime)
         {
             return new BlobDownloadInfo(
                 new FlattenedDownloadProperties()
