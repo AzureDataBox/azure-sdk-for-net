@@ -15,7 +15,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxHeavyAccountCopyLogDetails. </summary>
         public DataBoxHeavyAccountCopyLogDetails()
         {
-            CopyLogDetailsType = "DataBoxHeavy";
+            CopyLogDetailsType = ClassDiscriminator.DataBoxHeavy;
         }
 
         /// <summary> Initializes a new instance of DataBoxHeavyAccountCopyLogDetails. </summary>

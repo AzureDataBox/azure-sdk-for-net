@@ -16,15 +16,15 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("deviceType");
-            writer.WriteStringValue(DeviceType.ToString());
+            writer.WriteStringValue(DeviceType.ToSerialString());
             writer.WritePropertyName("transferType");
-            writer.WriteStringValue(TransferType.ToString());
+            writer.WriteStringValue(TransferType.ToSerialString());
             writer.WritePropertyName("country");
             writer.WriteStringValue(Country);
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("validationType");
-            writer.WriteStringValue(ValidationType.ToString());
+            writer.WriteStringValue(ValidationType.ToSerialString());
             writer.WriteEndObject();
         }
     }

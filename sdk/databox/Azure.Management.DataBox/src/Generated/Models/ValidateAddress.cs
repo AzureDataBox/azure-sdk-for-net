@@ -24,7 +24,7 @@ namespace Azure.Management.DataBox.Models
 
             ShippingAddress = shippingAddress;
             DeviceType = deviceType;
-            ValidationType = "ValidateAddress";
+            ValidationType = ValidationInputDiscriminator.ValidateAddress;
         }
 
         /// <summary> Initializes a new instance of ValidateAddress. </summary>

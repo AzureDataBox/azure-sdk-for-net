@@ -32,7 +32,7 @@ namespace Azure.Management.DataBox.Models
             TransferType = transferType;
             Country = country;
             Location = location;
-            ValidationType = "ValidateSkuAvailability";
+            ValidationType = ValidationInputDiscriminator.ValidateSkuAvailability;
         }
 
         /// <summary> Initializes a new instance of SkuAvailabilityValidationRequest. </summary>

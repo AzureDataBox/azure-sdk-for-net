@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name");
-            writer.WriteStringValue(Name.ToString());
+            writer.WriteStringValue(Name.ToSerialString());
             if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName");
@@ -39,7 +39,7 @@ namespace Azure.Management.DataBox.Models
             {
                 if (property.NameEquals("name"))
                 {
-                    name = new SkuName(property.Value.GetString());
+                    name = property.Value.GetString().ToSkuName();
                     continue;
                 }
                 if (property.NameEquals("displayName"))

@@ -24,7 +24,6 @@ namespace Azure.Management.DataBox.Models
             }
 
             IndividualRequestDetails = individualRequestDetails.ToArray();
-            ValidationCategory = null;
         }
 
         /// <summary> Initializes a new instance of ValidationRequest. </summary>
@@ -33,7 +32,7 @@ namespace Azure.Management.DataBox.Models
         internal ValidationRequest(string validationCategory, IList<ValidationInputRequest> individualRequestDetails)
         {
             ValidationCategory = validationCategory;
-            IndividualRequestDetails = individualRequestDetails;
+            IndividualRequestDetails = individualRequestDetails ?? new List<ValidationInputRequest>();
         }
 
         /// <summary> Identify the nature of validation. </summary>

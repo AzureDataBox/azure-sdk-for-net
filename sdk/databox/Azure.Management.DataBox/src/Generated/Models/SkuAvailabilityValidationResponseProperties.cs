@@ -13,7 +13,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of SkuAvailabilityValidationResponseProperties. </summary>
         internal SkuAvailabilityValidationResponseProperties()
         {
-            ValidationType = "ValidateSkuAvailability";
+            ValidationType = ValidationInputDiscriminator.ValidateSkuAvailability;
         }
 
         /// <summary> Initializes a new instance of SkuAvailabilityValidationResponseProperties. </summary>

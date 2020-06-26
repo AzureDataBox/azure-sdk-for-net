@@ -15,12 +15,12 @@ namespace Azure.Management.DataBox.Models
         public PreferencesValidationRequest(SkuName deviceType)
         {
             DeviceType = deviceType;
-            ValidationType = "ValidatePreferences";
+            ValidationType = ValidationInputDiscriminator.ValidatePreferences;
         }
 
         /// <summary> Initializes a new instance of PreferencesValidationRequest. </summary>
         /// <param name="validationType"> Identifies the type of validation request. </param>
-        /// <param name="preference"> Preferences related to the order. </param>
+        /// <param name="preference"> Preference of transport and data center. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         internal PreferencesValidationRequest(ValidationInputDiscriminator validationType, Preferences preference, SkuName deviceType) : base(validationType)
         {
@@ -29,7 +29,7 @@ namespace Azure.Management.DataBox.Models
             ValidationType = validationType;
         }
 
-        /// <summary> Preferences related to the order. </summary>
+        /// <summary> Preference of transport and data center. </summary>
         public Preferences Preference { get; set; }
         /// <summary> Device type to be used for the job. </summary>
         public SkuName DeviceType { get; }

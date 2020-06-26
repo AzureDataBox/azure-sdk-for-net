@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType");
-            writer.WriteStringValue(DataAccountType.ToString());
+            writer.WriteStringValue(DataAccountType.ToSerialString());
             if (TransferAllBlobs != null)
             {
                 writer.WritePropertyName("transferAllBlobs");
@@ -39,7 +39,7 @@ namespace Azure.Management.DataBox.Models
             {
                 if (property.NameEquals("dataAccountType"))
                 {
-                    dataAccountType = new DataAccountType(property.Value.GetString());
+                    dataAccountType = property.Value.GetString().ToDataAccountType();
                     continue;
                 }
                 if (property.NameEquals("transferAllBlobs"))

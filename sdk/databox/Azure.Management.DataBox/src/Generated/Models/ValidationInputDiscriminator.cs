@@ -5,58 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Identifies the type of validation request. </summary>
-    public readonly partial struct ValidationInputDiscriminator : IEquatable<ValidationInputDiscriminator>
+    public enum ValidationInputDiscriminator
     {
-        private readonly string _value;
-
-        /// <summary> Determines if two <see cref="ValidationInputDiscriminator"/> values are the same. </summary>
-        public ValidationInputDiscriminator(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string ValidateAddressValue = "ValidateAddress";
-        private const string ValidateSubscriptionIsAllowedToCreateJobValue = "ValidateSubscriptionIsAllowedToCreateJob";
-        private const string ValidatePreferencesValue = "ValidatePreferences";
-        private const string ValidateCreateOrderLimitValue = "ValidateCreateOrderLimit";
-        private const string ValidateSkuAvailabilityValue = "ValidateSkuAvailability";
-        private const string ValidateDataTransferDetailsValue = "ValidateDataTransferDetails";
-
         /// <summary> Identify request and response of address validation. </summary>
-        public static ValidationInputDiscriminator ValidateAddress { get; } = new ValidationInputDiscriminator(ValidateAddressValue);
+        ValidateAddress,
         /// <summary> Identify request and response for validation of subscription permission to create job. </summary>
-        public static ValidationInputDiscriminator ValidateSubscriptionIsAllowedToCreateJob { get; } = new ValidationInputDiscriminator(ValidateSubscriptionIsAllowedToCreateJobValue);
+        ValidateSubscriptionIsAllowedToCreateJob,
         /// <summary> Identify request and response of preference validation. </summary>
-        public static ValidationInputDiscriminator ValidatePreferences { get; } = new ValidationInputDiscriminator(ValidatePreferencesValue);
+        ValidatePreferences,
         /// <summary> Identify request and response of create order limit for subscription validation. </summary>
-        public static ValidationInputDiscriminator ValidateCreateOrderLimit { get; } = new ValidationInputDiscriminator(ValidateCreateOrderLimitValue);
+        ValidateCreateOrderLimit,
         /// <summary> Identify request and response of active job limit for sku availibility. </summary>
-        public static ValidationInputDiscriminator ValidateSkuAvailability { get; } = new ValidationInputDiscriminator(ValidateSkuAvailabilityValue);
+        ValidateSkuAvailability,
         /// <summary> Identify request and response of data transfer details validation. </summary>
-        public static ValidationInputDiscriminator ValidateDataTransferDetails { get; } = new ValidationInputDiscriminator(ValidateDataTransferDetailsValue);
-        /// <summary> Determines if two <see cref="ValidationInputDiscriminator"/> values are the same. </summary>
-        public static bool operator ==(ValidationInputDiscriminator left, ValidationInputDiscriminator right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ValidationInputDiscriminator"/> values are not the same. </summary>
-        public static bool operator !=(ValidationInputDiscriminator left, ValidationInputDiscriminator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ValidationInputDiscriminator"/>. </summary>
-        public static implicit operator ValidationInputDiscriminator(string value) => new ValidationInputDiscriminator(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ValidationInputDiscriminator other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ValidationInputDiscriminator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        ValidateDataTransferDetails
     }
 }

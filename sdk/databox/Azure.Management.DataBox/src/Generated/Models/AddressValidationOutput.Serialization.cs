@@ -31,7 +31,7 @@ namespace Azure.Management.DataBox.Models
                             {
                                 continue;
                             }
-                            validationType = new ValidationInputDiscriminator(property0.Value.GetString());
+                            validationType = property0.Value.GetString().ToValidationInputDiscriminator();
                             continue;
                         }
                         if (property0.NameEquals("error"))
@@ -49,7 +49,7 @@ namespace Azure.Management.DataBox.Models
                             {
                                 continue;
                             }
-                            validationStatus = new AddressValidationStatus(property0.Value.GetString());
+                            validationStatus = property0.Value.GetString().ToAddressValidationStatus();
                             continue;
                         }
                         if (property0.NameEquals("alternateAddresses"))

@@ -5,14 +5,23 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Request body to get the configuration for the region. </summary>
     public partial class RegionConfigurationRequest
     {
         /// <summary> Initializes a new instance of RegionConfigurationRequest. </summary>
-        public RegionConfigurationRequest()
+        /// <param name="scheduleAvailabilityRequest"> Request body to get the availability for scheduling orders. </param>
+        public RegionConfigurationRequest(ScheduleAvailabilityRequest scheduleAvailabilityRequest)
         {
+            if (scheduleAvailabilityRequest == null)
+            {
+                throw new ArgumentNullException(nameof(scheduleAvailabilityRequest));
+            }
+
+            ScheduleAvailabilityRequest = scheduleAvailabilityRequest;
         }
 
         /// <summary> Initializes a new instance of RegionConfigurationRequest. </summary>
@@ -25,7 +34,7 @@ namespace Azure.Management.DataBox.Models
         }
 
         /// <summary> Request body to get the availability for scheduling orders. </summary>
-        public ScheduleAvailabilityRequest ScheduleAvailabilityRequest { get; set; }
+        public ScheduleAvailabilityRequest ScheduleAvailabilityRequest { get; }
         /// <summary> Request body to get the transport availability for given sku. </summary>
         public TransportAvailabilityRequest TransportAvailabilityRequest { get; set; }
     }

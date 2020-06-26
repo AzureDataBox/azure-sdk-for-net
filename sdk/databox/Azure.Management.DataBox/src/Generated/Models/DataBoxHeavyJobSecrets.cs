@@ -15,7 +15,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxHeavyJobSecrets. </summary>
         internal DataBoxHeavyJobSecrets()
         {
-            JobSecretsType = "DataBoxHeavy";
+            JobSecretsType = ClassDiscriminator.DataBoxHeavy;
         }
 
         /// <summary> Initializes a new instance of DataBoxHeavyJobSecrets. </summary>
@@ -23,7 +23,7 @@ namespace Azure.Management.DataBox.Models
         /// <param name="dcAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="cabinetPodSecrets"> Contains the list of secret objects for a databox heavy job. </param>
-        internal DataBoxHeavyJobSecrets(ClassDiscriminator? jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, CloudError error, IReadOnlyList<DataBoxHeavySecret> cabinetPodSecrets) : base(jobSecretsType, dcAccessSecurityCode, error)
+        internal DataBoxHeavyJobSecrets(ClassDiscriminator jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, CloudError error, IReadOnlyList<DataBoxHeavySecret> cabinetPodSecrets) : base(jobSecretsType, dcAccessSecurityCode, error)
         {
             CabinetPodSecrets = cabinetPodSecrets;
             JobSecretsType = jobSecretsType;

@@ -7,7 +7,7 @@
 
 namespace Azure.Management.DataBox.Models
 {
-    /// <summary> The DcAccessSecurityCode. </summary>
+    /// <summary> Dc access security code. </summary>
     public partial class DcAccessSecurityCode
     {
         /// <summary> Initializes a new instance of DcAccessSecurityCode. </summary>
@@ -16,17 +16,17 @@ namespace Azure.Management.DataBox.Models
         }
 
         /// <summary> Initializes a new instance of DcAccessSecurityCode. </summary>
-        /// <param name="reverseDcAccessCode"> Reverse DcAccess code. </param>
-        /// <param name="forwardDcAccessCode"> Forward DcAccess code. </param>
+        /// <param name="reverseDcAccessCode"> Reverse Dc access security code. </param>
+        /// <param name="forwardDcAccessCode"> Forward Dc access security code. </param>
         internal DcAccessSecurityCode(string reverseDcAccessCode, string forwardDcAccessCode)
         {
             ReverseDcAccessCode = reverseDcAccessCode;
             ForwardDcAccessCode = forwardDcAccessCode;
         }
 
-        /// <summary> Reverse DcAccess code. </summary>
+        /// <summary> Reverse Dc access security code. </summary>
         public string ReverseDcAccessCode { get; }
-        /// <summary> Forward DcAccess code. </summary>
+        /// <summary> Forward Dc access security code. </summary>
         public string ForwardDcAccessCode { get; }
     }
 }

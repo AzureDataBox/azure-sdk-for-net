@@ -22,12 +22,12 @@ namespace Azure.Management.DataBox.Models
             }
 
             StorageAccountId = storageAccountId;
-            DataAccountType = "StorageAccount";
+            DataAccountType = DataAccountType.StorageAccount;
         }
 
         /// <summary> Initializes a new instance of StorageAccountDetails. </summary>
         /// <param name="dataAccountType"> Account Type of the data to be transferred. </param>
-        /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have atleast one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
+        /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
         /// <param name="storageAccountId"> Storage Account Resource Id. </param>
         internal StorageAccountDetails(DataAccountType dataAccountType, string sharePassword, string storageAccountId) : base(dataAccountType, sharePassword)
         {

@@ -23,7 +23,6 @@ namespace Azure.Management.DataBox.Models
             }
 
             ContactDetails = contactDetails;
-            JobDetailsType = null;
         }
 
         /// <summary> Initializes a new instance of JobDetails. </summary>

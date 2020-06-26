@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Management.DataBox.Models
 {
-    /// <summary> The CloudError. </summary>
+    /// <summary> Cloud error. </summary>
     public partial class CloudError
     {
         /// <summary> Initializes a new instance of CloudError. </summary>

@@ -5,49 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> The SkuName. </summary>
-    public readonly partial struct SkuName : IEquatable<SkuName>
+    public enum SkuName
     {
-        private readonly string _value;
-
-        /// <summary> Determines if two <see cref="SkuName"/> values are the same. </summary>
-        public SkuName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string DataBoxValue = "DataBox";
-        private const string DataBoxDiskValue = "DataBoxDisk";
-        private const string DataBoxHeavyValue = "DataBoxHeavy";
-
         /// <summary> Data Box. </summary>
-        public static SkuName DataBox { get; } = new SkuName(DataBoxValue);
+        DataBox,
         /// <summary> Data Box Disk. </summary>
-        public static SkuName DataBoxDisk { get; } = new SkuName(DataBoxDiskValue);
+        DataBoxDisk,
         /// <summary> Data Box Heavy. </summary>
-        public static SkuName DataBoxHeavy { get; } = new SkuName(DataBoxHeavyValue);
-        /// <summary> Determines if two <see cref="SkuName"/> values are the same. </summary>
-        public static bool operator ==(SkuName left, SkuName right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="SkuName"/> values are not the same. </summary>
-        public static bool operator !=(SkuName left, SkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SkuName"/>. </summary>
-        public static implicit operator SkuName(string value) => new SkuName(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SkuName other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(SkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        DataBoxHeavy
     }
 }

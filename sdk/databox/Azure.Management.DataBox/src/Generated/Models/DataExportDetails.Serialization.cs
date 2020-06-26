@@ -20,7 +20,7 @@ namespace Azure.Management.DataBox.Models
             if (LogCollectionLevel != null)
             {
                 writer.WritePropertyName("logCollectionLevel");
-                writer.WriteStringValue(LogCollectionLevel.Value.ToString());
+                writer.WriteStringValue(LogCollectionLevel.Value.ToSerialString());
             }
             writer.WritePropertyName("accountDetails");
             writer.WriteObjectValue(AccountDetails);
@@ -45,7 +45,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    logCollectionLevel = new LogCollectionLevel(property.Value.GetString());
+                    logCollectionLevel = property.Value.GetString().ToLogCollectionLevel();
                     continue;
                 }
                 if (property.NameEquals("accountDetails"))

@@ -37,7 +37,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    shareType = new ShareDestinationFormatType(property.Value.GetString());
+                    shareType = property.Value.GetString().ToShareDestinationFormatType();
                     continue;
                 }
                 if (property.NameEquals("userName"))
@@ -67,7 +67,7 @@ namespace Azure.Management.DataBox.Models
                     List<AccessProtocol> array = new List<AccessProtocol>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new AccessProtocol(item.GetString()));
+                        array.Add(item.GetString().ToAccessProtocol());
                     }
                     supportedAccessProtocols = array;
                     continue;

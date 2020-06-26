@@ -15,11 +15,8 @@ namespace Azure.Management.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ScheduleAvailabilityRequest != null)
-            {
-                writer.WritePropertyName("scheduleAvailabilityRequest");
-                writer.WriteObjectValue(ScheduleAvailabilityRequest);
-            }
+            writer.WritePropertyName("scheduleAvailabilityRequest");
+            writer.WriteObjectValue(ScheduleAvailabilityRequest);
             if (TransportAvailabilityRequest != null)
             {
                 writer.WritePropertyName("transportAvailabilityRequest");

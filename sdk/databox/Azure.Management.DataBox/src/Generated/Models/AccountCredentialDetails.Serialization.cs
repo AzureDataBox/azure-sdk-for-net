@@ -36,7 +36,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    dataAccountType = new DataAccountType(property.Value.GetString());
+                    dataAccountType = property.Value.GetString().ToDataAccountType();
                     continue;
                 }
                 if (property.NameEquals("accountConnectionString"))

@@ -51,7 +51,7 @@ namespace Azure.Management.DataBox.Models
             Phone = phone;
             PhoneExtension = phoneExtension;
             Mobile = mobile;
-            EmailList = emailList;
+            EmailList = emailList ?? new List<string>();
             NotificationPreference = notificationPreference;
         }
 
@@ -64,7 +64,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Mobile number of the contact person. </summary>
         public string Mobile { get; set; }
         /// <summary> List of Email-ids to be notified about job progress. </summary>
-        public IList<string> EmailList { get; set; }
+        public IList<string> EmailList { get; }
         /// <summary> Notification preference for a job stage. </summary>
         public IList<NotificationPreference> NotificationPreference { get; set; }
     }

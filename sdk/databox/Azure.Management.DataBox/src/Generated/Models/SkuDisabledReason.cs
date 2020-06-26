@@ -5,58 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Reason why the Sku is disabled. </summary>
-    public readonly partial struct SkuDisabledReason : IEquatable<SkuDisabledReason>
+    public enum SkuDisabledReason
     {
-        private readonly string _value;
-
-        /// <summary> Determines if two <see cref="SkuDisabledReason"/> values are the same. </summary>
-        public SkuDisabledReason(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string NoneValue = "None";
-        private const string CountryValue = "Country";
-        private const string RegionValue = "Region";
-        private const string FeatureValue = "Feature";
-        private const string OfferTypeValue = "OfferType";
-        private const string NoSubscriptionInfoValue = "NoSubscriptionInfo";
-
         /// <summary> SKU is not disabled. </summary>
-        public static SkuDisabledReason None { get; } = new SkuDisabledReason(NoneValue);
+        None,
         /// <summary> SKU is not available in the requested country. </summary>
-        public static SkuDisabledReason Country { get; } = new SkuDisabledReason(CountryValue);
+        Country,
         /// <summary> SKU is not available to push data to the requested Azure region. </summary>
-        public static SkuDisabledReason Region { get; } = new SkuDisabledReason(RegionValue);
+        Region,
         /// <summary> Required features are not enabled for the SKU. </summary>
-        public static SkuDisabledReason Feature { get; } = new SkuDisabledReason(FeatureValue);
+        Feature,
         /// <summary> Subscription does not have required offer types for the SKU. </summary>
-        public static SkuDisabledReason OfferType { get; } = new SkuDisabledReason(OfferTypeValue);
+        OfferType,
         /// <summary> Subscription has not registered to Microsoft.DataBox and Service does not have the subscription notification. </summary>
-        public static SkuDisabledReason NoSubscriptionInfo { get; } = new SkuDisabledReason(NoSubscriptionInfoValue);
-        /// <summary> Determines if two <see cref="SkuDisabledReason"/> values are the same. </summary>
-        public static bool operator ==(SkuDisabledReason left, SkuDisabledReason right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="SkuDisabledReason"/> values are not the same. </summary>
-        public static bool operator !=(SkuDisabledReason left, SkuDisabledReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SkuDisabledReason"/>. </summary>
-        public static implicit operator SkuDisabledReason(string value) => new SkuDisabledReason(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SkuDisabledReason other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(SkuDisabledReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        NoSubscriptionInfo
     }
 }

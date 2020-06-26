@@ -13,7 +13,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of SubscriptionIsAllowedToCreateJobValidationRequest. </summary>
         public SubscriptionIsAllowedToCreateJobValidationRequest()
         {
-            ValidationType = "ValidateSubscriptionIsAllowedToCreateJob";
+            ValidationType = ValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob;
         }
 
         /// <summary> Initializes a new instance of SubscriptionIsAllowedToCreateJobValidationRequest. </summary>

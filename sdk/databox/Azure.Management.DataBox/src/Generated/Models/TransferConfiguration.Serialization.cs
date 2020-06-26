@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("transferConfigurationType");
-            writer.WriteStringValue(TransferConfigurationType.ToString());
+            writer.WriteStringValue(TransferConfigurationType.ToSerialString());
             if (TransferFilterDetails != null)
             {
                 writer.WritePropertyName("transferFilterDetails");
@@ -39,7 +39,7 @@ namespace Azure.Management.DataBox.Models
             {
                 if (property.NameEquals("transferConfigurationType"))
                 {
-                    transferConfigurationType = new TransferConfigurationType(property.Value.GetString());
+                    transferConfigurationType = property.Value.GetString().ToTransferConfigurationType();
                     continue;
                 }
                 if (property.NameEquals("transferFilterDetails"))

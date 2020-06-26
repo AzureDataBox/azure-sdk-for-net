@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("filterFileType");
-            writer.WriteStringValue(FilterFileType.ToString());
+            writer.WriteStringValue(FilterFileType.ToSerialString());
             writer.WritePropertyName("filterFilePath");
             writer.WriteStringValue(FilterFilePath);
             writer.WriteEndObject();
@@ -30,7 +30,7 @@ namespace Azure.Management.DataBox.Models
             {
                 if (property.NameEquals("filterFileType"))
                 {
-                    filterFileType = new FilterFileType(property.Value.GetString());
+                    filterFileType = property.Value.GetString().ToFilterFileType();
                     continue;
                 }
                 if (property.NameEquals("filterFilePath"))

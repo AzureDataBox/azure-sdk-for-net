@@ -53,22 +53,13 @@ namespace Azure.Management.DataBox
             _subscriptionId = subscriptionId;
         }
 
-        /// <summary> Creates a new instance of OperationsClient. </summary>
-        public virtual OperationsClient GetOperationsClient()
-        {
-            return new OperationsClient(_clientDiagnostics, _pipeline, _endpoint);
-        }
+        /// <summary> Returns an instance of Operations. </summary>
+        public virtual Operations Operations => new Operations(_clientDiagnostics, _pipeline, _endpoint);
 
-        /// <summary> Creates a new instance of JobsClient. </summary>
-        public virtual JobsClient GetJobsClient()
-        {
-            return new JobsClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of JobsOperations. </summary>
+        public virtual JobsOperations Jobs => new JobsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
 
-        /// <summary> Creates a new instance of ServiceClient. </summary>
-        public virtual ServiceClient GetServiceClient()
-        {
-            return new ServiceClient(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
-        }
+        /// <summary> Returns an instance of ServiceOperations. </summary>
+        public virtual ServiceOperations Service => new ServiceOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);
     }
 }

@@ -79,7 +79,7 @@ namespace Azure.Management.DataBox.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("jobDetailsType");
-            writer.WriteStringValue(JobDetailsType.ToString());
+            writer.WriteStringValue(JobDetailsType.ToSerialString());
             if (Preferences != null)
             {
                 writer.WritePropertyName("preferences");
@@ -265,7 +265,7 @@ namespace Azure.Management.DataBox.Models
                 }
                 if (property.NameEquals("jobDetailsType"))
                 {
-                    jobDetailsType = new ClassDiscriminator(property.Value.GetString());
+                    jobDetailsType = property.Value.GetString().ToClassDiscriminator();
                     continue;
                 }
                 if (property.NameEquals("preferences"))

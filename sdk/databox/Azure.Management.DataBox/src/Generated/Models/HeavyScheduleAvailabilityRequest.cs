@@ -21,7 +21,7 @@ namespace Azure.Management.DataBox.Models
                 throw new ArgumentNullException(nameof(storageLocation));
             }
 
-            SkuName = "DataBoxHeavy";
+            SkuName = SkuName.DataBoxHeavy;
         }
 
         /// <summary> Initializes a new instance of HeavyScheduleAvailabilityRequest. </summary>

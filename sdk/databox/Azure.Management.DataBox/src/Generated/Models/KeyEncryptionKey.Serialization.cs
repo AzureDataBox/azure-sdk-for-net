@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kekType");
-            writer.WriteStringValue(KekType.ToString());
+            writer.WriteStringValue(KekType.ToSerialString());
             if (KekUrl != null)
             {
                 writer.WritePropertyName("kekUrl");
@@ -39,7 +39,7 @@ namespace Azure.Management.DataBox.Models
             {
                 if (property.NameEquals("kekType"))
                 {
-                    kekType = new KekType(property.Value.GetString());
+                    kekType = property.Value.GetString().ToKekType();
                     continue;
                 }
                 if (property.NameEquals("kekUrl"))

@@ -18,7 +18,7 @@ namespace Azure.Management.DataBox.Models
         }
 
         /// <summary> Initializes a new instance of Preferences. </summary>
-        /// <param name="preferredDataCenterRegion"> Preferred data center region. </param>
+        /// <param name="preferredDataCenterRegion"> Preferrred data center region. </param>
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
         internal Preferences(IList<string> preferredDataCenterRegion, TransportPreferences transportPreferences)
         {
@@ -26,7 +26,7 @@ namespace Azure.Management.DataBox.Models
             TransportPreferences = transportPreferences;
         }
 
-        /// <summary> Preferred data center region. </summary>
+        /// <summary> Preferrred data center region. </summary>
         public IList<string> PreferredDataCenterRegion { get; set; }
         /// <summary> Preferences related to the shipment logistics of the sku. </summary>
         public TransportPreferences TransportPreferences { get; set; }

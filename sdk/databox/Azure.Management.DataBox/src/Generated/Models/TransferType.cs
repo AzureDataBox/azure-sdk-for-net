@@ -5,46 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Type of the transfer. </summary>
-    public readonly partial struct TransferType : IEquatable<TransferType>
+    public enum TransferType
     {
-        private readonly string _value;
-
-        /// <summary> Determines if two <see cref="TransferType"/> values are the same. </summary>
-        public TransferType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string ImportToAzureValue = "ImportToAzure";
-        private const string ExportFromAzureValue = "ExportFromAzure";
-
         /// <summary> Import data to azure. </summary>
-        public static TransferType ImportToAzure { get; } = new TransferType(ImportToAzureValue);
+        ImportToAzure,
         /// <summary> Export data from azure. </summary>
-        public static TransferType ExportFromAzure { get; } = new TransferType(ExportFromAzureValue);
-        /// <summary> Determines if two <see cref="TransferType"/> values are the same. </summary>
-        public static bool operator ==(TransferType left, TransferType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="TransferType"/> values are not the same. </summary>
-        public static bool operator !=(TransferType left, TransferType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TransferType"/>. </summary>
-        public static implicit operator TransferType(string value) => new TransferType(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TransferType other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(TransferType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        ExportFromAzure
     }
 }

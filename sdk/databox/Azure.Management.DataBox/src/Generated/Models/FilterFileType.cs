@@ -5,46 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Type of the filter file. </summary>
-    public readonly partial struct FilterFileType : IEquatable<FilterFileType>
+    public enum FilterFileType
     {
-        private readonly string _value;
-
-        /// <summary> Determines if two <see cref="FilterFileType"/> values are the same. </summary>
-        public FilterFileType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string AzureBlobValue = "AzureBlob";
-        private const string AzureFileValue = "AzureFile";
-
-        /// <summary> Filter file is of the type Azureblobs. </summary>
-        public static FilterFileType AzureBlob { get; } = new FilterFileType(AzureBlobValue);
+        /// <summary> Filter file is of the type AzureBlobs. </summary>
+        AzureBlob,
         /// <summary> Filter file is of the type AzureFiles. </summary>
-        public static FilterFileType AzureFile { get; } = new FilterFileType(AzureFileValue);
-        /// <summary> Determines if two <see cref="FilterFileType"/> values are the same. </summary>
-        public static bool operator ==(FilterFileType left, FilterFileType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="FilterFileType"/> values are not the same. </summary>
-        public static bool operator !=(FilterFileType left, FilterFileType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FilterFileType"/>. </summary>
-        public static implicit operator FilterFileType(string value) => new FilterFileType(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FilterFileType other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(FilterFileType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        AzureFile
     }
 }

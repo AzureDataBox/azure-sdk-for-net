@@ -33,7 +33,7 @@ namespace Azure.Management.DataBox.Models
             if (Status != null)
             {
                 writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }
@@ -79,7 +79,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    status = new CopyStatus(property.Value.GetString());
+                    status = property.Value.GetString().ToCopyStatus();
                     continue;
                 }
             }

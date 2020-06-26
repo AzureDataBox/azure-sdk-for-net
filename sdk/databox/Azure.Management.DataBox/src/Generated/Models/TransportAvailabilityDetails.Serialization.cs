@@ -23,7 +23,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    shipmentType = new TransportShipmentTypes(property.Value.GetString());
+                    shipmentType = property.Value.GetString().ToTransportShipmentTypes();
                     continue;
                 }
             }

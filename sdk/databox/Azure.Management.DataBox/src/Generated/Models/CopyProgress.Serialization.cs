@@ -23,12 +23,12 @@ namespace Azure.Management.DataBox.Models
             if (TransferType != null)
             {
                 writer.WritePropertyName("transferType");
-                writer.WriteStringValue(TransferType.Value.ToString());
+                writer.WriteStringValue(TransferType.Value.ToSerialString());
             }
             if (DataAccountType != null)
             {
                 writer.WritePropertyName("dataAccountType");
-                writer.WriteStringValue(DataAccountType.Value.ToString());
+                writer.WriteStringValue(DataAccountType.Value.ToSerialString());
             }
             if (AccountId != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    transferType = new TransferType(property.Value.GetString());
+                    transferType = property.Value.GetString().ToTransferType();
                     continue;
                 }
                 if (property.NameEquals("dataAccountType"))
@@ -136,7 +136,7 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    dataAccountType = new DataAccountType(property.Value.GetString());
+                    dataAccountType = property.Value.GetString().ToDataAccountType();
                     continue;
                 }
                 if (property.NameEquals("accountId"))

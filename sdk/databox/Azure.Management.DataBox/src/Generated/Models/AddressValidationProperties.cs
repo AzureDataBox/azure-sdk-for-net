@@ -15,7 +15,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of AddressValidationProperties. </summary>
         internal AddressValidationProperties()
         {
-            ValidationType = "ValidateAddress";
+            ValidationType = ValidationInputDiscriminator.ValidateAddress;
         }
 
         /// <summary> Initializes a new instance of AddressValidationProperties. </summary>

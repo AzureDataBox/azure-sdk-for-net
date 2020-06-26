@@ -13,7 +13,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxAccountCopyLogDetails. </summary>
         public DataBoxAccountCopyLogDetails()
         {
-            CopyLogDetailsType = "DataBox";
+            CopyLogDetailsType = ClassDiscriminator.DataBox;
         }
 
         /// <summary> Initializes a new instance of DataBoxAccountCopyLogDetails. </summary>

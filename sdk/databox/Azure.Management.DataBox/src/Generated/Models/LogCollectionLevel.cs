@@ -5,46 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Level of the logs to be collected. </summary>
-    public readonly partial struct LogCollectionLevel : IEquatable<LogCollectionLevel>
+    public enum LogCollectionLevel
     {
-        private readonly string _value;
-
-        /// <summary> Determines if two <see cref="LogCollectionLevel"/> values are the same. </summary>
-        public LogCollectionLevel(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string ErrorValue = "Error";
-        private const string VerboseValue = "Verbose";
-
         /// <summary> Only Errors will be collected in the logs. </summary>
-        public static LogCollectionLevel Error { get; } = new LogCollectionLevel(ErrorValue);
+        Error,
         /// <summary> Verbose logging (includes Errors, CRC, size information and others). </summary>
-        public static LogCollectionLevel Verbose { get; } = new LogCollectionLevel(VerboseValue);
-        /// <summary> Determines if two <see cref="LogCollectionLevel"/> values are the same. </summary>
-        public static bool operator ==(LogCollectionLevel left, LogCollectionLevel right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="LogCollectionLevel"/> values are not the same. </summary>
-        public static bool operator !=(LogCollectionLevel left, LogCollectionLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogCollectionLevel"/>. </summary>
-        public static implicit operator LogCollectionLevel(string value) => new LogCollectionLevel(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LogCollectionLevel other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(LogCollectionLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        Verbose
     }
 }

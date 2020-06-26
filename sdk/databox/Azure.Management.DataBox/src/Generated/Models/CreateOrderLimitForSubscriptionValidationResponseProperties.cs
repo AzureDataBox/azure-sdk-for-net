@@ -13,7 +13,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationResponseProperties. </summary>
         internal CreateOrderLimitForSubscriptionValidationResponseProperties()
         {
-            ValidationType = "ValidateCreateOrderLimit";
+            ValidationType = ValidationInputDiscriminator.ValidateCreateOrderLimit;
         }
 
         /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationResponseProperties. </summary>

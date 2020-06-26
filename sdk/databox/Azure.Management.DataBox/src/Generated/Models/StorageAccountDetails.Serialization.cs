@@ -18,7 +18,7 @@ namespace Azure.Management.DataBox.Models
             writer.WritePropertyName("storageAccountId");
             writer.WriteStringValue(StorageAccountId);
             writer.WritePropertyName("dataAccountType");
-            writer.WriteStringValue(DataAccountType.ToString());
+            writer.WriteStringValue(DataAccountType.ToSerialString());
             if (SharePassword != null)
             {
                 writer.WritePropertyName("sharePassword");
@@ -41,7 +41,7 @@ namespace Azure.Management.DataBox.Models
                 }
                 if (property.NameEquals("dataAccountType"))
                 {
-                    dataAccountType = new DataAccountType(property.Value.GetString());
+                    dataAccountType = property.Value.GetString().ToDataAccountType();
                     continue;
                 }
                 if (property.NameEquals("sharePassword"))

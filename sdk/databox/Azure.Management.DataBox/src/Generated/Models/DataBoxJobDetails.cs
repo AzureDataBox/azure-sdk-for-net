@@ -22,7 +22,7 @@ namespace Azure.Management.DataBox.Models
                 throw new ArgumentNullException(nameof(contactDetails));
             }
 
-            JobDetailsType = "DataBox";
+            JobDetailsType = ClassDiscriminator.DataBox;
         }
 
         /// <summary> Initializes a new instance of DataBoxJobDetails. </summary>
@@ -41,7 +41,7 @@ namespace Azure.Management.DataBox.Models
         /// <param name="keyEncryptionKey"> Details about which key encryption type is being used. </param>
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transfered in this job, in tera bytes. </param>
         /// <param name="copyProgress"> Copy progress per storage account. </param>
-        /// <param name="devicePassword"> Set Device password for unlocking Databox. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have atleast one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
+        /// <param name="devicePassword"> Set Device password for unlocking Databox. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
         internal DataBoxJobDetails(IList<JobStages> jobStages, ContactDetails contactDetails, ShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, ClassDiscriminator jobDetailsType, Preferences preferences, IList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, KeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IList<CopyProgress> copyProgress, string devicePassword) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, keyEncryptionKey, expectedDataSizeInTerabytes)
         {
             CopyProgress = copyProgress;
@@ -51,7 +51,7 @@ namespace Azure.Management.DataBox.Models
 
         /// <summary> Copy progress per storage account. </summary>
         public IList<CopyProgress> CopyProgress { get; }
-        /// <summary> Set Device password for unlocking Databox. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have atleast one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </summary>
+        /// <summary> Set Device password for unlocking Databox. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </summary>
         public string DevicePassword { get; set; }
     }
 }

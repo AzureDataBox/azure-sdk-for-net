@@ -19,7 +19,7 @@ namespace Azure.Management.DataBox.Models
         {
             DeviceType = deviceType;
             TransferType = transferType;
-            ValidationType = "ValidateDataTransferDetails";
+            ValidationType = ValidationInputDiscriminator.ValidateDataTransferDetails;
         }
 
         /// <summary> Initializes a new instance of DataTransferDetailsValidationRequest. </summary>

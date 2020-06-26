@@ -15,7 +15,7 @@ namespace Azure.Management.DataBox.Models
         public CreateOrderLimitForSubscriptionValidationRequest(SkuName deviceType)
         {
             DeviceType = deviceType;
-            ValidationType = "ValidateCreateOrderLimit";
+            ValidationType = ValidationInputDiscriminator.ValidateCreateOrderLimit;
         }
 
         /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationRequest. </summary>

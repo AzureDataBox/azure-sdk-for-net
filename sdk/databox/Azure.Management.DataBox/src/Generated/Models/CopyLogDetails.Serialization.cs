@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("copyLogDetailsType");
-            writer.WriteStringValue(CopyLogDetailsType.ToString());
+            writer.WriteStringValue(CopyLogDetailsType.ToSerialString());
             writer.WriteEndObject();
         }
 
@@ -36,7 +36,7 @@ namespace Azure.Management.DataBox.Models
             {
                 if (property.NameEquals("copyLogDetailsType"))
                 {
-                    copyLogDetailsType = new ClassDiscriminator(property.Value.GetString());
+                    copyLogDetailsType = property.Value.GetString().ToClassDiscriminator();
                     continue;
                 }
             }

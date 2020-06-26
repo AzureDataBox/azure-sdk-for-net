@@ -25,12 +25,12 @@ namespace Azure.Management.DataBox.Models
                     {
                         continue;
                     }
-                    status = new ValidationStatus(property.Value.GetString());
+                    status = property.Value.GetString().ToValidationStatus();
                     continue;
                 }
                 if (property.NameEquals("validationType"))
                 {
-                    validationType = new ValidationInputDiscriminator(property.Value.GetString());
+                    validationType = property.Value.GetString().ToValidationInputDiscriminator();
                     continue;
                 }
                 if (property.NameEquals("error"))

@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("stageName");
-            writer.WriteStringValue(StageName.ToString());
+            writer.WriteStringValue(StageName.ToSerialString());
             writer.WritePropertyName("sendNotification");
             writer.WriteBooleanValue(SendNotification);
             writer.WriteEndObject();
@@ -30,7 +30,7 @@ namespace Azure.Management.DataBox.Models
             {
                 if (property.NameEquals("stageName"))
                 {
-                    stageName = new NotificationStageName(property.Value.GetString());
+                    stageName = property.Value.GetString().ToNotificationStageName();
                     continue;
                 }
                 if (property.NameEquals("sendNotification"))

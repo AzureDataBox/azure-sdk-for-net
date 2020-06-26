@@ -21,7 +21,7 @@ namespace Azure.Management.DataBox.Models
                 throw new ArgumentNullException(nameof(storageLocation));
             }
 
-            SkuName = "DataBox";
+            SkuName = SkuName.DataBox;
         }
 
         /// <summary> Initializes a new instance of DataBoxScheduleAvailabilityRequest. </summary>

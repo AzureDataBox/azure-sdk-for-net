@@ -13,7 +13,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of PreferencesValidationResponseProperties. </summary>
         internal PreferencesValidationResponseProperties()
         {
-            ValidationType = "ValidatePreferences";
+            ValidationType = ValidationInputDiscriminator.ValidatePreferences;
         }
 
         /// <summary> Initializes a new instance of PreferencesValidationResponseProperties. </summary>

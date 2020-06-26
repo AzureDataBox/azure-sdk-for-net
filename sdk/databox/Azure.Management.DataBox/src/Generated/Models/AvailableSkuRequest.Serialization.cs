@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("transferType");
-            writer.WriteStringValue(TransferType.ToString());
+            writer.WriteStringValue(TransferType.ToSerialString());
             writer.WritePropertyName("country");
             writer.WriteStringValue(Country);
             writer.WritePropertyName("location");
@@ -27,7 +27,7 @@ namespace Azure.Management.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in SkuNames)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
             }

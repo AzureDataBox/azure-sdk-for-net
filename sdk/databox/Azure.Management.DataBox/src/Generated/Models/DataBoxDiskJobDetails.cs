@@ -22,7 +22,7 @@ namespace Azure.Management.DataBox.Models
                 throw new ArgumentNullException(nameof(contactDetails));
             }
 
-            JobDetailsType = "DataBoxDisk";
+            JobDetailsType = ClassDiscriminator.DataBoxDisk;
         }
 
         /// <summary> Initializes a new instance of DataBoxDiskJobDetails. </summary>

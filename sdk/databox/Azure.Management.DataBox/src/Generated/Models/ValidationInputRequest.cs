@@ -13,7 +13,6 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of ValidationInputRequest. </summary>
         public ValidationInputRequest()
         {
-            ValidationType = null;
         }
 
         /// <summary> Initializes a new instance of ValidationInputRequest. </summary>

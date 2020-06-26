@@ -5,49 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> Create order limit validation status. </summary>
-    public readonly partial struct ValidationStatus : IEquatable<ValidationStatus>
+    public enum ValidationStatus
     {
-        private readonly string _value;
-
-        /// <summary> Determines if two <see cref="ValidationStatus"/> values are the same. </summary>
-        public ValidationStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string ValidValue = "Valid";
-        private const string InvalidValue = "Invalid";
-        private const string SkippedValue = "Skipped";
-
         /// <summary> Validation is successful. </summary>
-        public static ValidationStatus Valid { get; } = new ValidationStatus(ValidValue);
+        Valid,
         /// <summary> Validation is not successful. </summary>
-        public static ValidationStatus Invalid { get; } = new ValidationStatus(InvalidValue);
+        Invalid,
         /// <summary> Validation is skipped. </summary>
-        public static ValidationStatus Skipped { get; } = new ValidationStatus(SkippedValue);
-        /// <summary> Determines if two <see cref="ValidationStatus"/> values are the same. </summary>
-        public static bool operator ==(ValidationStatus left, ValidationStatus right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ValidationStatus"/> values are not the same. </summary>
-        public static bool operator !=(ValidationStatus left, ValidationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ValidationStatus"/>. </summary>
-        public static implicit operator ValidationStatus(string value) => new ValidationStatus(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ValidationStatus other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ValidationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        Skipped
     }
 }

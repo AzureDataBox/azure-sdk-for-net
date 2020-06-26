@@ -16,7 +16,7 @@ namespace Azure.Management.DataBox.Models
         internal static DataBoxHeavyJobSecrets DeserializeDataBoxHeavyJobSecrets(JsonElement element)
         {
             IReadOnlyList<DataBoxHeavySecret> cabinetPodSecrets = default;
-            ClassDiscriminator? jobSecretsType = default;
+            ClassDiscriminator jobSecretsType = default;
             DcAccessSecurityCode dcAccessSecurityCode = default;
             CloudError error = default;
             foreach (var property in element.EnumerateObject())
@@ -44,11 +44,7 @@ namespace Azure.Management.DataBox.Models
                 }
                 if (property.NameEquals("jobSecretsType"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    jobSecretsType = new ClassDiscriminator(property.Value.GetString());
+                    jobSecretsType = property.Value.GetString().ToClassDiscriminator();
                     continue;
                 }
                 if (property.NameEquals("dcAccessSecurityCode"))

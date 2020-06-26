@@ -22,7 +22,6 @@ namespace Azure.Management.DataBox.Models
             }
 
             StorageLocation = storageLocation;
-            SkuName = null;
         }
 
         /// <summary> Initializes a new instance of ScheduleAvailabilityRequest. </summary>

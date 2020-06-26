@@ -13,7 +13,7 @@ namespace Azure.Management.DataBox.Models
         /// <summary> Initializes a new instance of DataTransferDetailsValidationResponseProperties. </summary>
         internal DataTransferDetailsValidationResponseProperties()
         {
-            ValidationType = "ValidateDataTransferDetails";
+            ValidationType = ValidationInputDiscriminator.ValidateDataTransferDetails;
         }
 
         /// <summary> Initializes a new instance of DataTransferDetailsValidationResponseProperties. </summary>

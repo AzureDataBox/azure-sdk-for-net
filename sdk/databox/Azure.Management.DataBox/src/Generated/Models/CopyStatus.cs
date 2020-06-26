@@ -5,73 +5,32 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.Management.DataBox.Models
 {
     /// <summary> The Status of the copy. </summary>
-    public readonly partial struct CopyStatus : IEquatable<CopyStatus>
+    public enum CopyStatus
     {
-        private readonly string _value;
-
-        /// <summary> Determines if two <see cref="CopyStatus"/> values are the same. </summary>
-        public CopyStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string NotStartedValue = "NotStarted";
-        private const string InProgressValue = "InProgress";
-        private const string CompletedValue = "Completed";
-        private const string CompletedWithErrorsValue = "CompletedWithErrors";
-        private const string FailedValue = "Failed";
-        private const string NotReturnedValue = "NotReturned";
-        private const string HardwareErrorValue = "HardwareError";
-        private const string DeviceFormattedValue = "DeviceFormatted";
-        private const string DeviceMetadataModifiedValue = "DeviceMetadataModified";
-        private const string StorageAccountNotAccessibleValue = "StorageAccountNotAccessible";
-        private const string UnsupportedDataValue = "UnsupportedData";
-
         /// <summary> Data copy hasn&apos;t started yet. </summary>
-        public static CopyStatus NotStarted { get; } = new CopyStatus(NotStartedValue);
+        NotStarted,
         /// <summary> Data copy is in progress. </summary>
-        public static CopyStatus InProgress { get; } = new CopyStatus(InProgressValue);
+        InProgress,
         /// <summary> Data copy completed. </summary>
-        public static CopyStatus Completed { get; } = new CopyStatus(CompletedValue);
+        Completed,
         /// <summary> Data copy completed with errors. </summary>
-        public static CopyStatus CompletedWithErrors { get; } = new CopyStatus(CompletedWithErrorsValue);
+        CompletedWithErrors,
         /// <summary> Data copy failed. No data was copied. </summary>
-        public static CopyStatus Failed { get; } = new CopyStatus(FailedValue);
+        Failed,
         /// <summary> No copy triggered as device was not returned. </summary>
-        public static CopyStatus NotReturned { get; } = new CopyStatus(NotReturnedValue);
+        NotReturned,
         /// <summary> The Device has hit hardware issues. </summary>
-        public static CopyStatus HardwareError { get; } = new CopyStatus(HardwareErrorValue);
+        HardwareError,
         /// <summary> Data copy failed. The Device was formatted by user. </summary>
-        public static CopyStatus DeviceFormatted { get; } = new CopyStatus(DeviceFormattedValue);
+        DeviceFormatted,
         /// <summary> Data copy failed. Device metadata was modified by user. </summary>
-        public static CopyStatus DeviceMetadataModified { get; } = new CopyStatus(DeviceMetadataModifiedValue);
+        DeviceMetadataModified,
         /// <summary> Data copy failed. Storage Account was not accessible during copy. </summary>
-        public static CopyStatus StorageAccountNotAccessible { get; } = new CopyStatus(StorageAccountNotAccessibleValue);
+        StorageAccountNotAccessible,
         /// <summary> Data copy failed. The Device data content is not supported. </summary>
-        public static CopyStatus UnsupportedData { get; } = new CopyStatus(UnsupportedDataValue);
-        /// <summary> Determines if two <see cref="CopyStatus"/> values are the same. </summary>
-        public static bool operator ==(CopyStatus left, CopyStatus right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="CopyStatus"/> values are not the same. </summary>
-        public static bool operator !=(CopyStatus left, CopyStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CopyStatus"/>. </summary>
-        public static implicit operator CopyStatus(string value) => new CopyStatus(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CopyStatus other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(CopyStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        UnsupportedData
     }
 }

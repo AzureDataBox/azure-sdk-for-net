@@ -18,12 +18,12 @@ namespace Azure.Management.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ValidateAddress": return AddressValidationProperties.DeserializeAddressValidationProperties(element);
                     case "ValidateCreateOrderLimit": return CreateOrderLimitForSubscriptionValidationResponseProperties.DeserializeCreateOrderLimitForSubscriptionValidationResponseProperties(element);
                     case "ValidateDataTransferDetails": return DataTransferDetailsValidationResponseProperties.DeserializeDataTransferDetailsValidationResponseProperties(element);
                     case "ValidatePreferences": return PreferencesValidationResponseProperties.DeserializePreferencesValidationResponseProperties(element);
                     case "ValidateSkuAvailability": return SkuAvailabilityValidationResponseProperties.DeserializeSkuAvailabilityValidationResponseProperties(element);
                     case "ValidateSubscriptionIsAllowedToCreateJob": return SubscriptionIsAllowedToCreateJobValidationResponseProperties.DeserializeSubscriptionIsAllowedToCreateJobValidationResponseProperties(element);
+                    case "ValidateAddress": return AddressValidationProperties.DeserializeAddressValidationProperties(element);
                 }
             }
             ValidationInputDiscriminator validationType = default;
@@ -32,7 +32,7 @@ namespace Azure.Management.DataBox.Models
             {
                 if (property.NameEquals("validationType"))
                 {
-                    validationType = new ValidationInputDiscriminator(property.Value.GetString());
+                    validationType = property.Value.GetString().ToValidationInputDiscriminator();
                     continue;
                 }
                 if (property.NameEquals("error"))
