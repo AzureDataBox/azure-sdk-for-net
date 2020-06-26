@@ -23,11 +23,17 @@ steps:
     command: 'build'
     projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
 
+# Currently doesn't take the fix to autorest.csharp
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'build'
+#     projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
+#     arguments: '/t:GenerateCode'
+
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'build'
-    projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
-    arguments: '/t:GenerateCode'
+    command: 'custom'
+    custom: 'npx autorest@https://github.com/Azure/autorest/releases/download/autorest-3.0.6222/autorest-3.0.6222.tgz --version=3.0.6282 sdk/databox/Azure.Management.DataBox/src/autorest.md  --use=https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200622.3/autorest-csharp-v3-3.0.0-dev.20200622.3.tgz --output-folder=sdk/databox/Azure.Management.DataBox/src --title=Azure.Management.DataBox --namespace=Azure.Management.DataBox --shared-source-folder=eng/../sdk/core/Azure.Core/src/Shared/'
 
 - task: DotNetCoreCLI@2
   displayName: Build
