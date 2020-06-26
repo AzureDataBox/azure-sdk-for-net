@@ -32,7 +32,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'npx autorest@https://github.com/Azure/autorest/releases/download/autorest-3.0.6222/autorest-3.0.6222.tgz --version=3.0.6282 src\autorest.md  --use=https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200622.3/autorest-csharp-v3-3.0.0-dev.20200622.3.tgz --title=Azure.Management.DataBox --namespace=Azure.Management.DataBox --shared-source-folder=d:\a\1\s\eng\../sdk/core/Azure.Core/src/Shared/'
+    script: 'npx autorest@https://github.com/Azure/autorest/releases/download/autorest-3.0.6222/autorest-3.0.6222.tgz --version=3.0.6282 src\autorest.md  --use=https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200622.3/autorest-csharp-v3-3.0.0-dev.20200622.3.tgz --output-folder=src --title=Azure.Management.DataBox --namespace=Azure.Management.DataBox --shared-source-folder=d:\a\1\s\eng\../sdk/core/Azure.Core/src/Shared/'
     workingDirectory: 'd:\a\1\s\sdk\databox\Azure.Management.DataBox\'
 - task: DotNetCoreCLI@2
   displayName: Build
