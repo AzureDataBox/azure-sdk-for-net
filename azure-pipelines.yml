@@ -34,7 +34,6 @@ steps:
   inputs:
     command: 'custom'
     custom: 'npx autorest@https://github.com/Azure/autorest/releases/download/autorest-3.0.6222/autorest-3.0.6222.tgz --version=3.0.6282 sdk\databox\Azure.Management.DataBox\src/autorest.md  --use=https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200622.3/autorest-csharp-v3-3.0.0-dev.20200622.3.tgz --output-folder=sdk\databox\Azure.Management.DataBox\src --title=Azure.Management.DataBox --namespace=Azure.Management.DataBox --shared-source-folder=eng\../sdk/core/Azure.Core/src/Shared/'
-    workingDirectory: 'sdk\databox\Azure.Management.DataBox\src'
 
 - task: DotNetCoreCLI@2
   displayName: Build
