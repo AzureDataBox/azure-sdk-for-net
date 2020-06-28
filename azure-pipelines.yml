@@ -21,13 +21,13 @@ steps:
   displayName: Build
   inputs:
     command: 'build'
-    projects: 'sdk\databox\Azure.Management.DataBox\src\Azure.Management.DataBox.csproj'
+    projects: '$(projectPath)'
 
 # Currently doesn't take the fix to autorest.csharp
 # - task: DotNetCoreCLI@2
 #   inputs:
 #     command: 'build'
-#     projects: 'sdk/databox/Azure.Management.DataBox/src/Azure.Management.DataBox.csproj'
+#     projects: '$(projectPath)'
 #     arguments: '/t:GenerateCode'
 
 - task: CmdLine@2
@@ -38,7 +38,7 @@ steps:
   displayName: Build
   inputs:
     command: 'build'
-    projects: 'sdk\databox\Azure.Management.DataBox\src\Azure.Management.DataBox.csproj'
+    projects: '$(projectPath)'
     
 - task: CopyFiles@2
   inputs:
@@ -55,8 +55,8 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-      git config --global user.email "t-vajana@microsoft.com"
-      git config --global user.name "Vaishnavi Janardhan"
+      git config --global user.email "$(emailId)"
+      git config --global user.name "$(username)"
 
       echo GIT CHECKOUT
       git checkout master
@@ -67,6 +67,6 @@ steps:
       echo GIT STATUS
       git status
       echo GIT COMMIT
-      git commit -m "Generate SDK for DataBox"
+      git commit -m "$(commitMsg)"
       echo GIT PUSH
       git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin master    
