@@ -44,14 +44,14 @@ steps:
     command: 'build'
     projects: '$(projectPath)'
 
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   inputs:
-    command: pack
+    command: 'pack'
     packagesToPack: '$(projectPath)'
     versioningScheme: byPrereleaseNumber
     majorVersion: '$(Major)'
     minorVersion: '$(Minor)'
-    patchVersion: '$(Patch)'    
+    patchVersion: '$(Patch)'
     
 - task: CopyFiles@2
   inputs:
