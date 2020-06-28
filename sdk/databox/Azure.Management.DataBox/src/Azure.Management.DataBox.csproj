@@ -4,16 +4,6 @@
     <PackageId>Azure.Management.DataBox</PackageId>
     <Description>Azure management client SDK for Azure resource provider Microsft.DataBox</Description>
     <PackageTags>azure;management;microsft.databox</PackageTags>
-    <PackageReleaseNotes>
-
-      <![CDATA[
-                Changes:
-                
-                1) Support for Export and Customer managed key
-
-            ]]>
-
-    </PackageReleaseNotes>
   </PropertyGroup>
    <PropertyGroup>
     <!-- TODO: Temp workaround. Should be fixed prio release  -->
