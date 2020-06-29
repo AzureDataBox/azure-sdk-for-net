@@ -11,10 +11,11 @@ pool:
 
 variables:
   buildConfiguration: 'Build'
+  projectPath: sdk\databox\Azure.Management.DataBox\src\Azure.Management.DataBox.csproj
+  artifactName: DataBoxArtifacts
   Major: '1'
   Minor: '2'
   Patch: '0'
-
 
 steps:
 - checkout: self
@@ -62,7 +63,7 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'dll'
+    ArtifactName: '$(artifactName)'
     publishLocation: 'Container'
 
 - task: CmdLine@2
@@ -83,33 +84,3 @@ steps:
       git commit -m "$(commitMsg)"
       echo GIT PUSH
       git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin master    
-
-# - task: UseDotNet@2
-#   displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
-#   inputs:
-#     version: "$(DotNetCoreSDKVersion)"
-# #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
-# - script: |
-#     dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:Configuration=$(BuildConfiguration) /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=$(scope) $(loggingArgs) $(RPScopeArgs)"
-#   displayName: "Build & Package"
-#   env:
-#     DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-#     DOTNET_CLI_TELEMETRY_OPTOUT: 1
-#     DOTNET_MULTILEVEL_LOOKUP: 0
-# - task: PublishBuildArtifacts@1
-#   condition: succeededOrFailed()
-#   inputs:
-#     pathtoPublish: $(msBuildLogDir)
-#     artifactName: MsBuildLogs
-# - task: PublishPipelineArtifact@0
-#   condition: succeeded()
-#   inputs:
-#     artifactName: packages
-#     targetPath: $(Build.ArtifactStagingDirectory)
-# - pwsh: |
-#     $releaseTag = "FOR_SIGNING"
-#     if ("$(ShouldPublish)" -eq "true") { $releaseTag = "FOR_PUBLISHING" }
-#     echo "Tagging build with $releaseTag"
-#     echo "##vso[build.addbuildtag]$releaseTag"
-#   displayName: "Tagging the build"
-#   condition: ne(variables['System.TeamProject'], 'public')       
