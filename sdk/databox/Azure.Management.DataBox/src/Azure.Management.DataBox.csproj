@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.2.0</Version>
+    <PackageId>Azure.Management.DataBox</PackageId>
+    <Description>Azure management client SDK for Azure resource provider Microsft.DataBox</Description>
+    <PackageTags>azure;management;microsft.databox</PackageTags>
+  </PropertyGroup>
+   <PropertyGroup>
+    <!-- TODO: Temp workaround. Should be fixed prio release  -->
+    <NoWarn>$(NoWarn);AZC0008</NoWarn>
+  </PropertyGroup>
+</Project>
