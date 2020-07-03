@@ -1,0 +1,86 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- none
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Build'
+  projectPath: sdk\databox\Azure.Management.DataBox\src\Azure.Management.DataBox.csproj
+  artifactName: DataBoxArtifacts
+  Major: '1'
+  Minor: '2'
+  Patch: '0'
+
+steps:
+- checkout: self
+  persistCredentials: true
+  clean: true
+
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: 'build'
+    projects: '$(projectPath)'
+
+# Currently doesn't take the fix to autorest.csharp
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: 'build'
+#     projects: '$(projectPath)'
+#     arguments: '/t:GenerateCode'
+
+- task: CmdLine@2
+  inputs:
+    script: 'npx autorest@https://github.com/Azure/autorest/releases/download/autorest-3.0.6222/autorest-3.0.6222.tgz --version=3.0.6282 d:\a\1\s\sdk\databox\Azure.Management.DataBox\src\autorest.md  --use=https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200622.3/autorest-csharp-v3-3.0.0-dev.20200622.3.tgz --output-folder=d:\a\1\s\sdk\databox\Azure.Management.DataBox\src --title=Azure.Management.DataBox --namespace=Azure.Management.DataBox --shared-source-folder=d:\a\1\s\eng\../sdk/core/Azure.Core/src/Shared/'
+    
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: 'build'
+    projects: '$(projectPath)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'pack'
+    packagesToPack: '$(projectPath)'
+    versioningScheme: byPrereleaseNumber
+    majorVersion: '$(Major)'
+    minorVersion: '$(Minor)'
+    patchVersion: '$(Patch)'
+    
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: 'artifacts/**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'    
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: '$(artifactName)'
+    publishLocation: 'Container'
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      git config --global user.email "$(emailId)"
+      git config --global user.name "$(username)"
+
+      echo GIT CHECKOUT
+      git checkout master
+      echo GIT STATUS
+      git status
+      echo GIT ADD
+      git add .
+      echo GIT STATUS
+      git status
+      echo GIT COMMIT
+      git commit -m "$(commitMsg)"
+      echo GIT PUSH
+      git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin master    
